@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 733200126954648963}
   - component: {fileID: 4868188711055108360}
-  - component: {fileID: 7596189904925988958}
   - component: {fileID: 5036764537888014412}
+  - component: {fileID: 7596189904925988958}
   m_Layer: 0
   m_Name: Fish
   m_TagString: Untagged
@@ -62,20 +62,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &7596189904925988958
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4683415358838884875}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ebf1b4d7f28413f953f813018775585, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _config: {fileID: 11400000, guid: 66e8764f2f6ae2e41a934bdc13d6369f, type: 2}
-  _visualTransform: {fileID: 7191732062506056212}
 --- !u!58 &5036764537888014412
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -112,6 +98,20 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: -0.05, y: -0.05}
   m_Radius: 0.46
+--- !u!114 &7596189904925988958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4683415358838884875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ebf1b4d7f28413f953f813018775585, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _config: {fileID: 11400000, guid: 66e8764f2f6ae2e41a934bdc13d6369f, type: 2}
+  _visualTransform: {fileID: 7191732062506056212}
 --- !u!1 &8710112853801457606
 GameObject:
   m_ObjectHideFlags: 0

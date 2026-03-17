@@ -4,16 +4,16 @@ using UnityEngine;
 
 namespace Spawners
 {
-    public class FishPool
+    public class FishPool : MonoBehaviour
     {
-        private readonly Dictionary<Collider2D, FishBoid> _fishesCache;
-        private readonly LinkedList<FishBoid> _activeFishes;
-        private readonly LinkedList<FishBoid> _freeFishes;
-        private readonly FishBoid _fishPrefab;
+        private Dictionary<Collider2D, FishBoid> _fishesCache;
+        private LinkedList<FishBoid> _activeFishes;
+        private LinkedList<FishBoid> _freeFishes;
+        private FishBoid _fishPrefab;
 
         public FishBoid[] GetActiveFishes() => _activeFishes.ToArray();
 
-        public FishPool()
+        private void Awake()
         {
             _fishPrefab = Resources.Load<FishBoid>("Prefabs/Fish");
 
@@ -29,22 +29,20 @@ namespace Spawners
             if (_freeFishes.Count > 0)
             {
                 fish = _freeFishes.First.Value;
-
                 _freeFishes.RemoveFirst();
             }
             else
             {
-                fish = Object.Instantiate(_fishPrefab);
+                fish = Instantiate(_fishPrefab, transform, true);
 
                 fish.Init(_fishesCache);
-                
-                var collider = fish.GetComponent<Collider2D>();
 
-                _fishesCache.Add(collider, fish);
+                var col = fish.GetComponent<Collider2D>();
+                
+                _fishesCache.Add(col, fish);
             }
 
             fish.gameObject.SetActive(true);
-
             _activeFishes.AddLast(fish);
 
             return fish;

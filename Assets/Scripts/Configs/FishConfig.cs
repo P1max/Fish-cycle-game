@@ -1,12 +1,12 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
 
-[CreateAssetMenu(fileName = "New Fish Config", menuName = "Aquarium/Fish Config")]
 public class FishConfig : ScriptableObject
 {
     [Title("Движение")]
     [Tooltip("Диапазон случайной начальной скорости и жесткие границы скорости при движении.")]
-    [MinMaxSlider(0.5f, 10f, true)] public Vector2 SpeedRange = new(1.5f, 3f);
+    [MinMaxSlider(0.5f, 10f, true)]
+    public Vector2 SpeedRange = new(1.5f, 3f);
 
     [Tooltip("Скорость сглаживания поворота визуала. Чем выше, тем быстрее рыбка 'клюет носом'.")]
     public float SteerSpeed = 3f;
@@ -27,7 +27,6 @@ public class FishConfig : ScriptableObject
     [Title("Boids (Стая)")]
     [Tooltip("Радиус 'обзора', в котором рыба замечает соседей для взаимодействия.")]
     public float NeighborRadius = 2f;
-
     [Tooltip("Дистанция личного пространства. Если сосед ближе, рыба начнет от него отплывать.")]
     public float SeparationRadius = 0.75f;
 
