@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e14952f7c49e8540901179b57a4ac55, type: 3}
   m_Name: FishConfig
   m_EditorClassIdentifier: 
-  SpeedRange: {x: 1, y: 1.7}
+  SpeedRange: {x: 1, y: 1.4}
   SteerSpeed: 10
   MaxTiltAngle: 30
   EdgeMargin: 0.2
@@ -34,5 +34,5 @@ MonoBehaviour:
   BreedCooldownSeconds: 12
   IncomeCoins: 3
   IncomeCooldownSeconds: 5
-  FoodWeight: 20
-  FoodSearchRadius: 5
+  FoodWeight: 25
+  FoodSearchRadius: 6

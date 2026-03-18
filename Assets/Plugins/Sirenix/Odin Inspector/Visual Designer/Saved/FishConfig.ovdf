@@ -1,0 +1,54 @@
+OVDF v1.1
+FishConfig, Assembly-CSharp
+MetaGuid:1e14952f7c49e8540901179b57a4ac55
+
+# $98omASTL4uJmg99sva1JG
+Position: $root:0
++ [Sirenix.OdinInspector.BoxGroupAttribute]
+	GroupName = "Передвижение"
+	HideWhenChildrenAreInvisible = False
+	AnimateVisibility = False
+	VisibleIf = ""
+	LabelText = "Передвижение"
+
+# SpeedRange
+Position: $98omASTL4uJmg99sva1JG:0
+
+# SteerSpeed
+Position: $98omASTL4uJmg99sva1JG:1
+
+# MaxTiltAngle
+Position: $98omASTL4uJmg99sva1JG:2
+
+# EdgeMargin
+Position: $98omASTL4uJmg99sva1JG:3
+
+# EdgeSlowdownFactor
+Position: $98omASTL4uJmg99sva1JG:4
+
+# BoundsWeight
+Position: $98omASTL4uJmg99sva1JG:5
+
+# NeighborRadius
+Position: $98omASTL4uJmg99sva1JG:6
+
+# SeparationRadius
+Position: $98omASTL4uJmg99sva1JG:7
+
+# AlignmentWeight
+Position: $98omASTL4uJmg99sva1JG:8
+
+# CohesionWeight
+Position: $98omASTL4uJmg99sva1JG:9
+
+# SeparationWeight
+Position: $98omASTL4uJmg99sva1JG:10
+
+# WanderWeight
+Position: $98omASTL4uJmg99sva1JG:11
+
+# FoodWeight
+Position: $98omASTL4uJmg99sva1JG:12
+
+# FoodSearchRadius
+Position: $98omASTL4uJmg99sva1JG:13
