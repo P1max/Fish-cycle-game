@@ -41,4 +41,40 @@ public class FishConfig : ScriptableObject
 
     [Tooltip("Сила случайного 'блуждания'. Добавляет хаоса в движение, чтобы рыбы не плыли по линейке.")]
     public float WanderWeight = 1f;
+
+    // ==========================================
+
+    [Title("Экономика и Жизненный цикл")]
+    [Tooltip("Уникальный идентификатор рыбки для JSON.")]
+    public string Id = "goldfish_basic";
+
+    [Tooltip("Тип рыбки (используется для подбора правильного спрайта).")]
+    public string Type = "goldfish";
+
+    [Tooltip("Цена покупки в конвейере.")]
+    public int Price = 100;
+
+    [Tooltip("Модификатор размера (мин и макс). При спавне базовый размер умножится на это значение.")]
+    [MinMaxSlider(0.5f, 3f, true)]
+    public Vector2 SizeModifier = new(0.9f, 1.1f);
+
+    [Tooltip("Время жизни рыбки в секундах до естественной смерти.")]
+    public float LifetimeSeconds = 45f;
+
+    [Tooltip("Скорость роста голода (% в секунду).")]
+    public float HungerGrowthPercentPerSecond = 10f;
+
+    [Title("Размножение")]
+    [Tooltip("Шанс на успешное размножение при встрече двух готовых рыб (в %).")]
+    public float BreedChancePercent = 10f;
+
+    [Tooltip("Время в секундах между попытками размножиться.")]
+    public float BreedCooldownSeconds = 12f;
+
+    [Title("Доход")]
+    [Tooltip("Количество монет, которое рыбка производит за один цикл.")]
+    public int IncomeCoins = 3;
+
+    [Tooltip("Время в секундах между генерацией монет.")]
+    public float IncomeCooldownSeconds = 5f;
 }

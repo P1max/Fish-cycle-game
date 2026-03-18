@@ -6,25 +6,27 @@ namespace Spawners
 {
     public class FishPool : MonoBehaviour
     {
-        private Dictionary<Collider2D, FishBoid> _fishesCache;
-        private LinkedList<FishBoid> _activeFishes;
-        private LinkedList<FishBoid> _freeFishes;
-        private FishBoid _fishPrefab;
+        [SerializeField] private FishConfig _defaultConfig;
+        
+        private Dictionary<Collider2D, FishEntity> _fishesCache;
+        private LinkedList<FishEntity> _activeFishes;
+        private LinkedList<FishEntity> _freeFishes;
+        private FishEntity _fishPrefab;
 
-        public FishBoid[] GetActiveFishes() => _activeFishes.ToArray();
+        public FishEntity[] GetActiveFishes() => _activeFishes.ToArray();
 
         private void Awake()
         {
-            _fishPrefab = Resources.Load<FishBoid>("Prefabs/Fish");
+            _fishPrefab = Resources.Load<FishEntity>("Prefabs/Fish");
 
-            _activeFishes = new LinkedList<FishBoid>();
-            _freeFishes = new LinkedList<FishBoid>();
-            _fishesCache = new Dictionary<Collider2D, FishBoid>();
+            _activeFishes = new LinkedList<FishEntity>();
+            _freeFishes = new LinkedList<FishEntity>();
+            _fishesCache = new Dictionary<Collider2D, FishEntity>();
         }
 
-        public FishBoid GetFish()
+        public FishEntity GetFish()
         {
-            FishBoid fish;
+            FishEntity fish;
 
             if (_freeFishes.Count > 0)
             {
@@ -35,7 +37,7 @@ namespace Spawners
             {
                 fish = Instantiate(_fishPrefab, transform, true);
 
-                fish.Init(_fishesCache);
+                fish.Init(_defaultConfig, _fishesCache);
 
                 var col = fish.GetComponent<Collider2D>();
                 
@@ -48,7 +50,7 @@ namespace Spawners
             return fish;
         }
 
-        public void ReturnFish(FishBoid fish)
+        public void ReturnFish(FishEntity fish)
         {
             fish.gameObject.SetActive(false);
 

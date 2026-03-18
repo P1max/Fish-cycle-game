@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 733200126954648963}
   - component: {fileID: 4868188711055108360}
   - component: {fileID: 5036764537888014412}
+  - component: {fileID: 8076199011676212012}
   - component: {fileID: 7596189904925988958}
   m_Layer: 0
   m_Name: Fish
@@ -98,6 +99,18 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: -0.05, y: -0.05}
   m_Radius: 0.46
+--- !u!114 &8076199011676212012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4683415358838884875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e302014057844c498e45326040e54d28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7596189904925988958
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,7 +123,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ebf1b4d7f28413f953f813018775585, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _config: {fileID: 11400000, guid: 66e8764f2f6ae2e41a934bdc13d6369f, type: 2}
   _visualTransform: {fileID: 7191732062506056212}
 --- !u!1 &8710112853801457606
 GameObject:
@@ -139,7 +151,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 733200126954648963}
