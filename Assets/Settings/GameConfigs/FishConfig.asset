@@ -24,3 +24,15 @@ MonoBehaviour:
   CohesionWeight: 1
   SeparationWeight: 10
   WanderWeight: 10
+  Id: goldfish_basic
+  Type: goldfish
+  Price: 100
+  SizeModifier: {x: 0.9, y: 1.1}
+  LifetimeSeconds: 45
+  HungerGrowthPercentPerSecond: 4
+  BreedChancePercent: 10
+  BreedCooldownSeconds: 12
+  IncomeCoins: 3
+  IncomeCooldownSeconds: 5
+  FoodWeight: 20
+  FoodSearchRadius: 5

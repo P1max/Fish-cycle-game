@@ -3,7 +3,7 @@ using UnityEngine;
 public class FishHunger
 {
     private readonly FishEntity _fish;
-    
+
     public float CurrentHungerPercent { get; private set; }
 
     public FishHunger(FishEntity fish)
@@ -11,7 +11,7 @@ public class FishHunger
         _fish = fish;
         CurrentHungerPercent = 0f;
     }
-    
+
     public void Feed(float nutritionValue)
     {
         CurrentHungerPercent -= nutritionValue;
@@ -25,6 +25,8 @@ public class FishHunger
         CurrentHungerPercent += _fish.Config.HungerGrowthPercentPerSecond * deltaTime;
 
         CurrentHungerPercent = Mathf.Clamp(CurrentHungerPercent, 0f, 100f);
+
+        if (CurrentHungerPercent > 70f) Debug.Log($"Рыбка голодна");
 
         if (CurrentHungerPercent >= 100f)
         {

@@ -39,11 +39,10 @@ public class FishConfig : ScriptableObject
     [Tooltip("Приоритет сохранения дистанции. Обычно это самый высокий вес, чтобы рыбы не слипались.")]
     public float SeparationWeight = 2f;
 
+    [Title("Своё мнение")]
     [Tooltip("Сила случайного 'блуждания'. Добавляет хаоса в движение, чтобы рыбы не плыли по линейке.")]
     public float WanderWeight = 1f;
-
-    // ==========================================
-
+    
     [Title("Экономика и Жизненный цикл")]
     [Tooltip("Уникальный идентификатор рыбки для JSON.")]
     public string Id = "goldfish_basic";
@@ -62,7 +61,7 @@ public class FishConfig : ScriptableObject
     public float LifetimeSeconds = 45f;
 
     [Tooltip("Скорость роста голода (% в секунду).")]
-    public float HungerGrowthPercentPerSecond = 10f;
+    public float HungerGrowthPercentPerSecond = 20f;
 
     [Title("Размножение")]
     [Tooltip("Шанс на успешное размножение при встрече двух готовых рыб (в %).")]
@@ -77,4 +76,11 @@ public class FishConfig : ScriptableObject
 
     [Tooltip("Время в секундах между генерацией монет.")]
     public float IncomeCooldownSeconds = 5f;
+
+    [Title("Еда")]
+    [Tooltip("Вес притяжения к еде")]
+    public float FoodWeight = 5f;
+
+    [Tooltip("Радиус, в котором рыба замечает еду")]
+    public float FoodSearchRadius = 4f;
 }

@@ -11,6 +11,8 @@ namespace Core.Feed
         private bool _isConsumed;
 
         public float NutritionValue { get; private set; }
+        
+        public bool IsConsumed => _isConsumed;
 
         private void OnTriggerEnter2D(Collider2D col)
         {
@@ -23,6 +25,7 @@ namespace Core.Feed
         {
             _isConsumed = true;
 
+            Debug.Log($"Скушана");
             fish.Hunger.Feed(NutritionValue);
 
             transform.DOScale(Vector3.zero, 0.2f).OnComplete(ReturnToPool);
@@ -43,24 +46,19 @@ namespace Core.Feed
 
             transform.localScale = Vector3.zero;
 
-            // Создаем секвенцию для сложной анимации
             var sequence = DOTween.Sequence();
 
-            // Задержка перед появлением
             sequence.SetDelay(delay);
-
-            // 1. Появление с нулевого размера
             sequence.Append(transform.DOScale(Vector3.one, 0.4f).SetEase(Ease.OutBack));
 
-            // Одновременно с появлением делаем быстрый "плюх" в воду (теряем первоначальную скорость)
-            float waterHitY = startPosition.y - 1.2f;
+            var waterHitY = startPosition.y - 1.2f;
+            
             sequence.Join(transform.DOMoveY(waterHitY, 0.6f).SetEase(Ease.OutCubic));
 
-            // 2. Медленное, равномерное погружение на дно
             var fallDuration = Random.Range(6f, 9f);
+            
             sequence.Append(transform.DOMoveY(targetBottomY, fallDuration).SetEase(Ease.Linear));
 
-            // Что делаем в конце
             sequence.OnComplete(() =>
             {
                 if (!_isConsumed) ReturnToPool();

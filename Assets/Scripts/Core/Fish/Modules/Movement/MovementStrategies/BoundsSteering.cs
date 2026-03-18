@@ -10,18 +10,18 @@ public class BoundsSteering : ISteeringBehavior
         _camera = camera;
     }
 
-    public Vector2 CalculateSteering(FishMovement fish)
+    public Vector2 CalculateSteering(FishEntity fish)
     {
         var viewportPos = _camera.WorldToViewportPoint(fish.transform.position);
         var boundsSteer = Vector2.zero;
 
-        fish.IsNearEdge = false;
+        fish.Movement.IsNearEdge = false;
 
-        if (viewportPos.x < fish.Config.EdgeMargin) { boundsSteer.x = 1f; fish.IsNearEdge = true; }
-        else if (viewportPos.x > 1f - fish.Config.EdgeMargin) { boundsSteer.x = -1f; fish.IsNearEdge = true; }
+        if (viewportPos.x < fish.Config.EdgeMargin) { boundsSteer.x = 1f; fish.Movement.IsNearEdge = true; }
+        else if (viewportPos.x > 1f - fish.Config.EdgeMargin) { boundsSteer.x = -1f; fish.Movement.IsNearEdge = true; }
 
-        if (viewportPos.y < fish.Config.EdgeMargin) { boundsSteer.y = 1f; fish.IsNearEdge = true; }
-        else if (viewportPos.y > 1f - fish.Config.EdgeMargin) { boundsSteer.y = -1f; fish.IsNearEdge = true; }
+        if (viewportPos.y < fish.Config.EdgeMargin) { boundsSteer.y = 1f; fish.Movement.IsNearEdge = true; }
+        else if (viewportPos.y > 1f - fish.Config.EdgeMargin) { boundsSteer.y = -1f; fish.Movement.IsNearEdge = true; }
 
         return boundsSteer.normalized * fish.Config.BoundsWeight;
     }

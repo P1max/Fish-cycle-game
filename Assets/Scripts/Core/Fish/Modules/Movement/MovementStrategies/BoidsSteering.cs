@@ -12,7 +12,7 @@ public class BoidsSteering : ISteeringBehavior
         _filter = new ContactFilter2D().NoFilter();
     }
 
-    public Vector2 CalculateSteering(FishMovement fish)
+    public Vector2 CalculateSteering(FishEntity fish)
     {
         var alignment = Vector2.zero;
         var cohesion = Vector2.zero;
@@ -26,7 +26,7 @@ public class BoidsSteering : ISteeringBehavior
             var col = _overlapResults[i];
 
             if (col.gameObject == fish.gameObject) continue;
-            if (!fish.FishesCache.TryGetValue(col, out var otherFish)) continue;
+            if (!fish.Movement.FishesCache.TryGetValue(col, out var otherFish)) continue;
 
             neighborCount++;
             alignment += otherFish.Movement.Velocity;

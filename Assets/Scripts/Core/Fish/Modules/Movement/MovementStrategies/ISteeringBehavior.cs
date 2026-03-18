@@ -4,6 +4,6 @@ namespace Core.Fish.BoidStrategies
 {
     public interface ISteeringBehavior
     {
-        Vector2 CalculateSteering(FishMovement fish);
+        Vector2 CalculateSteering(FishEntity fish);
     }
 }

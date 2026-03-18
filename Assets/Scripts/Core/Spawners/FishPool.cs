@@ -1,12 +1,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Zenject;
 
 namespace Spawners
 {
     public class FishPool : MonoBehaviour
     {
         [SerializeField] private FishConfig _defaultConfig;
+        
+        [Inject] private FoodPool _foodPool;
         
         private Dictionary<Collider2D, FishEntity> _fishesCache;
         private LinkedList<FishEntity> _activeFishes;
@@ -37,7 +40,7 @@ namespace Spawners
             {
                 fish = Instantiate(_fishPrefab, transform, true);
 
-                fish.Init(_defaultConfig, _fishesCache);
+                fish.Init(_defaultConfig, _fishesCache, _foodPool);
 
                 var col = fish.GetComponent<Collider2D>();
                 
