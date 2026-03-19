@@ -17,7 +17,7 @@ namespace Core.Feed
         {
             if (_isConsumed) return;
 
-            if (col.TryGetComponent<FishEntity>(out var fish)) Consume(fish);
+            if (col.TryGetComponent<FishEntity>(out var fish) && fish.IsAlive) Consume(fish);
         }
 
         private void Consume(FishEntity fish)

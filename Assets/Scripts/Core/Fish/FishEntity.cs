@@ -8,7 +8,9 @@ public class FishEntity : MonoBehaviour
     [SerializeField] private Transform _visualTransform;
     [SerializeField] private SpriteRenderer _spriteRenderer;
 
-    private bool _isActive;
+    private bool _isAlive;
+    
+    public bool IsAlive => _isAlive;
 
     public FishConfig Config { get; private set; }
     public FishMovement Movement { get; private set; }
@@ -19,7 +21,7 @@ public class FishEntity : MonoBehaviour
 
     private void Update()
     {
-        if (!_isActive) return;
+        if (!_isAlive) return;
 
         var delta = Time.deltaTime;
 
@@ -30,14 +32,14 @@ public class FishEntity : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!_isActive) return;
+        if (!_isAlive) return;
 
         Movement.Tick();
     }
 
     public void Die()
     {
-        _isActive = false;
+        _isAlive = false;
         Movement.Stop();
         FishVisual.SetDeadVisuals();
 
@@ -71,6 +73,6 @@ public class FishEntity : MonoBehaviour
         Movement = new FishMovement(this, fishesCache, foodPool, GetComponent<Rigidbody2D>());
         FishVisual = new FishVisual(this, _visualTransform, _spriteRenderer);
 
-        _isActive = true;
+        _isAlive = true;
     }
 }
