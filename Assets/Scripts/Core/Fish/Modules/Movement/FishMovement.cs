@@ -22,10 +22,6 @@ public class FishMovement
         FishesCache = fishesCache;
         _rigidbody = rigidbody;
 
-        var initialSpeed = Random.Range(_fishEntity.Config.SpeedRange.x, _fishEntity.Config.SpeedRange.y);
-
-        _velocity = Random.insideUnitCircle.normalized * initialSpeed;
-
         _behaviors = new ISteeringBehavior[]
         {
             new WanderSteering(),

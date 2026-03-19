@@ -1,0 +1,127 @@
+{
+  "aquarium": {
+    "startCoins": 300,
+    "startFishCount": 0,
+    "maxFishCount": 10
+  },
+  "feeder": {
+    "cooldownSeconds": 8.0,
+    "totalHungerRestorePerUse": 45.0,
+    "foodPiecesCount": {
+      "x": 3,
+      "y": 6
+    }
+  },
+  "store": {
+    "conveyerSpeed": 1.0,
+    "freeFishQuality": 0.5,
+    "defaultFishQuality": 1.0,
+    "defaultQualityCoinsRange": {
+      "x": 100,
+      "y": 500
+    },
+    "upgradeFishQualityRange": {
+      "x": 2.0,
+      "y": 8.0
+    },
+    "upgradeQualityCoinsRange": {
+      "x": 500,
+      "y": 5000
+    }
+  },
+  "fishConfigs": [
+    {
+      "id": "goldfish_basic",
+      "type": "goldfish",
+      "price": 100,
+      "sizeModifier": {
+        "x": 0.9,
+        "y": 1.0
+      },
+      "lifetimeSeconds": 45.0,
+      "hungerGrowthPercentPerSecond": 5.0,
+      "breedChancePercent": 10.0,
+      "breedCooldownSeconds": 12.0,
+      "incomeCoins": 3,
+      "incomeCooldownSeconds": 5.0,
+      "speedRange": {
+        "x": 1.0,
+        "y": 1.2
+      },
+      "steerSpeed": 7.0,
+      "maxTiltAngle": 20.0,
+      "edgeMargin": 0.2,
+      "boundsWeight": 18.0,
+      "neighborRadius": 3.0,
+      "separationRadius": 3.0,
+      "alignmentWeight": 5.0,
+      "cohesionWeight": 2.0,
+      "separationWeight": 9.0,
+      "wanderWeight": 13.0,
+      "foodWeight": 50.0,
+      "foodSearchRadius": 6.0
+    },
+    {
+      "id": "bluefish_fat",
+      "type": "bluefish",
+      "price": 300,
+      "sizeModifier": {
+        "x": 1.1,
+        "y": 1.2
+      },
+      "lifetimeSeconds": 30.0,
+      "hungerGrowthPercentPerSecond": 10.0,
+      "breedChancePercent": 8.0,
+      "breedCooldownSeconds": 10.0,
+      "incomeCoins": 8,
+      "incomeCooldownSeconds": 6.0,
+      "speedRange": {
+        "x": 0.7,
+        "y": 0.8
+      },
+      "steerSpeed": 7.0,
+      "maxTiltAngle": 20.0,
+      "edgeMargin": 0.2,
+      "boundsWeight": 18.0,
+      "neighborRadius": 3.0,
+      "separationRadius": 3.0,
+      "alignmentWeight": 5.0,
+      "cohesionWeight": 2.0,
+      "separationWeight": 9.0,
+      "wanderWeight": 13.0,
+      "foodWeight": 50.0,
+      "foodSearchRadius": 6.0
+    },
+    {
+      "id": "pinkfish_fit",
+      "type": "pinkfish",
+      "price": 250,
+      "sizeModifier": {
+        "x": 0.7,
+        "y": 0.8
+      },
+      "lifetimeSeconds": 60.0,
+      "hungerGrowthPercentPerSecond": 30.0,
+      "breedChancePercent": 15.0,
+      "breedCooldownSeconds": 16.0,
+      "incomeCoins": 6,
+      "incomeCooldownSeconds": 6.0,
+      "speedRange": {
+        "x": 1.2,
+        "y": 1.4
+      },
+      "steerSpeed": 7.0,
+      "maxTiltAngle": 20.0,
+      "edgeMargin": 0.2,
+      "boundsWeight": 18.0,
+      "neighborRadius": 3.0,
+      "separationRadius": 3.0,
+      "alignmentWeight": 5.0,
+      "cohesionWeight": 2.0,
+      "separationWeight": 9.0,
+      "wanderWeight": 13.0,
+      "foodWeight": 50.0,
+      "foodSearchRadius": 6.0
+    }
+  ]
+}

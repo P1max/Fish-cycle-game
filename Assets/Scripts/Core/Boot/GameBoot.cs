@@ -10,9 +10,9 @@ namespace Core.Boot
 
         private void Start()
         {
-            _fishPool.GetFish();
-            _fishPool.GetFish();
-            _fishPool.GetFish();
+            _fishPool.GetFish("goldfish_basic");
+            _fishPool.GetFish("pinkfish_fit");
+            _fishPool.GetFish("bluefish_fat");
         }
     }
 }

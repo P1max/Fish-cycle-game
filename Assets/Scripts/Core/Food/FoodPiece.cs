@@ -9,9 +9,8 @@ namespace Core.Feed
     {
         private FoodPool _pool;
         private bool _isConsumed;
+        private float _nutritionValue;
 
-        public float NutritionValue { get; private set; }
-        
         public bool IsConsumed => _isConsumed;
 
         private void OnTriggerEnter2D(Collider2D col)
@@ -25,8 +24,7 @@ namespace Core.Feed
         {
             _isConsumed = true;
 
-            Debug.Log($"Скушана");
-            fish.Hunger.Feed(NutritionValue);
+            fish.Hunger.Feed(_nutritionValue);
 
             transform.DOScale(Vector3.zero, 0.2f).OnComplete(ReturnToPool);
         }
@@ -42,7 +40,7 @@ namespace Core.Feed
         {
             _isConsumed = false;
             transform.position = startPosition;
-            NutritionValue = nutritionValue;
+            _nutritionValue = nutritionValue;
 
             transform.localScale = Vector3.zero;
 
@@ -52,11 +50,11 @@ namespace Core.Feed
             sequence.Append(transform.DOScale(Vector3.one, 0.4f).SetEase(Ease.OutBack));
 
             var waterHitY = startPosition.y - 1.2f;
-            
+
             sequence.Join(transform.DOMoveY(waterHitY, 0.6f).SetEase(Ease.OutCubic));
 
             var fallDuration = Random.Range(6f, 9f);
-            
+
             sequence.Append(transform.DOMoveY(targetBottomY, fallDuration).SetEase(Ease.Linear));
 
             sequence.OnComplete(() =>

@@ -111,6 +111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _visualTransform: {fileID: 7191732062506056212}
+  _spriteRenderer: {fileID: 1185555120012837122}
 --- !u!1 &8710112853801457606
 GameObject:
   m_ObjectHideFlags: 0

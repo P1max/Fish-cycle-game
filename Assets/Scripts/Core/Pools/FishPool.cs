@@ -7,10 +7,9 @@ namespace Spawners
 {
     public class FishPool : MonoBehaviour
     {
-        [SerializeField] private FishConfig _defaultConfig;
-        
         [Inject] private FoodPool _foodPool;
-        
+        [Inject] private Dictionary<string, FishConfig> _fishConfigs;
+
         private Dictionary<Collider2D, FishEntity> _fishesCache;
         private LinkedList<FishEntity> _activeFishes;
         private LinkedList<FishEntity> _freeFishes;
@@ -27,8 +26,17 @@ namespace Spawners
             _fishesCache = new Dictionary<Collider2D, FishEntity>();
         }
 
-        public FishEntity GetFish()
+        public FishEntity GetFish(string fishId)
         {
+            var targetConfig = _fishConfigs[fishId];
+
+            if (targetConfig == null)
+            {
+                Debug.LogError($"Пул не нашел конфиг рыбы с ID: {fishId}");
+
+                return null;
+            }
+
             FishEntity fish;
 
             if (_freeFishes.Count > 0)
@@ -40,12 +48,14 @@ namespace Spawners
             {
                 fish = Instantiate(_fishPrefab, transform, true);
 
-                fish.Init(_defaultConfig, _fishesCache, _foodPool);
+                fish.Init(_fishesCache, _foodPool);
 
                 var col = fish.GetComponent<Collider2D>();
-                
+
                 _fishesCache.Add(col, fish);
             }
+
+            fish.SetConfig(targetConfig);
 
             fish.gameObject.SetActive(true);
             _activeFishes.AddLast(fish);

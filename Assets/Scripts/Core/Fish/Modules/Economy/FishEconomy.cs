@@ -3,7 +3,7 @@ using UnityEngine;
 public class FishEconomy
 {
     private readonly FishEntity _fish;
-    
+
     private float _coinTimer;
 
     public FishEconomy(FishEntity fish)
@@ -15,6 +15,11 @@ public class FishEconomy
     private void SpawnCoin()
     {
         Debug.Log($"Рыбка принесла {_fish.Config.IncomeCoins} монет");
+    }
+
+    public void Reset()
+    {
+        _coinTimer = 0f;
     }
 
     public void Tick(float deltaTime)

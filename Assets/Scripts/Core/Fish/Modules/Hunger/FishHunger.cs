@@ -12,6 +12,11 @@ public class FishHunger
         CurrentHungerPercent = 0f;
     }
 
+    public void Reset()
+    {
+        CurrentHungerPercent = 0f;
+    }
+
     public void Feed(float nutritionValue)
     {
         CurrentHungerPercent -= nutritionValue;
@@ -25,8 +30,6 @@ public class FishHunger
         CurrentHungerPercent += _fish.Config.HungerGrowthPercentPerSecond * deltaTime;
 
         CurrentHungerPercent = Mathf.Clamp(CurrentHungerPercent, 0f, 100f);
-
-        if (CurrentHungerPercent > 70f) Debug.Log($"Рыбка голодна");
 
         if (CurrentHungerPercent >= 100f)
         {

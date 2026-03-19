@@ -8,22 +8,19 @@ namespace Core.Feed
     public class FeedManager : ITickable
     {
         private readonly FoodPool _foodPool;
+        private readonly FeederConfig _config;
 
         private bool _isReady;
-        private float _timer;
         private float _currentTime;
-        private float _totalNutritionPerUse;
 
         public event Action<float> _normalizedTime;
 
         public bool IsReady => _isReady;
 
-        public FeedManager(FoodPool foodPool)
+        public FeedManager(FoodPool foodPool, FeederConfig config)
         {
             _foodPool = foodPool;
-
-            _timer = 8f;
-            _totalNutritionPerUse = 45f;
+            _config = config;
 
             Reset();
         }
@@ -33,10 +30,11 @@ namespace Core.Feed
             if (!_isReady) return;
 
             var cam = Camera.main;
+
             if (cam == null) return;
 
-            var foodAmount = UnityEngine.Random.Range(3, 7);
-            var nutritionPerPiece = _totalNutritionPerUse / foodAmount; 
+            var foodAmount = UnityEngine.Random.Range(_config.FoodPiecesCount.x, _config.FoodPiecesCount.y + 1);
+            var nutritionPerPiece = _config.TotalHungerRestorePerUse / foodAmount;
 
             var topLeft = cam.ViewportToWorldPoint(new Vector3(0, 1, 0));
             var bottomRight = cam.ViewportToWorldPoint(new Vector3(1, 0, 0));
@@ -48,7 +46,7 @@ namespace Core.Feed
                 var randomX = UnityEngine.Random.Range(topLeft.x + 0.5f, bottomRight.x - 0.5f);
                 var startY = topLeft.y + 0.2f;
                 var targetY = bottomRight.y - 0.5f;
-                var delay = (i == 0) ? 0f : UnityEngine.Random.Range(0.1f, 1.2f);
+                var delay = (i == 0) ? 0f : UnityEngine.Random.Range(0.4f, 1.2f);
 
                 food.Spawn(new Vector2(randomX, startY), targetY, nutritionPerPiece, delay);
             }
@@ -70,9 +68,9 @@ namespace Core.Feed
 
             _currentTime += Time.deltaTime;
 
-            _normalizedTime?.Invoke(Mathf.Clamp(_currentTime / _timer, 0, 1));
+            _normalizedTime?.Invoke(Mathf.Clamp(_currentTime / _config.CooldownSeconds, 0, 1));
 
-            if (_currentTime >= _timer) _isReady = true;
+            if (_currentTime >= _config.CooldownSeconds) _isReady = true;
         }
     }
 }

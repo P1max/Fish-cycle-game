@@ -1,5 +1,4 @@
 using UnityEngine;
-using System;
 using System.Collections.Generic;
 using Core.Fish.Modules.Visual;
 using Spawners;
@@ -7,10 +6,9 @@ using Spawners;
 public class FishEntity : MonoBehaviour
 {
     [SerializeField] private Transform _visualTransform;
+    [SerializeField] private SpriteRenderer _spriteRenderer;
 
     private bool _isActive;
-
-    public event Action<FishEntity> OnDeath;
 
     public FishConfig Config { get; private set; }
     public FishMovement Movement { get; private set; }
@@ -18,7 +16,7 @@ public class FishEntity : MonoBehaviour
     public FishEconomy Economy { get; private set; }
     public FishLifeCycle LifeCycle { get; private set; }
     public FishVisual FishVisual { get; private set; }
-    
+
     private void Update()
     {
         if (!_isActive) return;
@@ -41,22 +39,37 @@ public class FishEntity : MonoBehaviour
     {
         _isActive = false;
         Movement.Stop();
-        OnDeath?.Invoke(this);
+        FishVisual.SetDeadVisuals();
 
         Debug.Log($"Рыбка умерла");
     }
 
-    public void Init(FishConfig config, IReadOnlyDictionary<Collider2D, FishEntity> fishesCache, FoodPool foodPool)
+    public void SetConfig(FishConfig config)
     {
         Config = config;
 
-        if (!Config) Debug.LogWarning("Рыбе не назначен конфиг.");
+        if (!Config) Debug.LogWarning("Конфиг рыбы пуст.");
+        else
+        {
+            Hunger.Reset();
+            Economy.Reset();
+            LifeCycle.Reset();
+            FishVisual.ResetVisuals();
+            FishVisual.SetSprite(config.Sprite);
 
+            var randomSize = Random.Range(config.SizeModifier.x, config.SizeModifier.y);
+
+            transform.localScale = new Vector3(randomSize, randomSize, 1f);
+        }
+    }
+
+    public void Init(IReadOnlyDictionary<Collider2D, FishEntity> fishesCache, FoodPool foodPool)
+    {
         Hunger = new FishHunger(this);
         Economy = new FishEconomy(this);
         LifeCycle = new FishLifeCycle(this);
         Movement = new FishMovement(this, fishesCache, foodPool, GetComponent<Rigidbody2D>());
-        FishVisual = new FishVisual(this, _visualTransform);
+        FishVisual = new FishVisual(this, _visualTransform, _spriteRenderer);
 
         _isActive = true;
     }

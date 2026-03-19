@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 namespace Core.Fish.Modules.Visual
@@ -6,6 +7,39 @@ namespace Core.Fish.Modules.Visual
     {
         private readonly FishEntity _fishEntity;
         private readonly Transform _visualTransform;
+        private readonly SpriteRenderer _spriteRenderer;
+
+        private Sequence _sequence;
+
+        public FishVisual(FishEntity fishEntity, Transform visualTransform, SpriteRenderer spriteRenderer)
+        {
+            _fishEntity = fishEntity;
+            _visualTransform = visualTransform;
+            _spriteRenderer = spriteRenderer;
+        }
+
+        public void SetDeadVisuals()
+        {
+            _sequence = DOTween.Sequence()
+                .Append(_visualTransform.DORotate(new Vector3(0, 0, 180f), 1.5f))
+                .Join(_spriteRenderer.DOColor(Color.gray, 1.5f));
+
+            _sequence.Play();
+        }
+
+        public void ResetVisuals()
+        {
+            _sequence?.Kill();
+            _sequence = null;
+
+            _visualTransform.localRotation = Quaternion.identity;
+            _spriteRenderer.color = Color.white;
+        }
+
+        public void SetSprite(Sprite sprite)
+        {
+            _spriteRenderer.sprite = sprite;
+        }
 
         public void UpdateVisuals()
         {
@@ -29,12 +63,6 @@ namespace Core.Fish.Modules.Visual
                 targetRotation,
                 _fishEntity.Config.SteerSpeed * Time.fixedDeltaTime
             );
-        }
-
-        public FishVisual (FishEntity fishEntity, Transform visualTransform)
-        {
-            _fishEntity = fishEntity;
-            _visualTransform = visualTransform;
         }
     }
 }

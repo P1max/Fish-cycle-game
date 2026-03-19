@@ -9,6 +9,11 @@ public class FishLifeCycle
         _fish = fish;
     }
 
+    public void Reset()
+    {
+        _lifeTimer = 0f;
+    }
+
     public void Tick(float deltaTime)
     {
         _lifeTimer += deltaTime;
