@@ -17,19 +17,19 @@ MonoBehaviour:
   SteerSpeed: 7
   MaxTiltAngle: 20
   EdgeMargin: 0.2
-  BoundsWeight: 18
+  BoundsWeight: 23
   NeighborRadius: 3
   SeparationRadius: 3
   AlignmentWeight: 5
   CohesionWeight: 2
-  SeparationWeight: 9
+  SeparationWeight: 12.5
   WanderWeight: 13
   Sprite: {fileID: 223742739620255397, guid: 2614568ab893bcd44aacff75891ebbcd, type: 3}
   Type: goldfish
   Price: 100
   SizeModifier: {x: 0.9, y: 1}
-  LifetimeSeconds: 120
-  HungerGrowthPercentPerSecond: 1
+  LifetimeSeconds: 45
+  HungerGrowthPercentPerSecond: 5
   BreedChancePercent: 10
   BreedCooldownSeconds: 12
   IncomeCoins: 3

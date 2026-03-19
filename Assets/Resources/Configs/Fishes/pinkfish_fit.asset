@@ -13,26 +13,26 @@ MonoBehaviour:
   m_Name: pinkfish_fit
   m_EditorClassIdentifier: 
   Id: pinkfish_fit
-  SpeedRange: {x: 1.3, y: 1.5}
+  SpeedRange: {x: 1.2, y: 1.4}
   SteerSpeed: 7
   MaxTiltAngle: 20
   EdgeMargin: 0.2
-  BoundsWeight: 18
+  BoundsWeight: 23
   NeighborRadius: 3
   SeparationRadius: 3
   AlignmentWeight: 5
   CohesionWeight: 2
-  SeparationWeight: 9
+  SeparationWeight: 12.5
   WanderWeight: 13
   Sprite: {fileID: -6109183866432475690, guid: b37b99657144e8e43b2ffc484d2bc392, type: 3}
   Type: pinkfish
-  Price: 100
+  Price: 250
   SizeModifier: {x: 0.7, y: 0.8}
-  LifetimeSeconds: 120
-  HungerGrowthPercentPerSecond: 1
-  BreedChancePercent: 10
-  BreedCooldownSeconds: 12
-  IncomeCoins: 3
-  IncomeCooldownSeconds: 5
+  LifetimeSeconds: 60
+  HungerGrowthPercentPerSecond: 4
+  BreedChancePercent: 15
+  BreedCooldownSeconds: 16
+  IncomeCoins: 6
+  IncomeCooldownSeconds: 6
   FoodWeight: 50
   FoodSearchRadius: 6
