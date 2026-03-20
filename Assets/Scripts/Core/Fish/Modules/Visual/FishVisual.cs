@@ -1,3 +1,4 @@
+using System;
 using DG.Tweening;
 using UnityEngine;
 
@@ -27,12 +28,26 @@ namespace Core.Fish.Modules.Visual
             _sequence.Play();
         }
 
+        public void PlayCollectAnimation(Action onComplete)
+        {
+            _sequence?.Complete();
+            _sequence?.Kill();
+
+            _sequence = DOTween.Sequence()
+                .Append(_visualTransform.DOLocalMoveY(_visualTransform.localPosition.y + 1f, 0.5f))
+                .Join(_spriteRenderer.DOFade(0f, 0.5f))
+                .OnComplete(() => onComplete?.Invoke());
+
+            _sequence.Play();
+        }
+
         public void ResetVisuals()
         {
             _sequence?.Kill();
             _sequence = null;
 
             _visualTransform.localRotation = Quaternion.identity;
+            _visualTransform.localPosition = Vector3.zero;
             _spriteRenderer.color = Color.white;
         }
 

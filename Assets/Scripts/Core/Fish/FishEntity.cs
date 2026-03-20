@@ -1,7 +1,9 @@
+using System;
 using UnityEngine;
 using System.Collections.Generic;
 using Core.Fish.Modules.Visual;
 using Spawners;
+using Random = UnityEngine.Random;
 
 public class FishEntity : MonoBehaviour
 {
@@ -9,7 +11,10 @@ public class FishEntity : MonoBehaviour
     [SerializeField] private SpriteRenderer _spriteRenderer;
 
     private bool _isAlive;
-    
+    private Collider2D _collider;
+
+    public event Action<FishEntity> OnReadyToPool;
+
     public bool IsAlive => _isAlive;
 
     public FishConfig Config { get; private set; }
@@ -46,6 +51,15 @@ public class FishEntity : MonoBehaviour
         Debug.Log($"Рыбка умерла");
     }
 
+    public void Collect()
+    {
+        if (_isAlive) return;
+
+        _collider.enabled = false;
+
+        FishVisual.PlayCollectAnimation(() => OnReadyToPool?.Invoke(this));
+    }
+
     public void SetConfig(FishConfig config)
     {
         Config = config;
@@ -53,6 +67,8 @@ public class FishEntity : MonoBehaviour
         if (!Config) Debug.LogWarning("Конфиг рыбы пуст.");
         else
         {
+            _collider.enabled = true;
+
             Hunger.Reset();
             Economy.Reset();
             LifeCycle.Reset();
@@ -65,8 +81,10 @@ public class FishEntity : MonoBehaviour
         }
     }
 
-    public void Init(IReadOnlyDictionary<Collider2D, FishEntity> fishesCache, FoodPool foodPool)
+    public void Init(IReadOnlyDictionary<Collider2D, FishEntity> fishesCache, FoodPool foodPool, Collider2D thisCollider)
     {
+        _collider = thisCollider;
+
         Hunger = new FishHunger(this);
         Economy = new FishEconomy(this);
         LifeCycle = new FishLifeCycle(this);

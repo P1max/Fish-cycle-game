@@ -48,11 +48,13 @@ namespace Spawners
             {
                 fish = Instantiate(_fishPrefab, transform, true);
 
-                fish.Init(_fishesCache, _foodPool);
-
                 var col = fish.GetComponent<Collider2D>();
 
                 _fishesCache.Add(col, fish);
+
+                fish.Init(_fishesCache, _foodPool, col);
+
+                fish.OnReadyToPool += ReturnFish;
             }
 
             fish.SetConfig(targetConfig);
