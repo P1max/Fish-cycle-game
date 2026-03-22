@@ -48,7 +48,7 @@ namespace Core.Feed
                 var targetY = bottomRight.y - 0.5f;
                 var delay = (i == 0) ? 0f : UnityEngine.Random.Range(0.4f, 1.2f);
 
-                food.Spawn(new Vector2(randomX, startY), targetY, nutritionPerPiece, delay);
+                food.Spawn(new Vector2(randomX, startY), nutritionPerPiece, delay);
             }
 
             Reset();

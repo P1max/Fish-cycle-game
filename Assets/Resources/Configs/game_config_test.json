@@ -13,7 +13,9 @@
     }
   },
   "boids": {
-    "edgeMargin": 0.2,
+    "marginXSides": 0.2,
+    "marginTop": 0.2,
+    "marginBottom": 0.15,
     "boundsWeight": 23.0,
     "neighborRadius": 3.0,
     "separationRadius": 3.0,

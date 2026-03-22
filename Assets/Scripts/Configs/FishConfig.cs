@@ -8,7 +8,11 @@ public class FishConfig : ScriptableObject, IValidatableConfig
     public string Id = "goldfish_basic";
 
     [Title("Движение")]
-    [MinMaxSlider(0.5f, 10f, true)] public Vector2 SpeedRange = new(1.5f, 3f);
+    [MinMaxSlider(0.5f, 5f, true)] 
+    [Tooltip("Диапазон 'спокойной' скорости. При спавне рыбка выберет себе случайное значение отсюда.")]
+    public Vector2 NormalSpeedRange = new(1.5f, 2f);
+    [Tooltip("Абсолютный максимум скорости, до которого рыбка разгонится при 100% голоде.")]
+    public float MaxHungrySpeed = 3f;
     [Tooltip("Скорость сглаживания поворота визуала. Чем выше, тем быстрее рыбка 'клюет носом'.")]
     public float SteerSpeed = 3f;
     [Tooltip("Максимальный угол наклона (в градусах) при движении вверх или вниз.")]
@@ -41,8 +45,9 @@ public class FishConfig : ScriptableObject, IValidatableConfig
 
     public void ValidateData()
     {
-        SpeedRange.x = Mathf.Max(0.1f, SpeedRange.x);
-        SpeedRange.y = Mathf.Max(SpeedRange.x, SpeedRange.y);
+        NormalSpeedRange.x = Mathf.Max(0.1f, NormalSpeedRange.x);
+        NormalSpeedRange.y = Mathf.Max(NormalSpeedRange.x, NormalSpeedRange.y);
+        MaxHungrySpeed = Mathf.Max(NormalSpeedRange.y, MaxHungrySpeed);
 
         SteerSpeed = Mathf.Max(0f, SteerSpeed);
         MaxTiltAngle = Mathf.Clamp(MaxTiltAngle, 0f, 60f);

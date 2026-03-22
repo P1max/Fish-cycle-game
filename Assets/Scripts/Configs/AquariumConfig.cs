@@ -7,7 +7,10 @@ public class AquariumConfig : ScriptableObject, IValidatableConfig
     public int StartFishCount = 2;
     public int MaxFishCount = 10;
 
-    private void OnValidate() => ValidateData();
+    private void OnValidate()
+    {
+        ValidateData();
+    }
 
     public void ValidateData()
     {

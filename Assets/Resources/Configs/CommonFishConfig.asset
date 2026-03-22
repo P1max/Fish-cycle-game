@@ -10,15 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 55ad112e68ff4df3a50f18c40f27f22b, type: 3}
-  m_Name: BoidsConfig
+  m_Name: CommonFishConfig
   m_EditorClassIdentifier: 
-  EdgeMargin: 0.2
-  BoundsWeight: 50
-  NeighborRadius: 1
-  SeparationRadius: 2
-  AlignmentWeight: 9
+  MarginXSides: 0.2
+  MarginTop: 0.2
+  MarginBottom: 0.1
+  BoundsWeight: 80
+  NeighborRadius: 2
+  SeparationRadius: 1.4
+  AlignmentWeight: 5
   CohesionWeight: 2
-  SeparationWeight: 100
-  FoodWeight: 50
+  SeparationWeight: 140
+  ObstacleAvoidanceWeight: 30
+  FoodWeight: 60
   FoodSearchRadius: 4
-  WanderWeight: 15
+  EatTimer: {x: 2, y: 3}
+  WanderWeight: 10

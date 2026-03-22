@@ -1,6 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 using Spawners;
+using Random = UnityEngine.Random;
 
 namespace Core.Feed
 {
@@ -10,23 +11,17 @@ namespace Core.Feed
         private FoodPool _pool;
         private bool _isConsumed;
         private float _nutritionValue;
+        private Rigidbody2D _rigidbody;
+        private Collider2D _collider;
+        private float _startScale;
 
         public bool IsConsumed => _isConsumed;
 
-        private void OnTriggerEnter2D(Collider2D col)
+        private void Awake()
         {
-            if (_isConsumed) return;
-
-            if (col.TryGetComponent<FishEntity>(out var fish) && fish.IsAlive) Consume(fish);
-        }
-
-        private void Consume(FishEntity fish)
-        {
-            _isConsumed = true;
-
-            fish.Hunger.Feed(_nutritionValue);
-
-            transform.DOScale(Vector3.zero, 0.2f).OnComplete(ReturnToPool);
+            _rigidbody = GetComponent<Rigidbody2D>();
+            _collider = GetComponent<Collider2D>();
+            _startScale = transform.localScale.x;
         }
 
         private void ReturnToPool()
@@ -36,30 +31,57 @@ namespace Core.Feed
             _pool.ReturnFood(this);
         }
 
-        public void Spawn(Vector2 startPosition, float targetBottomY, float nutritionValue, float delay)
+        public void Consume(FishEntity fish)
+        {
+            if (_isConsumed) return;
+
+            _isConsumed = true;
+
+            _rigidbody.bodyType = RigidbodyType2D.Kinematic;
+            _rigidbody.linearVelocity = Vector2.zero;
+
+            fish.Hunger.Feed(_nutritionValue);
+
+            transform.DOScale(Vector3.zero, 0.2f).OnComplete(ReturnToPool);
+        }
+
+        public void Spawn(Vector2 startPosition, float nutritionValue, float delay)
         {
             _isConsumed = false;
             transform.position = startPosition;
             _nutritionValue = nutritionValue;
-
             transform.localScale = Vector3.zero;
+
+            _rigidbody.bodyType = RigidbodyType2D.Kinematic;
+            _rigidbody.linearVelocity = Vector2.zero;
 
             var sequence = DOTween.Sequence();
 
+            sequence.SetTarget(transform);
             sequence.SetDelay(delay);
-            sequence.Append(transform.DOScale(Vector3.one, 0.4f).SetEase(Ease.OutBack));
+            sequence.Append(transform.DOScale(_startScale, 0.3f).SetEase(Ease.OutBack));
 
-            var waterHitY = startPosition.y - 1.2f;
+            var waterHitY = startPosition.y - 1.6f;
 
             sequence.Join(transform.DOMoveY(waterHitY, 0.6f).SetEase(Ease.OutCubic));
 
-            var fallDuration = Random.Range(6f, 9f);
+            sequence.AppendCallback(() =>
+            {
+                Debug.Log($"Коснулись воды");
+                _rigidbody.bodyType = RigidbodyType2D.Dynamic;
 
-            sequence.Append(transform.DOMoveY(targetBottomY, fallDuration).SetEase(Ease.Linear));
+                _rigidbody.AddForce(new Vector2(Random.Range(-0.02f, 0.02f), 0), ForceMode2D.Impulse);
+            });
+
+            sequence.AppendInterval(30f);
 
             sequence.OnComplete(() =>
             {
-                if (!_isConsumed) ReturnToPool();
+                if (!_isConsumed)
+                {
+                    _isConsumed = true;
+                    transform.DOScale(Vector3.zero, 0.2f).OnComplete(ReturnToPool);
+                }
             });
         }
 

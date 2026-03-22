@@ -47,8 +47,8 @@ public class ConfigValidator
         
         if (json["boids"] != null)
         {
-            JsonConvert.PopulateObject(json["boids"].ToString(), _configs.Boids);
-            _configs.Boids.ValidateData();
+            JsonConvert.PopulateObject(json["boids"].ToString(), _configs.CommonFish);
+            _configs.CommonFish.ValidateData();
         }
 
         if (json["fishConfigs"] is JArray fishArray)

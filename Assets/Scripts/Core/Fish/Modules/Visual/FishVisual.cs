@@ -70,7 +70,7 @@ namespace Core.Fish.Modules.Visual
                     _visualTransform.localScale.z);
 
             var targetAngleZ = Mathf.Clamp(
-                (_fishEntity.Movement.Velocity.y / _fishEntity.Config.SpeedRange.y) * _fishEntity.Config.MaxTiltAngle,
+                (_fishEntity.Movement.Velocity.y / _fishEntity.Config.NormalSpeedRange.y) * _fishEntity.Config.MaxTiltAngle,
                 -_fishEntity.Config.MaxTiltAngle,
                 _fishEntity.Config.MaxTiltAngle);
 

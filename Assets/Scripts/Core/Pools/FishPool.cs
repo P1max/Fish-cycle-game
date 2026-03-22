@@ -8,7 +8,7 @@ namespace Spawners
     public class FishPool : MonoBehaviour
     {
         [Inject] private FoodPool _foodPool;
-        [Inject] private BoidsConfig _boidsConfig;
+        [Inject] private CommonFishConfig _commonFishConfig;
         [Inject] private Dictionary<string, FishConfig> _fishConfigs;
 
         private Dictionary<Collider2D, FishEntity> _fishesCache;
@@ -53,7 +53,7 @@ namespace Spawners
 
                 _fishesCache.Add(col, fish);
 
-                fish.Init(_fishesCache, _foodPool, col, _boidsConfig);
+                fish.Init(_fishesCache, _foodPool, col, _commonFishConfig);
 
                 fish.OnReadyToPool += ReturnFish;
             }

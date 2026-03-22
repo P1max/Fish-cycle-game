@@ -18,12 +18,13 @@ public class FishEntity : MonoBehaviour
     public bool IsAlive => _isAlive;
 
     public FishConfig Config { get; private set; }
-    public BoidsConfig BoidsConfig { get; private set; }
+    public CommonFishConfig CommonFishConfig { get; private set; }
     public FishMovement Movement { get; private set; }
     public FishHunger Hunger { get; private set; }
     public FishEconomy Economy { get; private set; }
     public FishLifeCycle LifeCycle { get; private set; }
     public FishVisual FishVisual { get; private set; }
+    public float BaseSpeed { get; private set; }
 
     private void Update()
     {
@@ -48,8 +49,6 @@ public class FishEntity : MonoBehaviour
         _isAlive = false;
         Movement.Stop();
         FishVisual.SetDeadVisuals();
-
-        Debug.Log($"Рыбка умерла");
     }
 
     public void Collect()
@@ -79,18 +78,19 @@ public class FishEntity : MonoBehaviour
             var randomSize = Random.Range(config.SizeModifier.x, config.SizeModifier.y);
 
             transform.localScale = new Vector3(randomSize, randomSize, 1f);
+            BaseSpeed = Random.Range(config.NormalSpeedRange.x, config.NormalSpeedRange.y);
         }
     }
 
-    public void Init(IReadOnlyDictionary<Collider2D, FishEntity> fishesCache, FoodPool foodPool, Collider2D thisCollider, BoidsConfig boidsConfig)
+    public void Init(IReadOnlyDictionary<Collider2D, FishEntity> fishesCache, FoodPool foodPool, Collider2D thisCollider, CommonFishConfig commonFishConfig)
     {
         _collider = thisCollider;
-        BoidsConfig = boidsConfig;
+        CommonFishConfig = commonFishConfig;
 
         Hunger = new FishHunger(this);
         Economy = new FishEconomy(this);
         LifeCycle = new FishLifeCycle(this);
-        Movement = new FishMovement(this, fishesCache, foodPool, GetComponent<Rigidbody2D>());
+        Movement = new FishMovement(this, fishesCache, foodPool, GetComponent<Rigidbody2D>(), _collider);
         FishVisual = new FishVisual(this, _visualTransform, _spriteRenderer);
 
         _isAlive = true;
@@ -98,15 +98,15 @@ public class FishEntity : MonoBehaviour
     
     private void OnDrawGizmosSelected()
     {
-        if (Config == null || BoidsConfig == null) return;
+        if (Config == null || CommonFishConfig == null) return;
 
         var currentPosition = transform.position;
 
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(currentPosition, BoidsConfig.NeighborRadius);
+        Gizmos.DrawWireSphere(currentPosition, CommonFishConfig.NeighborRadius);
 
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(currentPosition, BoidsConfig.SeparationRadius);
+        Gizmos.DrawWireSphere(currentPosition, CommonFishConfig.SeparationRadius);
         
         if (Movement != null && IsAlive)
         {

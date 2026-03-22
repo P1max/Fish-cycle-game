@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: bluefish_fat
   m_EditorClassIdentifier: 
   Id: bluefish_fat
-  SpeedRange: {x: 0.7, y: 0.8}
+  NormalSpeedRange: {x: 0.7, y: 0.85}
+  MaxHungrySpeed: 1.2
   SteerSpeed: 7
   MaxTiltAngle: 20
   Sprite: {fileID: -3803863093779294543, guid: a17ccf93abad92c41ba955bc32a6e2b6, type: 3}

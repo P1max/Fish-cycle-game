@@ -20,25 +20,32 @@ public class BoidsSteering : ISteeringBehavior
         var neighborCount = 0;
         var separationCount = 0;
 
-        var count = Physics2D.OverlapCircle(fish.transform.position, fish.BoidsConfig.NeighborRadius, _filter, _overlapResults);
+        var count = Physics2D.OverlapCircle(fish.transform.position, fish.CommonFishConfig.NeighborRadius, _filter, _overlapResults);
 
         for (var i = 0; i < count; i++)
         {
             var col = _overlapResults[i];
 
             if (col.gameObject == fish.gameObject) continue;
-            if (!fish.Movement.FishesCache.TryGetValue(col, out var otherFish)) continue;
 
+            if (!fish.Movement.FishesCache.TryGetValue(col, out var otherFish))
+            {
+                //Debug.LogWarning($"Не удалось найти конфиг рыбы {count} в кеше");
+                continue;
+            }
+
+            if (!otherFish.IsAlive) continue;
+            
             neighborCount++;
             alignment += otherFish.Movement.Velocity;
             cohesion += (Vector2)otherFish.transform.position;
 
             var distance = Vector2.Distance(fish.transform.position, otherFish.transform.position);
 
-            if (distance < fish.BoidsConfig.SeparationRadius && distance > 0)
+            if (distance < fish.CommonFishConfig.SeparationRadius && distance > 0)
             {
                 var diff = (Vector2)fish.transform.position - (Vector2)otherFish.transform.position;
-                var repulsionForce = 1f - (distance / fish.BoidsConfig.SeparationRadius);
+                var repulsionForce = 1f - (distance / fish.CommonFishConfig.SeparationRadius);
                 
                 separation += diff.normalized * repulsionForce;
                 separationCount++;
@@ -47,13 +54,13 @@ public class BoidsSteering : ISteeringBehavior
 
         if (neighborCount > 0)
         {
-            alignment = (alignment / neighborCount).normalized * fish.BoidsConfig.AlignmentWeight;
-            cohesion = ((cohesion / neighborCount) - (Vector2)fish.transform.position).normalized * fish.BoidsConfig.CohesionWeight;
+            alignment = (alignment / neighborCount).normalized * fish.CommonFishConfig.AlignmentWeight;
+            cohesion = ((cohesion / neighborCount) - (Vector2)fish.transform.position).normalized * fish.CommonFishConfig.CohesionWeight;
         }
 
         if (separationCount > 0)
         {
-            separation = (separation / separationCount) * fish.BoidsConfig.SeparationWeight;
+            separation = (separation / separationCount) * fish.CommonFishConfig.SeparationWeight;
         }
 
         return alignment + cohesion + separation;

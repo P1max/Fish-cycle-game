@@ -14,40 +14,39 @@ public class BoundsSteering : ISteeringBehavior
     {
         var viewportPos = _camera.WorldToViewportPoint(fish.transform.position);
         var boundsSteer = Vector2.zero;
-        var margin = fish.BoidsConfig.EdgeMargin;
 
         fish.Movement.IsNearEdge = false;
+        
+        var marginX = fish.CommonFishConfig.MarginXSides;
+        var marginTop = fish.CommonFishConfig.MarginTop;
+        var marginBottom = fish.CommonFishConfig.MarginBottom;
 
-        if (viewportPos.x < margin)
+        if (viewportPos.x < marginX)
         {
-            var depth = 1f - (viewportPos.x / margin); 
-            
+            var depth = 1f - (viewportPos.x / marginX); 
             boundsSteer.x = depth;
             fish.Movement.IsNearEdge = true;
         }
-        else if (viewportPos.x > 1f - margin)
+        else if (viewportPos.x > 1f - marginX)
         {
-            var depth = (viewportPos.x - (1f - margin)) / margin; 
-            
+            var depth = (viewportPos.x - (1f - marginX)) / marginX; 
             boundsSteer.x = -depth;
             fish.Movement.IsNearEdge = true;
         }
 
-        if (viewportPos.y < margin)
+        if (viewportPos.y < marginBottom)
         {
-            var depth = 1f - (viewportPos.y / margin);
-            
+            var depth = 1f - (viewportPos.y / marginBottom);
             boundsSteer.y = depth;
             fish.Movement.IsNearEdge = true;
         }
-        else if (viewportPos.y > 1f - margin)
+        else if (viewportPos.y > 1f - marginTop)
         {
-            var depth = (viewportPos.y - (1f - margin)) / margin;
-            
+            var depth = (viewportPos.y - (1f - marginTop)) / marginTop;
             boundsSteer.y = -depth;
             fish.Movement.IsNearEdge = true;
         }
 
-        return boundsSteer * fish.BoidsConfig.BoundsWeight;
+        return boundsSteer * fish.CommonFishConfig.BoundsWeight;
     }
 }

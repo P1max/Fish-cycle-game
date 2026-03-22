@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: pinkfish_fit
   m_EditorClassIdentifier: 
   Id: pinkfish_fit
-  SpeedRange: {x: 1.2, y: 1.4}
+  NormalSpeedRange: {x: 1.2, y: 1.4}
+  MaxHungrySpeed: 1.8
   SteerSpeed: 7
   MaxTiltAngle: 20
   Sprite: {fileID: -6109183866432475690, guid: b37b99657144e8e43b2ffc484d2bc392, type: 3}

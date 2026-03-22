@@ -10,13 +10,15 @@ public class FishMovement
     private Rigidbody2D _rigidbody;
     private Vector2 _velocity;
     private bool _isActive;
+    private float _currentSpeedLimit;
 
     public IReadOnlyDictionary<Collider2D, FishEntity> FishesCache { get; private set; }
     public bool IsNearEdge { get; set; }
+    public bool IsChasingFood { get; set; }
     public Vector2 Velocity => _velocity;
 
     public FishMovement(FishEntity fishEntity, IReadOnlyDictionary<Collider2D, FishEntity> fishesCache, FoodPool foodPool,
-        Rigidbody2D rigidbody)
+        Rigidbody2D rigidbody, Collider2D collider)
     {
         _fishEntity = fishEntity;
         FishesCache = fishesCache;
@@ -25,10 +27,10 @@ public class FishMovement
         _behaviors = new ISteeringBehavior[]
         {
             new BoundsSteering(Camera.main),
+            new ObstacleSteering(),
             new WanderSteering(),
             new BoidsSteering(),
-            new FoodSteering(foodPool),
-            //new WiggleSteering()
+            new FoodSteering(foodPool, collider),
         };
 
         _isActive = true;
@@ -52,19 +54,17 @@ public class FishMovement
 
         _velocity += acceleration * Time.fixedDeltaTime;
 
+        var targetSpeedLimit = IsChasingFood ? _fishEntity.Config.MaxHungrySpeed : _fishEntity.BaseSpeed;
+        
+        _currentSpeedLimit = Mathf.Lerp(_currentSpeedLimit, targetSpeedLimit, Time.fixedDeltaTime * 3f);
+
+        _velocity = Vector2.ClampMagnitude(_velocity, _currentSpeedLimit);
+
         var speed = _velocity.magnitude;
 
-        var hungerMultiplier = 1f + (_fishEntity.Hunger.CurrentHungerPercent / 100f * 0.5f);
-        var currentMaxSpeed = _fishEntity.Config.SpeedRange.y * hungerMultiplier;
-        var currentMinSpeed = _fishEntity.Config.SpeedRange.x;
-
-        if (speed > currentMaxSpeed)
+        if (!IsChasingFood && speed < _fishEntity.BaseSpeed && speed > 0.1f && !IsNearEdge)
         {
-            _velocity = _velocity.normalized * currentMaxSpeed;
-        }
-        else if (speed < currentMinSpeed && speed > 0.1f && !IsNearEdge)
-        {
-            _velocity = Vector2.Lerp(_velocity, _velocity.normalized * currentMinSpeed, Time.fixedDeltaTime * 2f);
+            _velocity = Vector2.Lerp(_velocity, _velocity.normalized * _fishEntity.BaseSpeed, Time.fixedDeltaTime * 2f);
         }
 
         _rigidbody.linearVelocity = _velocity;
