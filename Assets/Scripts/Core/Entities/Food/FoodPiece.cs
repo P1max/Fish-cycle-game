@@ -67,7 +67,6 @@ namespace Core.Feed
 
             sequence.AppendCallback(() =>
             {
-                Debug.Log($"Коснулись воды");
                 _rigidbody.bodyType = RigidbodyType2D.Dynamic;
 
                 _rigidbody.AddForce(new Vector2(Random.Range(-0.02f, 0.02f), 0), ForceMode2D.Impulse);

@@ -1057,6 +1057,7 @@ GameObject:
   m_Component:
   - component: {fileID: 608926892}
   - component: {fileID: 608926893}
+  - component: {fileID: 608926894}
   m_Layer: 5
   m_Name: FishesQuantityBlock
   m_TagString: Untagged
@@ -1105,6 +1106,19 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &608926894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 608926891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7de60007b5ac41189b10db95dc06d3f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fishCountText: {fileID: 1195292236}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -1265,6 +1279,7 @@ Transform:
   - {fileID: 635190496}
   - {fileID: 800241374}
   - {fileID: 1530928156}
+  - {fileID: 2107539690}
   m_Father: {fileID: 1204838203}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &800241373
@@ -1737,6 +1752,7 @@ GameObject:
   m_Component:
   - component: {fileID: 957663029}
   - component: {fileID: 957663030}
+  - component: {fileID: 957663031}
   m_Layer: 5
   m_Name: CoinsBlock
   m_TagString: Untagged
@@ -1785,6 +1801,19 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &957663031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 957663028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deaf987c67194fa9ac53119382d0b0b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _moneyCounterText: {fileID: 428046410}
 --- !u!1 &1121552421
 GameObject:
   m_ObjectHideFlags: 0
@@ -2191,7 +2220,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1204838203}
-  - component: {fileID: 1204838204}
   m_Layer: 0
   m_Name: Game
   m_TagString: Untagged
@@ -2215,18 +2243,6 @@ Transform:
   - {fileID: 643849697}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1204838204
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1204838202}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b10b1597648242b2838c4e616d5504d8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1205862992
 GameObject:
   m_ObjectHideFlags: 0
@@ -3119,6 +3135,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2079290581}
   m_CullTransparentMesh: 1
+--- !u!1 &2107539689
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2107539690}
+  - component: {fileID: 2107539691}
+  m_Layer: 0
+  m_Name: Coins
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2107539690
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2107539689}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 643849697}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2107539691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2107539689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7facf05f40b4098a3fa9468b625b077, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2115835703
 GameObject:
   m_ObjectHideFlags: 0

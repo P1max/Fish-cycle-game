@@ -16,13 +16,11 @@ namespace UI.FeedJar
         [SerializeField] private Color _animColor;
 
         private event Action _onCLick;
-        private Vector2 _startAnchoredPosition;
         private Sequence _shakeSeq;
 
         private void Awake()
         {
             _button.onClick.AddListener(OnClick);
-            _startAnchoredPosition = _rect.anchoredPosition;
         }
 
         public void OnClick()
@@ -32,14 +30,9 @@ namespace UI.FeedJar
             _onCLick?.Invoke();
         }
 
-        public void Init(Action onCLick)
-        {
-            _onCLick = onCLick;
-        }
-
         public void PlayShakeAnimation()
         {
-            _shakeSeq?.Kill(true); 
+            _shakeSeq?.Kill(true);
 
             _shakeSeq = DOTween.Sequence()
                 .Append(_rect.DOPunchAnchorPos(new Vector2(16f, 0), 0.7f, vibrato: 10, elasticity: 1f))
@@ -51,6 +44,11 @@ namespace UI.FeedJar
             if (isActiveAndEnabled)
             {
             }
+        }
+
+        public void Init(Action onCLick)
+        {
+            _onCLick = onCLick;
         }
     }
 }

@@ -14,6 +14,7 @@ public class FishEntity : MonoBehaviour
     private Collider2D _collider;
 
     public event Action<FishEntity> OnReadyToPool;
+    public event Action<FishEntity> OnReturnedToPool;
 
     public bool IsAlive => _isAlive;
 
@@ -57,7 +58,9 @@ public class FishEntity : MonoBehaviour
 
         _collider.enabled = false;
 
-        FishVisual.PlayCollectAnimation(() => OnReadyToPool?.Invoke(this));
+        OnReadyToPool?.Invoke(this);
+
+        FishVisual.PlayCollectAnimation(() => OnReturnedToPool?.Invoke(this));
     }
 
     public void SetConfig(FishConfig config)
@@ -82,20 +85,21 @@ public class FishEntity : MonoBehaviour
         }
     }
 
-    public void Init(IReadOnlyDictionary<Collider2D, FishEntity> fishesCache, FoodPool foodPool, Collider2D thisCollider, CommonFishConfig commonFishConfig)
+    public void Init(IReadOnlyDictionary<Collider2D, FishEntity> fishesCache, FoodPool foodPool, Collider2D thisCollider,
+        CommonFishConfig commonFishConfig, CoinsPool coinsPool)
     {
         _collider = thisCollider;
         CommonFishConfig = commonFishConfig;
 
         Hunger = new FishHunger(this);
-        Economy = new FishEconomy(this);
+        Economy = new FishEconomy(this, coinsPool);
         LifeCycle = new FishLifeCycle(this);
         Movement = new FishMovement(this, fishesCache, foodPool, GetComponent<Rigidbody2D>(), _collider);
         FishVisual = new FishVisual(this, _visualTransform, _spriteRenderer);
 
         _isAlive = true;
     }
-    
+
     private void OnDrawGizmosSelected()
     {
         if (Config == null || CommonFishConfig == null) return;
@@ -107,7 +111,7 @@ public class FishEntity : MonoBehaviour
 
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(currentPosition, CommonFishConfig.SeparationRadius);
-        
+
         if (Movement != null && IsAlive)
         {
             Gizmos.color = Color.blue;

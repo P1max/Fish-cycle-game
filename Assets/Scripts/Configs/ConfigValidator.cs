@@ -1,26 +1,13 @@
-using System.Collections.Generic;
-using System.Linq;
 using Core.Configs;
+using Core.Loaders;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 
 public class ConfigValidator
 {
-    private readonly GameConfigs _configs;
-
-    public Dictionary<string, FishConfig> LoadedFishes { get; private set; }
-
-    public ConfigValidator(GameConfigs configs)
+    public ConfigValidator(GameConfigs configs, FishesLoader fishesLoader)
     {
-        _configs = configs;
-    }
-
-    public void LoadAndPatchFromJson()
-    {
-        LoadedFishes = Resources.LoadAll<FishConfig>("Configs/Fishes")
-            .ToDictionary(fish => fish.Id, fish => fish);
-
         var jsonTextAsset = Resources.Load<TextAsset>("Configs/game_config");
 
         if (jsonTextAsset == null)
@@ -35,20 +22,20 @@ public class ConfigValidator
 
         if (json["aquarium"] != null)
         {
-            JsonConvert.PopulateObject(json["aquarium"].ToString(), _configs.Aquarium);
-            _configs.Aquarium.ValidateData();
+            JsonConvert.PopulateObject(json["aquarium"].ToString(), configs.Aquarium);
+            configs.Aquarium.ValidateData();
         }
 
         if (json["feeder"] != null)
         {
-            JsonConvert.PopulateObject(json["feeder"].ToString(), _configs.Feeder);
-            _configs.Feeder.ValidateData();
+            JsonConvert.PopulateObject(json["feeder"].ToString(), configs.Feeder);
+            configs.Feeder.ValidateData();
         }
         
         if (json["boids"] != null)
         {
-            JsonConvert.PopulateObject(json["boids"].ToString(), _configs.CommonFish);
-            _configs.CommonFish.ValidateData();
+            JsonConvert.PopulateObject(json["boids"].ToString(), configs.CommonFish);
+            configs.CommonFish.ValidateData();
         }
 
         if (json["fishConfigs"] is JArray fishArray)
@@ -57,7 +44,7 @@ public class ConfigValidator
             {
                 var id = fishJson["id"]?.ToString();
 
-                if (id != null && LoadedFishes.TryGetValue(id, out var targetFishSo))
+                if (id != null && fishesLoader.LoadedFishesDict.TryGetValue(id, out var targetFishSo))
                 {
                     JsonConvert.PopulateObject(fishJson.ToString(), targetFishSo);
                     targetFishSo.ValidateData();
@@ -65,5 +52,7 @@ public class ConfigValidator
                 else Debug.LogWarning($"Рыбка с ID {id} есть в JSON, но SO не найден в Resources");
             }
         }
+        
+        Debug.Log("Конфиги свалидированы");
     }
 }

@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using System.Linq;
+using Core.Loaders;
 using UnityEngine;
 using Zenject;
 
@@ -8,16 +8,15 @@ namespace Spawners
     public class FishPool : MonoBehaviour
     {
         [Inject] private FoodPool _foodPool;
+        [Inject] private CoinsPool _coinsPool;
         [Inject] private CommonFishConfig _commonFishConfig;
-        [Inject] private Dictionary<string, FishConfig> _fishConfigs;
+        [Inject] private FishesLoader _fishesLoader;
 
         private Dictionary<Collider2D, FishEntity> _fishesCache;
         private LinkedList<FishEntity> _activeFishes;
         private LinkedList<FishEntity> _freeFishes;
         private FishEntity _fishPrefab;
-
-        public FishEntity[] GetActiveFishes() => _activeFishes.ToArray();
-
+        
         private void Awake()
         {
             _fishPrefab = Resources.Load<FishEntity>("Prefabs/Fish");
@@ -29,7 +28,7 @@ namespace Spawners
 
         public FishEntity GetFish(string fishId)
         {
-            var targetConfig = _fishConfigs[fishId];
+            var targetConfig = _fishesLoader.LoadedFishesDict[fishId];
 
             if (targetConfig == null)
             {
@@ -53,9 +52,9 @@ namespace Spawners
 
                 _fishesCache.Add(col, fish);
 
-                fish.Init(_fishesCache, _foodPool, col, _commonFishConfig);
+                fish.Init(_fishesCache, _foodPool, col, _commonFishConfig, _coinsPool);
 
-                fish.OnReadyToPool += ReturnFish;
+                fish.OnReturnedToPool += ReturnFish;
             }
 
             fish.SetConfig(targetConfig);

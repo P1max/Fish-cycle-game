@@ -1,20 +1,22 @@
-using UnityEngine;
+using Spawners;
 
 public class FishEconomy
 {
     private readonly FishEntity _fish;
+    private readonly CoinsPool _coinsPool;
 
     private float _coinTimer;
 
-    public FishEconomy(FishEntity fish)
+    public FishEconomy(FishEntity fish, CoinsPool coinsPool)
     {
         _fish = fish;
+        _coinsPool = coinsPool;
         _coinTimer = 0f;
     }
 
     private void SpawnCoin()
     {
-        Debug.Log($"Рыбка принесла {_fish.Config.IncomeCoins} монет");
+        _coinsPool.GetCoin(_fish.transform.position, _fish.Config.IncomeCoins);
     }
 
     public void Reset()
