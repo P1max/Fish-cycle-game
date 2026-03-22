@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Aquarium: {fileID: 11400000, guid: 5dbe7dfd146a81c429155134efba1d8e, type: 2}
   Feeder: {fileID: 11400000, guid: 39ddfe5547b2e5a47868ec73f377a7a6, type: 2}
+  Boids: {fileID: 11400000, guid: 1644800116385d0419d223bb6b7c858a, type: 2}
