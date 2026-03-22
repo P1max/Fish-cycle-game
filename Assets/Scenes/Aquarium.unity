@@ -1690,7 +1690,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ffb38db567f4ec88dc910e68c7bf0b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _jar: {fileID: 1411081011}
   _button: {fileID: 504453531}
+  _rect: {fileID: 932303728}
+  _ease:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.14760238
+      value: 0.3755377
+      inSlope: 1.9869865
+      outSlope: 1.9869865
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.3318726
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _animColor: {r: 0.8773585, g: 0.30210927, b: 0.30210927, a: 1}
 --- !u!1 &957663028
 GameObject:
   m_ObjectHideFlags: 0
@@ -2421,7 +2457,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 184bee1f7ced46538533b35c923ce1c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _defaultConfig: {fileID: 11400000, guid: 66e8764f2f6ae2e41a934bdc13d6369f, type: 2}
 --- !u!1 &1544306586
 GameObject:
   m_ObjectHideFlags: 0

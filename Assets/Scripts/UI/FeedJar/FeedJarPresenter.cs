@@ -27,8 +27,6 @@ namespace UI.FeedJar
                 }
                 else
                 {
-                    Debug.Log("Ещё не готова кормить!");
-                    
                     _feedJarView.PlayShakeAnimation();
                 }
             });
