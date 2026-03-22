@@ -1,6 +1,7 @@
 using System;
 using DG.Tweening;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Core.Fish.Modules.Visual
 {
@@ -9,6 +10,7 @@ namespace Core.Fish.Modules.Visual
         private readonly FishEntity _fishEntity;
         private readonly Transform _visualTransform;
         private readonly SpriteRenderer _spriteRenderer;
+        private readonly float _wiggleOffset;
 
         private Sequence _sequence;
 
@@ -17,6 +19,8 @@ namespace Core.Fish.Modules.Visual
             _fishEntity = fishEntity;
             _visualTransform = visualTransform;
             _spriteRenderer = spriteRenderer;
+            
+            _wiggleOffset = Random.Range(0f, 100f);
         }
 
         public void SetDeadVisuals()

@@ -12,7 +12,10 @@ namespace Core.Boot
         {
             _fishPool.GetFish("goldfish_basic").transform.position = Vector2.zero;
             _fishPool.GetFish("pinkfish_fit").transform.position = Vector2.zero;
+            _fishPool.GetFish("goldfish_basic").transform.position = Vector2.zero;
+            _fishPool.GetFish("pinkfish_fit").transform.position = Vector2.zero;
             _fishPool.GetFish("bluefish_fat").transform.position = Vector2.zero;
+            _fishPool.GetFish("goldfish_basic").transform.position = Vector2.zero;
         }
     }
 }

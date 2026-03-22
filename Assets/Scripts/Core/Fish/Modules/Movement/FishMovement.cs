@@ -24,10 +24,11 @@ public class FishMovement
 
         _behaviors = new ISteeringBehavior[]
         {
-            new WanderSteering(),
             new BoundsSteering(Camera.main),
+            new WanderSteering(),
             new BoidsSteering(),
-            new FoodSteering(foodPool)
+            new FoodSteering(foodPool),
+            //new WiggleSteering()
         };
 
         _isActive = true;
@@ -51,16 +52,20 @@ public class FishMovement
 
         _velocity += acceleration * Time.fixedDeltaTime;
 
-        if (IsNearEdge)
-            _velocity = Vector2.Lerp(_velocity, _velocity.normalized * _fishEntity.Config.SpeedRange.x, Time.fixedDeltaTime * 3f);
-
         var speed = _velocity.magnitude;
 
         var hungerMultiplier = 1f + (_fishEntity.Hunger.CurrentHungerPercent / 100f * 0.5f);
         var currentMaxSpeed = _fishEntity.Config.SpeedRange.y * hungerMultiplier;
+        var currentMinSpeed = _fishEntity.Config.SpeedRange.x;
 
-        if (speed > currentMaxSpeed) _velocity = _velocity.normalized * currentMaxSpeed;
-        else if (speed < _fishEntity.Config.SpeedRange.x) _velocity = _velocity.normalized * _fishEntity.Config.SpeedRange.x;
+        if (speed > currentMaxSpeed)
+        {
+            _velocity = _velocity.normalized * currentMaxSpeed;
+        }
+        else if (speed < currentMinSpeed && speed > 0.1f && !IsNearEdge)
+        {
+            _velocity = Vector2.Lerp(_velocity, _velocity.normalized * currentMinSpeed, Time.fixedDeltaTime * 2f);
+        }
 
         _rigidbody.linearVelocity = _velocity;
 

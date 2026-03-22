@@ -8,5 +8,6 @@ namespace Core.Configs
         [Title("Системные конфиги")]
         public AquariumConfig Aquarium;
         public FeederConfig Feeder;
+        public BoidsConfig Boids;
     }
 }

@@ -25,7 +25,7 @@ namespace Core.Fish.BoidStrategies
             var minDistance = float.MaxValue;
             var foundFood = false;
 
-            var count = Physics2D.OverlapCircle(currentPos, fish.Config.FoodSearchRadius, _filter, _overlapResults);
+            var count = Physics2D.OverlapCircle(currentPos, fish.BoidsConfig.FoodSearchRadius, _filter, _overlapResults);
 
             for (var i = 0; i < count; i++)
             {
@@ -52,7 +52,7 @@ namespace Core.Fish.BoidStrategies
 
                 var hungerMultiplier = fish.Hunger.CurrentHungerPercent / 100f;
 
-                return directionToFood * (fish.Config.FoodWeight * hungerMultiplier);
+                return directionToFood * (fish.BoidsConfig.FoodWeight * hungerMultiplier);
             }
 
             return Vector2.zero;

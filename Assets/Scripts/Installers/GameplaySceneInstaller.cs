@@ -21,6 +21,7 @@ namespace Installers
             Container.Bind<Dictionary<string, FishConfig>>().FromInstance(configValidator.LoadedFishes).AsSingle();
             Container.Bind<FeederConfig>().FromInstance(_configs.Feeder).AsSingle();
             Container.Bind<AquariumConfig>().FromInstance(_configs.Aquarium).AsSingle();
+            Container.Bind<BoidsConfig>().FromInstance(_configs.Boids).AsSingle();
 
             Container.Bind<FishPool>().FromComponentInHierarchy().AsSingle();
             Container.Bind<FeedJarView>().FromComponentInHierarchy().AsSingle();

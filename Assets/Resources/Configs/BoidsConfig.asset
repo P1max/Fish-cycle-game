@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55ad112e68ff4df3a50f18c40f27f22b, type: 3}
+  m_Name: BoidsConfig
+  m_EditorClassIdentifier: 
+  EdgeMargin: 0.2
+  BoundsWeight: 50
+  NeighborRadius: 1
+  SeparationRadius: 2
+  AlignmentWeight: 9
+  CohesionWeight: 2
+  SeparationWeight: 100
+  FoodWeight: 50
+  FoodSearchRadius: 4
+  WanderWeight: 15

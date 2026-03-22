@@ -12,6 +12,18 @@
       "y": 6
     }
   },
+  "boids": {
+    "edgeMargin": 0.2,
+    "boundsWeight": 23.0,
+    "neighborRadius": 3.0,
+    "separationRadius": 3.0,
+    "alignmentWeight": 5.0,
+    "cohesionWeight": 2.0,
+    "separationWeight": 12.5,
+    "wanderWeight": 13.0,
+    "foodWeight": 50.0,
+    "foodSearchRadius": 6.0
+  },
   "store": {
     "conveyerSpeed": 1.0,
     "freeFishQuality": 0.5,
@@ -49,17 +61,7 @@
         "y": 1.2
       },
       "steerSpeed": 7.0,
-      "maxTiltAngle": 20.0,
-      "edgeMargin": 0.2,
-      "boundsWeight": 23.0,
-      "neighborRadius": 3.0,
-      "separationRadius": 3.0,
-      "alignmentWeight": 5.0,
-      "cohesionWeight": 2.0,
-      "separationWeight": 12.5,
-      "wanderWeight": 13.0,
-      "foodWeight": 50.0,
-      "foodSearchRadius": 6.0
+      "maxTiltAngle": 20.0
     },
     {
       "id": "bluefish_fat",
@@ -80,17 +82,7 @@
         "y": 0.8
       },
       "steerSpeed": 7.0,
-      "maxTiltAngle": 20.0,
-      "edgeMargin": 0.2,
-      "boundsWeight": 23.0,
-      "neighborRadius": 3.0,
-      "separationRadius": 3.0,
-      "alignmentWeight": 5.0,
-      "cohesionWeight": 2.0,
-      "separationWeight": 12.5,
-      "wanderWeight": 13.0,
-      "foodWeight": 50.0,
-      "foodSearchRadius": 6.0
+      "maxTiltAngle": 20.0
     },
     {
       "id": "pinkfish_fit",
@@ -111,17 +103,7 @@
         "y": 1.4
       },
       "steerSpeed": 7.0,
-      "maxTiltAngle": 20.0,
-      "edgeMargin": 0.2,
-      "boundsWeight": 23.0,
-      "neighborRadius": 3.0,
-      "separationRadius": 3.0,
-      "alignmentWeight": 5.0,
-      "cohesionWeight": 2.0,
-      "separationWeight": 12.5,
-      "wanderWeight": 13.0,
-      "foodWeight": 50.0,
-      "foodSearchRadius": 6.0
+      "maxTiltAngle": 20.0
     }
   ]
 }

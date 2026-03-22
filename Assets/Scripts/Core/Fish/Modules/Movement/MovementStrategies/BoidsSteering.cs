@@ -18,8 +18,9 @@ public class BoidsSteering : ISteeringBehavior
         var cohesion = Vector2.zero;
         var separation = Vector2.zero;
         var neighborCount = 0;
+        var separationCount = 0;
 
-        var count = Physics2D.OverlapCircle(fish.transform.position, fish.Config.NeighborRadius, _filter, _overlapResults);
+        var count = Physics2D.OverlapCircle(fish.transform.position, fish.BoidsConfig.NeighborRadius, _filter, _overlapResults);
 
         for (var i = 0; i < count; i++)
         {
@@ -34,19 +35,25 @@ public class BoidsSteering : ISteeringBehavior
 
             var distance = Vector2.Distance(fish.transform.position, otherFish.transform.position);
 
-            if (distance < fish.Config.SeparationRadius && distance > 0)
+            if (distance < fish.BoidsConfig.SeparationRadius && distance > 0)
             {
                 var diff = (Vector2)fish.transform.position - (Vector2)otherFish.transform.position;
+                var repulsionForce = 1f - (distance / fish.BoidsConfig.SeparationRadius);
                 
-                separation += diff.normalized / distance;
+                separation += diff.normalized * repulsionForce;
+                separationCount++;
             }
         }
 
         if (neighborCount > 0)
         {
-            alignment = (alignment / neighborCount).normalized * fish.Config.AlignmentWeight;
-            cohesion = ((cohesion / neighborCount) - (Vector2)fish.transform.position).normalized * fish.Config.CohesionWeight;
-            separation = (separation / neighborCount).normalized * fish.Config.SeparationWeight;
+            alignment = (alignment / neighborCount).normalized * fish.BoidsConfig.AlignmentWeight;
+            cohesion = ((cohesion / neighborCount) - (Vector2)fish.transform.position).normalized * fish.BoidsConfig.CohesionWeight;
+        }
+
+        if (separationCount > 0)
+        {
+            separation = (separation / separationCount) * fish.BoidsConfig.SeparationWeight;
         }
 
         return alignment + cohesion + separation;

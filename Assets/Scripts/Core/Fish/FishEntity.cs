@@ -18,6 +18,7 @@ public class FishEntity : MonoBehaviour
     public bool IsAlive => _isAlive;
 
     public FishConfig Config { get; private set; }
+    public BoidsConfig BoidsConfig { get; private set; }
     public FishMovement Movement { get; private set; }
     public FishHunger Hunger { get; private set; }
     public FishEconomy Economy { get; private set; }
@@ -81,9 +82,10 @@ public class FishEntity : MonoBehaviour
         }
     }
 
-    public void Init(IReadOnlyDictionary<Collider2D, FishEntity> fishesCache, FoodPool foodPool, Collider2D thisCollider)
+    public void Init(IReadOnlyDictionary<Collider2D, FishEntity> fishesCache, FoodPool foodPool, Collider2D thisCollider, BoidsConfig boidsConfig)
     {
         _collider = thisCollider;
+        BoidsConfig = boidsConfig;
 
         Hunger = new FishHunger(this);
         Economy = new FishEconomy(this);
@@ -92,5 +94,24 @@ public class FishEntity : MonoBehaviour
         FishVisual = new FishVisual(this, _visualTransform, _spriteRenderer);
 
         _isAlive = true;
+    }
+    
+    private void OnDrawGizmosSelected()
+    {
+        if (Config == null || BoidsConfig == null) return;
+
+        var currentPosition = transform.position;
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(currentPosition, BoidsConfig.NeighborRadius);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(currentPosition, BoidsConfig.SeparationRadius);
+        
+        if (Movement != null && IsAlive)
+        {
+            Gizmos.color = Color.blue;
+            Gizmos.DrawRay(currentPosition, Movement.Velocity);
+        }
     }
 }
