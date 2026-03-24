@@ -44,7 +44,7 @@ namespace Core.Coin
                 .Append(transform.DOMoveY(transform.position.y + 1.5f, 0.5f).SetEase(Ease.OutCubic))
                 .Join(transform.DORotate(new Vector3(0, 360f, 0), 0.5f, RotateMode.FastBeyond360).SetEase(Ease.InOutSine))
                 .Join(_spriteRenderer.DOFade(0f, 0.5f).SetEase(Ease.InQuad))
-                .OnComplete(() => _pool.ReturnCoin(this));
+                .OnComplete(() => _pool.ReturnToPool(this));
         }
 
         private void Collect()

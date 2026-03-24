@@ -6,60 +6,37 @@ using Zenject;
 
 namespace Spawners
 {
-    public class CoinsPool : MonoBehaviour
+    public class CoinsPool : BaseEntityPool<Coin>
     {
         [Inject] private BalanceManager _balanceManager;
         
         private Dictionary<Collider2D, Coin> _coinsCache;
-        private LinkedList<Coin> _activeCoins;
-        private LinkedList<Coin> _freeCoins;
-        private Coin _coinPrefab;
         
         public IReadOnlyDictionary<Collider2D, Coin> CoinsCache => _coinsCache;
 
-        private void Awake()
+        protected override void Awake()
         {
-            _coinPrefab = Resources.Load<Coin>("Prefabs/Coin");
-
-            _activeCoins = new LinkedList<Coin>();
-            _freeCoins = new LinkedList<Coin>();
+            base.Awake();
+            
             _coinsCache = new Dictionary<Collider2D, Coin>();
         }
 
-        public Coin GetCoin(Vector3 position, int value)
+        protected override void LoadPrefab()
         {
-            Coin coin;
-
-            if (_freeCoins.Count > 0)
-            {
-                coin = _freeCoins.First.Value;
-                _freeCoins.RemoveFirst();
-            }
-            else
-            {
-                coin = Instantiate(_coinPrefab, transform, true);
-
-                coin.Init(_balanceManager, this);
-
-                var col = coin.GetComponent<Collider2D>();
-
-                _coinsCache.Add(col, coin);
-            }
-
-            coin.gameObject.SetActive(true);
-            coin.Spawn(position, value);
-
-            _activeCoins.AddLast(coin);
-
-            return coin;
+            Prefab = Resources.Load<Coin>("Prefabs/Coin");
         }
-
-        public void ReturnCoin(Coin coin)
+        
+        protected override void OnItemCreated(Coin item)
         {
-            coin.gameObject.SetActive(false);
+            item.Init(_balanceManager, this); 
+            _coinsCache.Add(item.GetComponent<Collider2D>(), item);
+        }
+        
+        public void SpawnCoin(Vector2 position, int value)
+        {
+            var coin = Get(); 
 
-            _activeCoins.Remove(coin);
-            _freeCoins.AddLast(coin);
+            coin.Spawn(position, value);
         }
     }
 }

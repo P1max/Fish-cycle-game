@@ -16,7 +16,7 @@ public class FishEconomy
 
     private void SpawnCoin()
     {
-        _coinsPool.GetCoin(_fish.transform.position, _fish.Config.IncomeCoins);
+        _coinsPool.SpawnCoin(_fish.transform.position, _fish.Config.IncomeCoins);
     }
 
     public void Reset()

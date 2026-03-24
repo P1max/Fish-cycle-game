@@ -5,22 +5,22 @@ using Random = UnityEngine.Random;
 
 namespace Core.Feed
 {
-    [RequireComponent(typeof(Collider2D))]
     public class FoodPiece : MonoBehaviour
     {
-        private FoodPool _pool;
+        [SerializeField] private float _lifeTime = 30f;
+
         private bool _isConsumed;
-        private float _nutritionValue;
-        private Rigidbody2D _rigidbody;
-        private Collider2D _collider;
         private float _startScale;
+        private float _nutritionValue;
+        private FoodPool _pool;
+        private Sequence _spawnSequence;
+        private Rigidbody2D _rigidbody;
 
         public bool IsConsumed => _isConsumed;
 
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody2D>();
-            _collider = GetComponent<Collider2D>();
             _startScale = transform.localScale.x;
         }
 
@@ -28,7 +28,15 @@ namespace Core.Feed
         {
             transform.DOKill();
 
-            _pool.ReturnFood(this);
+            _pool.ReturnToPool(this);
+        }
+
+        private void RemoveFromAquarium()
+        {
+            _isConsumed = true;
+
+            transform.DOScale(Vector3.zero, 0.2f)
+                .OnComplete(() => _pool.ReturnToPool(this));
         }
 
         public void Consume(FishEntity fish)
@@ -37,51 +45,44 @@ namespace Core.Feed
 
             _isConsumed = true;
 
+            _spawnSequence?.Kill();
+            transform.DOKill();
+
             _rigidbody.bodyType = RigidbodyType2D.Kinematic;
             _rigidbody.linearVelocity = Vector2.zero;
 
             fish.Hunger.Feed(_nutritionValue);
 
-            transform.DOScale(Vector3.zero, 0.2f).OnComplete(ReturnToPool);
+            RemoveFromAquarium();
         }
 
         public void Spawn(Vector2 startPosition, float nutritionValue, float delay)
         {
             _isConsumed = false;
-            transform.position = startPosition;
             _nutritionValue = nutritionValue;
+
+            _spawnSequence?.Kill();
+            transform.DOKill();
+
+            transform.position = startPosition;
             transform.localScale = Vector3.zero;
 
             _rigidbody.bodyType = RigidbodyType2D.Kinematic;
             _rigidbody.linearVelocity = Vector2.zero;
 
-            var sequence = DOTween.Sequence();
-
-            sequence.SetTarget(transform);
-            sequence.SetDelay(delay);
-            sequence.Append(transform.DOScale(_startScale, 0.3f).SetEase(Ease.OutBack));
-
             var waterHitY = startPosition.y - 1.6f;
 
-            sequence.Join(transform.DOMoveY(waterHitY, 0.6f).SetEase(Ease.OutCubic));
-
-            sequence.AppendCallback(() =>
-            {
-                _rigidbody.bodyType = RigidbodyType2D.Dynamic;
-
-                _rigidbody.AddForce(new Vector2(Random.Range(-0.02f, 0.02f), 0), ForceMode2D.Impulse);
-            });
-
-            sequence.AppendInterval(30f);
-
-            sequence.OnComplete(() =>
-            {
-                if (!_isConsumed)
+            _spawnSequence = DOTween.Sequence()
+                .SetDelay(delay)
+                .Append(transform.DOScale(_startScale, 0.3f).SetEase(Ease.OutBack))
+                .Join(transform.DOMoveY(waterHitY, 0.6f).SetEase(Ease.OutCubic))
+                .AppendCallback(() =>
                 {
-                    _isConsumed = true;
-                    transform.DOScale(Vector3.zero, 0.2f).OnComplete(ReturnToPool);
-                }
-            });
+                    _rigidbody.bodyType = RigidbodyType2D.Dynamic;
+                    _rigidbody.AddForce(new Vector2(Random.Range(-0.02f, 0.02f), 0f), ForceMode2D.Impulse);
+                })
+                .AppendInterval(_lifeTime)
+                .OnComplete(RemoveFromAquarium);
         }
 
         public void Init(FoodPool pool)

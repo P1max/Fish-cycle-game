@@ -21,8 +21,6 @@ public class FishHunger
     {
         CurrentHungerPercent -= nutritionValue;
         CurrentHungerPercent = Mathf.Max(CurrentHungerPercent, 0f);
-
-        Debug.Log($"Ням! Голод теперь: {CurrentHungerPercent}");
     }
 
     public void Tick(float deltaTime)

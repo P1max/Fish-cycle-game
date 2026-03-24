@@ -23,7 +23,7 @@ MonoBehaviour:
   SizeModifier: {x: 0.9, y: 1}
   LifetimeSeconds: 120
   HungerGrowthPercentPerSecond: 1
-  BreedChancePercent: 10
-  BreedCooldownSeconds: 12
+  BreedChancePercent: 40
+  BreedCooldownSeconds: 5
   IncomeCoins: 3
   IncomeCooldownSeconds: 12

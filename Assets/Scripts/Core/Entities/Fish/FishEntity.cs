@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using System.Collections.Generic;
+using Core.Entities.Fish.Modules.Breeding;
 using Core.Fish.Modules;
 using Core.Fish.Modules.Visual;
 using Core.Game;
@@ -28,6 +29,7 @@ public class FishEntity : MonoBehaviour
     public FishLifeCycle LifeCycle { get; private set; }
     public FishVisual FishVisual { get; private set; }
     public FishScanner Scanner { get; private set; }
+    public FishBreeding Breeding { get; private set; }
     public float BaseSpeed { get; private set; }
 
     private void Update()
@@ -39,6 +41,7 @@ public class FishEntity : MonoBehaviour
         Hunger.Tick(delta);
         Economy.Tick(delta);
         LifeCycle.Tick(delta);
+        Breeding.Tick(delta);
     }
 
     private void FixedUpdate()
@@ -47,6 +50,25 @@ public class FishEntity : MonoBehaviour
 
         Scanner.Tick();
         Movement.Tick();
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (Config == null || CommonFishConfig == null) return;
+
+        var currentPosition = transform.position;
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(currentPosition, CommonFishConfig.NeighborRadius);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(currentPosition, CommonFishConfig.SeparationRadius);
+
+        if (Movement != null && IsAlive)
+        {
+            Gizmos.color = Color.blue;
+            Gizmos.DrawRay(currentPosition, Movement.Velocity);
+        }
     }
 
     public void Die()
@@ -79,6 +101,7 @@ public class FishEntity : MonoBehaviour
             Hunger.Reset();
             Economy.Reset();
             LifeCycle.Reset();
+            Breeding.Reset();
             FishVisual.ResetVisuals();
             FishVisual.SetSprite(config.Sprite);
 
@@ -90,7 +113,7 @@ public class FishEntity : MonoBehaviour
     }
 
     public void Init(IReadOnlyDictionary<Collider2D, FishEntity> fishesCache, FoodPool foodPool, Collider2D thisCollider,
-        CommonFishConfig commonFishConfig, CoinsPool coinsPool, AquariumBoundsManager aquariumBoundsManager)
+        CommonFishConfig commonFishConfig, CoinsPool coinsPool, AquariumBoundsManager aquariumBoundsManager, BreedManager breedManager)
     {
         _collider = thisCollider;
         CommonFishConfig = commonFishConfig;
@@ -104,26 +127,8 @@ public class FishEntity : MonoBehaviour
 
         FishVisual = new FishVisual(this, _visualTransform, _spriteRenderer);
         Scanner = new FishScanner(this, fishesCache, foodPool, coinsPool);
+        Breeding = new FishBreeding(this, breedManager);
 
         _isAlive = true;
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        if (Config == null || CommonFishConfig == null) return;
-
-        var currentPosition = transform.position;
-
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(currentPosition, CommonFishConfig.NeighborRadius);
-
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(currentPosition, CommonFishConfig.SeparationRadius);
-
-        if (Movement != null && IsAlive)
-        {
-            Gizmos.color = Color.blue;
-            Gizmos.DrawRay(currentPosition, Movement.Velocity);
-        }
     }
 }

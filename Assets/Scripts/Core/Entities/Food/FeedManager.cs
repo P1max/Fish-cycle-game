@@ -41,7 +41,7 @@ namespace Core.Feed
 
             for (var i = 0; i < foodAmount; i++)
             {
-                var food = _foodPool.GetFood();
+                var food = _foodPool.Get();
 
                 var randomX = UnityEngine.Random.Range(topLeft.x + 0.5f, bottomRight.x - 0.5f);
                 var startY = topLeft.y + 0.2f;

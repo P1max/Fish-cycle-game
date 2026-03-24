@@ -1,5 +1,6 @@
 using System;
 using Spawners;
+using UnityEngine;
 
 namespace Core.Game
 {
@@ -20,12 +21,13 @@ namespace Core.Game
 
         public bool CanAddFish => CurrentFishCount < _config.MaxFishCount;
 
-        public bool TryAddFish(string fishId)
+        public bool TryAddFish(string fishId, Vector2 spawnPosition = default)
         {
             if (!CanAddFish) return false;
 
             var fish = _fishPool.GetFish(fishId);
             
+            fish.transform.position = spawnPosition;
             fish.OnReadyToPool += HandleFishDeath;
 
             CurrentFishCount++;

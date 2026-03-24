@@ -33,6 +33,7 @@ namespace Installers
             Container.Bind<FishPool>().FromComponentInHierarchy().AsSingle();
             Container.Bind<CoinsPool>().FromComponentInHierarchy().AsSingle();
             Container.Bind<FoodPool>().FromComponentInHierarchy().AsSingle();
+            Container.Bind<EffectsPool>().FromComponentInHierarchy().AsSingle();
 
             Container.Bind<FeedJarPresenter>().AsSingle().NonLazy();
             Container.Bind<FeedJarView>().FromComponentInHierarchy().AsSingle();
@@ -49,7 +50,9 @@ namespace Installers
             
             Container.Bind<AquariumBounds>().FromComponentInHierarchy().AsSingle();
             Container.Bind<UITankBounds>().FromComponentInHierarchy().AsSingle();
+            
             Container.Bind<AquariumBoundsManager>().AsSingle().NonLazy();
+            Container.Bind<BreedManager>().AsSingle().NonLazy();
 
             Container.BindInterfacesTo<GameBootstrapper>().AsSingle();
         }

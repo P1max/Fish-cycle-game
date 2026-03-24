@@ -17,6 +17,9 @@ public class CommonFishConfig : ScriptableObject, IValidatableConfig
     public float CohesionWeight = 2f;
     public float SeparationWeight = 12.5f;
     
+    [Title("Потомство")]
+    public float PartnerSearchRadius = 1f;
+    
     [Title("Препятствия")]
     public float ObstacleAvoidanceWeight = 30f;
 
@@ -42,6 +45,7 @@ public class CommonFishConfig : ScriptableObject, IValidatableConfig
         BoundsWeight = Mathf.Max(0f, BoundsWeight);
         NeighborRadius = Mathf.Max(0.1f, NeighborRadius);
         SeparationRadius = Mathf.Clamp(SeparationRadius, 0.1f, NeighborRadius);
+        PartnerSearchRadius = Mathf.Clamp(PartnerSearchRadius, 0.1f, NeighborRadius);
         AlignmentWeight = Mathf.Max(0f, AlignmentWeight);
         CohesionWeight = Mathf.Max(0f, CohesionWeight);
         SeparationWeight = Mathf.Max(0f, SeparationWeight);
