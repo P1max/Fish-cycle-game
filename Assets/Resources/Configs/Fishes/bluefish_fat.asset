@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: bluefish_fat
   m_EditorClassIdentifier: 
   Id: bluefish_fat
-  NormalSpeedRange: {x: 0.7, y: 0.85}
+  NormalSpeedRange: {x: 0.7, y: 0.75}
   MaxHungrySpeed: 1.2
   SteerSpeed: 7
   MaxTiltAngle: 20
@@ -21,9 +21,9 @@ MonoBehaviour:
   Type: bluefish
   Price: 300
   SizeModifier: {x: 1.1, y: 1.2}
-  LifetimeSeconds: 120
-  HungerGrowthPercentPerSecond: 1
+  LifetimeSeconds: 50
+  HungerGrowthPercentPerSecond: 1.5
   BreedChancePercent: 8
   BreedCooldownSeconds: 10
-  IncomeCoins: 10
-  IncomeCooldownSeconds: 16
+  IncomeCoins: 20
+  IncomeCooldownSeconds: 14

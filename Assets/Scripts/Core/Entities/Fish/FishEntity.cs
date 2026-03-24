@@ -95,7 +95,8 @@ public class FishEntity : MonoBehaviour
         Hunger = new FishHunger(this);
         Economy = new FishEconomy(this, coinsPool);
         LifeCycle = new FishLifeCycle(this);
-        Movement = new FishMovement(this, fishesCache, foodPool, GetComponent<Rigidbody2D>(), _collider, aquariumBoundsManager);
+        Movement = new FishMovement(this, fishesCache, foodPool, GetComponent<Rigidbody2D>(), _collider,
+            aquariumBoundsManager, coinsPool);
         FishVisual = new FishVisual(this, _visualTransform, _spriteRenderer);
 
         _isAlive = true;

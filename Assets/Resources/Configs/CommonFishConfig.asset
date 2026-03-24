@@ -21,7 +21,7 @@ MonoBehaviour:
   AlignmentWeight: 5
   CohesionWeight: 2
   SeparationWeight: 140
-  ObstacleAvoidanceWeight: 30
+  ObstacleAvoidanceWeight: 140
   FoodWeight: 60
   FoodSearchRadius: 4
   EatTimer: {x: 2, y: 3}

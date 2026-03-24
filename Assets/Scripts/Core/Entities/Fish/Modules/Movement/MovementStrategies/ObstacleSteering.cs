@@ -1,15 +1,18 @@
+using Spawners;
 using UnityEngine;
 
 namespace Core.Fish.BoidStrategies
 {
     public class ObstacleSteering : ISteeringBehavior
     {
-        private static readonly Collider2D[] _overlapResults = new Collider2D[64];
+        private static readonly Collider2D[] _overlapResults = new Collider2D[100];
         private readonly ContactFilter2D _filter;
+        private readonly CoinsPool _coinsPool;
 
-        public ObstacleSteering()
+        public ObstacleSteering(CoinsPool coinsPool)
         {
             _filter = new ContactFilter2D().NoFilter();
+            _coinsPool = coinsPool;
         }
 
         public Vector2 CalculateSteering(FishEntity fish)
@@ -27,8 +30,14 @@ namespace Core.Fish.BoidStrategies
                 var isObstacle = false;
 
                 if (fish.Movement.FishesCache.TryGetValue(col, out var otherFish))
+                {
                     if (!otherFish.IsAlive)
                         isObstacle = true;
+                }
+                else if (_coinsPool.CoinsCache.TryGetValue(col, out var coin))
+                {
+                    isObstacle = true;
+                }
 
                 if (isObstacle)
                 {

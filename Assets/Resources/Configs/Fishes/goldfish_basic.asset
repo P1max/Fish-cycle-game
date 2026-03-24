@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: goldfish_basic
   m_EditorClassIdentifier: 
   Id: goldfish_basic
-  NormalSpeedRange: {x: 1, y: 1.2}
+  NormalSpeedRange: {x: 0.9, y: 1.1}
   MaxHungrySpeed: 1.6
   SteerSpeed: 7
   MaxTiltAngle: 20
