@@ -103,7 +103,7 @@ public class FishEntity : MonoBehaviour
             aquariumBoundsManager);
 
         FishVisual = new FishVisual(this, _visualTransform, _spriteRenderer);
-        Scanner = new FishScanner(this,  fishesCache, foodPool, coinsPool);
+        Scanner = new FishScanner(this, fishesCache, foodPool, coinsPool);
 
         _isAlive = true;
     }

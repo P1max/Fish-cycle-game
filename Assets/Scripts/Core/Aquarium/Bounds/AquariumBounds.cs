@@ -6,7 +6,9 @@ using Zenject;
 public class AquariumBounds : MonoBehaviour
 {
     [Inject] private AquariumBoundsManager _boundsManager;
-    
+
+    [SerializeField] private float _thickness = 1f;
+
     private EdgeCollider2D _edgeCollider;
 
     private void Awake()
@@ -30,11 +32,13 @@ public class AquariumBounds : MonoBehaviour
     {
         var bounds = _boundsManager.WorldBounds;
 
-        var bottomLeft = new Vector2(bounds.xMin, bounds.yMin);
-        var topLeft = new Vector2(bounds.xMin, bounds.yMax);
-        var topRight = new Vector2(bounds.xMax, bounds.yMax);
-        var bottomRight = new Vector2(bounds.xMax, bounds.yMin);
+        var bottomLeft = new Vector2(bounds.xMin - _thickness, bounds.yMin - _thickness);
+        var topLeft = new Vector2(bounds.xMin - _thickness, bounds.yMax + _thickness);
+        var topRight = new Vector2(bounds.xMax + _thickness, bounds.yMax + _thickness);
+        var bottomRight = new Vector2(bounds.xMax + _thickness, bounds.yMin - _thickness);
 
         _edgeCollider.points = new[] { bottomLeft, topLeft, topRight, bottomRight, bottomLeft };
+
+        _edgeCollider.edgeRadius = _thickness;
     }
 }
