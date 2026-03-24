@@ -26,4 +26,4 @@ MonoBehaviour:
   BreedChancePercent: 10
   BreedCooldownSeconds: 12
   IncomeCoins: 3
-  IncomeCooldownSeconds: 5
+  IncomeCooldownSeconds: 12

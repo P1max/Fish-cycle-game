@@ -25,5 +25,5 @@ MonoBehaviour:
   HungerGrowthPercentPerSecond: 1
   BreedChancePercent: 8
   BreedCooldownSeconds: 10
-  IncomeCoins: 8
-  IncomeCooldownSeconds: 6
+  IncomeCoins: 10
+  IncomeCooldownSeconds: 16

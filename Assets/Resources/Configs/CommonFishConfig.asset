@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CommonFishConfig
   m_EditorClassIdentifier: 
   MarginXSides: 0.2
-  MarginTop: 0.2
+  MarginTop: 0.1
   MarginBottom: 0.1
   BoundsWeight: 80
   NeighborRadius: 2

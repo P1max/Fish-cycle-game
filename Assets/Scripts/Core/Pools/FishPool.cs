@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Core.Game;
 using Core.Loaders;
 using UnityEngine;
 using Zenject;
@@ -11,6 +12,7 @@ namespace Spawners
         [Inject] private CoinsPool _coinsPool;
         [Inject] private CommonFishConfig _commonFishConfig;
         [Inject] private FishesLoader _fishesLoader;
+        [Inject] private AquariumBoundsManager _aquariumBoundsManager;
 
         private Dictionary<Collider2D, FishEntity> _fishesCache;
         private LinkedList<FishEntity> _activeFishes;
@@ -52,7 +54,7 @@ namespace Spawners
 
                 _fishesCache.Add(col, fish);
 
-                fish.Init(_fishesCache, _foodPool, col, _commonFishConfig, _coinsPool);
+                fish.Init(_fishesCache, _foodPool, col, _commonFishConfig, _coinsPool, _aquariumBoundsManager);
 
                 fish.OnReturnedToPool += ReturnFish;
             }

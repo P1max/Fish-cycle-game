@@ -46,6 +46,10 @@ namespace Installers
             Container.BindInterfacesAndSelfTo<FeedManager>().AsSingle();
             Container.Bind<FishesManager>().AsSingle().NonLazy();
             Container.Bind<BalanceManager>().AsSingle().NonLazy();
+            
+            Container.Bind<AquariumBounds>().FromComponentInHierarchy().AsSingle();
+            Container.Bind<UITankBounds>().FromComponentInHierarchy().AsSingle();
+            Container.Bind<AquariumBoundsManager>().AsSingle().NonLazy();
 
             Container.BindInterfacesTo<GameBootstrapper>().AsSingle();
         }

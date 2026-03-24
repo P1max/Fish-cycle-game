@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Core.Fish.BoidStrategies;
+using Core.Game;
 using Spawners;
 using UnityEngine;
 
@@ -18,7 +19,7 @@ public class FishMovement
     public Vector2 Velocity => _velocity;
 
     public FishMovement(FishEntity fishEntity, IReadOnlyDictionary<Collider2D, FishEntity> fishesCache, FoodPool foodPool,
-        Rigidbody2D rigidbody, Collider2D collider)
+        Rigidbody2D rigidbody, Collider2D collider, AquariumBoundsManager aquariumBoundsManager)
     {
         _fishEntity = fishEntity;
         FishesCache = fishesCache;
@@ -26,7 +27,7 @@ public class FishMovement
 
         _behaviors = new ISteeringBehavior[]
         {
-            new BoundsSteering(Camera.main),
+            new BoundsSteering(aquariumBoundsManager),
             new ObstacleSteering(),
             new WanderSteering(),
             new BoidsSteering(),

@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using System.Collections.Generic;
 using Core.Fish.Modules.Visual;
+using Core.Game;
 using Spawners;
 using Random = UnityEngine.Random;
 
@@ -86,7 +87,7 @@ public class FishEntity : MonoBehaviour
     }
 
     public void Init(IReadOnlyDictionary<Collider2D, FishEntity> fishesCache, FoodPool foodPool, Collider2D thisCollider,
-        CommonFishConfig commonFishConfig, CoinsPool coinsPool)
+        CommonFishConfig commonFishConfig, CoinsPool coinsPool, AquariumBoundsManager aquariumBoundsManager)
     {
         _collider = thisCollider;
         CommonFishConfig = commonFishConfig;
@@ -94,7 +95,7 @@ public class FishEntity : MonoBehaviour
         Hunger = new FishHunger(this);
         Economy = new FishEconomy(this, coinsPool);
         LifeCycle = new FishLifeCycle(this);
-        Movement = new FishMovement(this, fishesCache, foodPool, GetComponent<Rigidbody2D>(), _collider);
+        Movement = new FishMovement(this, fishesCache, foodPool, GetComponent<Rigidbody2D>(), _collider, aquariumBoundsManager);
         FishVisual = new FishVisual(this, _visualTransform, _spriteRenderer);
 
         _isAlive = true;
