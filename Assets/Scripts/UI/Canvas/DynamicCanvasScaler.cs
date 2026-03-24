@@ -12,6 +12,7 @@ public class DynamicCanvasScaler : MonoBehaviour
     private void Awake()
     {
         _canvasScaler = GetComponent<CanvasScaler>();
+        
         ApplyCorrection();
     }
 
@@ -32,7 +33,6 @@ public class DynamicCanvasScaler : MonoBehaviour
             return;
 
         var screenRatio = (float)Screen.width / Screen.height;
-
         var targetRatio = _canvasScaler.referenceResolution.x / _canvasScaler.referenceResolution.y;
 
         _canvasScaler.matchWidthOrHeight = screenRatio < targetRatio ? 0f : 1f;

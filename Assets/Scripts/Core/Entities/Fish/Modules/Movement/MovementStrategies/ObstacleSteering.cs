@@ -1,57 +1,22 @@
-using Spawners;
 using UnityEngine;
 
 namespace Core.Fish.BoidStrategies
 {
     public class ObstacleSteering : ISteeringBehavior
     {
-        private static readonly Collider2D[] _overlapResults = new Collider2D[100];
-        private readonly ContactFilter2D _filter;
-        private readonly CoinsPool _coinsPool;
-
-        public ObstacleSteering(CoinsPool coinsPool)
-        {
-            _filter = new ContactFilter2D().NoFilter();
-            _coinsPool = coinsPool;
-        }
-
         public Vector2 CalculateSteering(FishEntity fish)
         {
             var avoidance = Vector2.zero;
             var obstacleCount = 0;
-            var count = Physics2D.OverlapCircle(fish.transform.position, fish.CommonFishConfig.SeparationRadius, _filter, _overlapResults);
 
-            for (var i = 0; i < count; i++)
+            foreach (var deadFish in fish.Scanner.NearbyDeadFishes)
             {
-                var col = _overlapResults[i];
+                avoidance += CalculateRepulsion(fish, deadFish.transform.position, ref obstacleCount);
+            }
 
-                if (col.gameObject == fish.gameObject) continue;
-
-                var isObstacle = false;
-
-                if (fish.Movement.FishesCache.TryGetValue(col, out var otherFish))
-                {
-                    if (!otherFish.IsAlive)
-                        isObstacle = true;
-                }
-                else if (_coinsPool.CoinsCache.TryGetValue(col, out var coin))
-                {
-                    isObstacle = true;
-                }
-
-                if (isObstacle)
-                {
-                    var diff = (Vector2)fish.transform.position - (Vector2)col.transform.position;
-                    var distance = diff.magnitude;
-
-                    if (distance < fish.CommonFishConfig.SeparationRadius && distance > 0)
-                    {
-                        var repulsionForce = 1f - (distance / fish.CommonFishConfig.SeparationRadius);
-
-                        avoidance += diff.normalized * repulsionForce;
-                        obstacleCount++;
-                    }
-                }
+            foreach (var coin in fish.Scanner.NearbyCoins)
+            {
+                avoidance += CalculateRepulsion(fish, coin.transform.position, ref obstacleCount);
             }
 
             if (obstacleCount > 0)
@@ -60,6 +25,23 @@ namespace Core.Fish.BoidStrategies
             }
 
             return avoidance;
+        }
+
+        private Vector2 CalculateRepulsion(FishEntity fish, Vector3 targetPos, ref int obstacleCount)
+        {
+            var diff = fish.transform.position - targetPos;
+            var distance = diff.magnitude;
+
+            if (distance < fish.CommonFishConfig.SeparationRadius && distance > 0)
+            {
+                obstacleCount++;
+
+                var repulsionForce = 1f - (distance / fish.CommonFishConfig.SeparationRadius);
+
+                return diff.normalized * repulsionForce;
+            }
+
+            return Vector2.zero;
         }
     }
 }

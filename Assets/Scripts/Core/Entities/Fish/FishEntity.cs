@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using System.Collections.Generic;
+using Core.Fish.Modules;
 using Core.Fish.Modules.Visual;
 using Core.Game;
 using Spawners;
@@ -26,6 +27,7 @@ public class FishEntity : MonoBehaviour
     public FishEconomy Economy { get; private set; }
     public FishLifeCycle LifeCycle { get; private set; }
     public FishVisual FishVisual { get; private set; }
+    public FishScanner Scanner { get; private set; }
     public float BaseSpeed { get; private set; }
 
     private void Update()
@@ -43,6 +45,7 @@ public class FishEntity : MonoBehaviour
     {
         if (!_isAlive) return;
 
+        Scanner.Tick();
         Movement.Tick();
     }
 
@@ -95,9 +98,12 @@ public class FishEntity : MonoBehaviour
         Hunger = new FishHunger(this);
         Economy = new FishEconomy(this, coinsPool);
         LifeCycle = new FishLifeCycle(this);
-        Movement = new FishMovement(this, fishesCache, foodPool, GetComponent<Rigidbody2D>(), _collider,
-            aquariumBoundsManager, coinsPool);
+
+        Movement = new FishMovement(this, GetComponent<Rigidbody2D>(), _collider,
+            aquariumBoundsManager);
+
         FishVisual = new FishVisual(this, _visualTransform, _spriteRenderer);
+        Scanner = new FishScanner(this,  fishesCache, foodPool, coinsPool);
 
         _isAlive = true;
     }
