@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 250472cdea0b4255a5e37888477a0ea0, type: 3}
+  m_Name: _GameConfigs
+  m_EditorClassIdentifier: 
+  UseJsonConfig: 0
+  Aquarium: {fileID: 11400000, guid: 5dbe7dfd146a81c429155134efba1d8e, type: 2}
+  Feeder: {fileID: 11400000, guid: 39ddfe5547b2e5a47868ec73f377a7a6, type: 2}
+  CommonFish: {fileID: 11400000, guid: 1644800116385d0419d223bb6b7c858a, type: 2}
+  Conveyor: {fileID: 11400000, guid: 4a750eb6283c694439ba8e470bfe15ad, type: 2}
+  FishesDatabase: {fileID: 11400000, guid: 44e32b3e8b6ab834094a1addb34d7369, type: 2}
+  JsonFile: {fileID: 0}

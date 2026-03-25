@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cf27615ed574e25ae191f890cbbf345, type: 3}
+  m_Name: FishesDatabaseConfig
+  m_EditorClassIdentifier: 
+  Fishes:
+  - Id: goldfish_basic
+    Type: goldfish
+    Price: 100
+    Sprite: {fileID: 223742739620255397, guid: 2614568ab893bcd44aacff75891ebbcd, type: 3}
+    NormalSpeedRange: {x: 0.9, y: 1.1}
+    MaxHungrySpeed: 1.6
+    SteerSpeed: 7
+    MaxTiltAngle: 20
+    SizeModifier: {x: 0.9, y: 1}
+    LifetimeSeconds: 90
+    HungerGrowthPercentPerSecond: 1
+    BreedChancePercent: 20
+    BreedCooldownSeconds: 12
+    IncomeCoins: 3
+    IncomeCooldownSeconds: 10
+  - Id: pinkfish_fit
+    Type: pinkfish
+    Price: 250
+    Sprite: {fileID: -6109183866432475690, guid: b37b99657144e8e43b2ffc484d2bc392, type: 3}
+    NormalSpeedRange: {x: 1.1, y: 1.3}
+    MaxHungrySpeed: 1.8
+    SteerSpeed: 7
+    MaxTiltAngle: 20
+    SizeModifier: {x: 0.7, y: 0.8}
+    LifetimeSeconds: 70
+    HungerGrowthPercentPerSecond: 0.4
+    BreedChancePercent: 15
+    BreedCooldownSeconds: 11
+    IncomeCoins: 10
+    IncomeCooldownSeconds: 14
+  - Id: bluefish_fat
+    Type: bluefish
+    Price: 300
+    Sprite: {fileID: -3803863093779294543, guid: a17ccf93abad92c41ba955bc32a6e2b6, type: 3}
+    NormalSpeedRange: {x: 1.5, y: 2}
+    MaxHungrySpeed: 3
+    SteerSpeed: 7
+    MaxTiltAngle: 20
+    SizeModifier: {x: 1.1, y: 1.2}
+    LifetimeSeconds: 100
+    HungerGrowthPercentPerSecond: 0.1
+    BreedChancePercent: 14
+    BreedCooldownSeconds: 15
+    IncomeCoins: 30
+    IncomeCooldownSeconds: 18
