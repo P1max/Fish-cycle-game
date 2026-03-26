@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: AquariumConfig
   m_EditorClassIdentifier: 
   StartCoins: 300
-  StartFishCount: 5
+  StartFishCount: 3
   MaxFishCount: 10

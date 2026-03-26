@@ -16,5 +16,7 @@ namespace UI
             
             fishesManager.OnFishCountChanged += _view.SetCurrentFishesCount;
         }
+
+        public void PlayLimitReachedAnimation() => _view.PlayLimitReachedAnimation();
     }
 }

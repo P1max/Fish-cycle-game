@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6befd2bfa616457f94eb2fa481432e2c, type: 3}
   m_Name: ConveyorConfig
   m_EditorClassIdentifier: 
-  ConveyorSpeed: 70
+  ConveyorSpeed: 80
   ItemSpacing: 25
   FreeQualityRange: {x: 0.3, y: 0.7}
   DefaultFishQuality: 1
-  DefaultQualityCoinsRange: {x: 100, y: 500}
-  UpgradeFishQualityRange: {x: 2, y: 8}
-  UpgradeQualityCoinsRange: {x: 500, y: 5000}
+  DefaultQualityCoinsRange: {x: 100, y: 1000}
+  UpgradeFishQualityRange: {x: 2, y: 4}
+  UpgradeQualityCoinsRange: {x: 1000, y: 20000}

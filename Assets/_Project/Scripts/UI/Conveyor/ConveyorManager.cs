@@ -3,6 +3,7 @@ using System.Linq;
 using Core.Configs;
 using Core.Game;
 using Core.Loaders;
+using UI.MoneyCounter;
 using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
@@ -17,6 +18,8 @@ namespace UI.Conveyor
         [Inject] private BalanceManager _balance;
         [Inject] private FishesManager _aquarium;
         [Inject] private FishesLoader _fishesLoader;
+        [Inject] private FishesCounterPresenter _fishesCounterPresenter;
+        [Inject] private CoinsCounterPresenter _coinsCounterPresenter;
 
         private List<FishItemView> _items;
         private List<string> _allFishIds;
@@ -129,8 +132,6 @@ namespace UI.Conveyor
 
                 ReRollItem(rightmostItem);
 
-                rightmostItem.gameObject.SetActive(true);
-
                 _items.RemoveAt(0);
                 _items.Add(rightmostItem);
             }
@@ -138,7 +139,7 @@ namespace UI.Conveyor
 
         private float CalculateQuality(int coins)
         {
-            if (coins <= 0)
+            if (coins <= 100 && _aquarium.CurrentFishCount < 1)
                 return Random.Range(_config.FreeQualityRange.x, _config.FreeQualityRange.y);
 
             if (coins <= _config.DefaultQualityCoinsRange.y)
@@ -157,29 +158,39 @@ namespace UI.Conveyor
             var quality = CalculateQuality(_balance.CurrentCoinsCount);
             var lifeTime = baseConfig.LifetimeSeconds * quality;
             var income = Mathf.RoundToInt(baseConfig.IncomeCoins * quality);
-            var price = Mathf.RoundToInt(baseConfig.Price * quality);
+            var price = quality <= _config.FreeQualityRange.y ? 0 : Mathf.RoundToInt(baseConfig.Price * quality);
 
             if (_balance.CurrentCoinsCount <= 0) price = 0;
 
             view.SetData(baseConfig.Sprite, lifeTime, income, price);
-            view.SetButtonAction(() => TryBuyFish(view, randomId, quality, price));
+
+            view.SetButtonAction(isPurchased =>
+            {
+                if (!isPurchased) TryBuyFish(view, randomId, quality, price);
+            });
         }
 
         private void TryBuyFish(FishItemView view, string fishId, float quality, int price)
         {
             if (!_aquarium.CanAddFish)
             {
+                _fishesCounterPresenter.PlayLimitReachedAnimation();
                 view.PlayShakeAnimation();
 
                 return;
             }
 
-            if (price <= 0 || _balance.TrySpendCoins(price))
+            if (!_balance.TrySpendCoins(price))
             {
-                _aquarium.TryAddFish(fishId, quality);
+                _coinsCounterPresenter.PlayNotEnoughMoneyAnimation();
+                view.PlayShakeAnimation();
 
-                view.gameObject.SetActive(false);
+                return;
             }
+
+            _aquarium.TryAddFish(fishId, quality);
+
+            view.SetPurchasedState();
         }
     }
 }

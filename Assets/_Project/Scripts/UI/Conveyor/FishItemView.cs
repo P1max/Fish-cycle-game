@@ -13,22 +13,32 @@ namespace UI.Conveyor
         [SerializeField] private TextMeshProUGUI _fishPrice;
         [SerializeField] private Button _button;
         [SerializeField] private RectTransform _rect;
+        [SerializeField] private TextMeshProUGUI _purchasedText;
 
-        private Action _buyAction;
-        
+        private Action<bool> _buyAction;
+        private bool _purchased;
+
         public RectTransform Rect => _rect;
 
         private void Awake()
         {
-            _button.onClick.AddListener(() => _buyAction?.Invoke());
+            _button.onClick.AddListener(() => _buyAction?.Invoke(_purchased));
         }
 
         public void PlayShakeAnimation()
         {
-            
         }
 
-        public void SetButtonAction(Action action)
+        public void SetPurchasedState()
+        {
+            _purchased = true;
+            
+            _fishSprite.color = new Color32(255, 255, 255, 0);
+
+            _purchasedText.gameObject.SetActive(true);
+        }
+
+        public void SetButtonAction(Action<bool> action)
         {
             _buyAction = action;
         }
@@ -36,9 +46,14 @@ namespace UI.Conveyor
         public void SetData(Sprite sprite, float lifeTime, int income, int fishPrice)
         {
             _fishSprite.sprite = sprite;
+            _fishSprite.color = new Color32(255, 255, 255, 255);
             _lifeTimeText.text = $"{lifeTime} s";
             _incomeText.text = $"{income} $/s";
             _fishPrice.text = fishPrice.ToString();
+
+
+            _purchased = false;
+            _purchasedText.gameObject.SetActive(false);
         }
     }
 }

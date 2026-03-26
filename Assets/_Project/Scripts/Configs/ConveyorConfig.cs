@@ -16,9 +16,9 @@ namespace Core.Configs
         [LabelText("Отступ (Item Spacing)")]
         public float ItemSpacing = 250f;
 
-        [BoxGroup("Качество: Бесплатные (Баланс 0)")]
+        [BoxGroup("Качество: Бесплатные")]
         [JsonProperty("freeFishQuality")]
-        [LabelText("Диапазон качества (0 монет)")]
+        [LabelText("Диапазон качества (Бесплатный)")]
         public Vector2 FreeQualityRange = new(0.3f, 0.7f);
 
         [BoxGroup("Качество: Обычные")]
@@ -41,9 +41,28 @@ namespace Core.Configs
         [LabelText("Диапазон монет (Улучшенный)")]
         public Vector2 UpgradeQualityCoinsRange = new(500, 50000);
 
+        private void OnValidate()
+        {
+            ValidateData();
+        }
+
         public void ValidateData()
         {
             ConveyorSpeed = Mathf.Max(0.1f, ConveyorSpeed);
+            ItemSpacing = Mathf.Max(0f, ItemSpacing);
+            DefaultFishQuality = Mathf.Max(0.1f, DefaultFishQuality);
+
+            FreeQualityRange.x = Mathf.Max(0.1f, FreeQualityRange.x);
+            FreeQualityRange.y = Mathf.Max(FreeQualityRange.x, FreeQualityRange.y);
+
+            DefaultQualityCoinsRange.x = Mathf.Max(1f, DefaultQualityCoinsRange.x);
+            DefaultQualityCoinsRange.y = Mathf.Max(DefaultQualityCoinsRange.x + 1f, DefaultQualityCoinsRange.y);
+
+            UpgradeQualityCoinsRange.x = DefaultQualityCoinsRange.y; 
+            UpgradeQualityCoinsRange.y = Mathf.Max(UpgradeQualityCoinsRange.x + 1f, UpgradeQualityCoinsRange.y);
+            
+            UpgradeFishQualityRange.x = Mathf.Max(DefaultFishQuality, UpgradeFishQualityRange.x);
+            UpgradeFishQualityRange.y = Mathf.Max(UpgradeFishQualityRange.x, UpgradeFishQualityRange.y);
         }
     }
 }

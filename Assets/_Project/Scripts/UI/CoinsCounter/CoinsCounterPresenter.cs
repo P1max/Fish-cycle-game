@@ -16,5 +16,7 @@ namespace UI.MoneyCounter
             
             _view.SetCurrentCoinsCount(_balanceManager.CurrentCoinsCount);
         }
+        
+        public void PlayNotEnoughMoneyAnimation() => _view.PlayNotEnoughMoneyAnimation();
     }
 }
