@@ -13,6 +13,36 @@ MonoBehaviour:
   m_Name: FishesDatabaseConfig
   m_EditorClassIdentifier: 
   Fishes:
+  - Id: alex
+    Type: goldfish
+    Price: 100
+    Sprite: {fileID: -222218625211863217, guid: 2af9b093b3a3bd347b3ae1bf25f046a3, type: 3}
+    NormalSpeedRange: {x: 0.9, y: 1.1}
+    MaxHungrySpeed: 1.6
+    SteerSpeed: 7
+    MaxTiltAngle: 20
+    SizeModifier: {x: 0.75, y: 0.85}
+    LifetimeSeconds: 90
+    HungerGrowthPercentPerSecond: 1
+    BreedChancePercent: 20
+    BreedCooldownSeconds: 12
+    IncomeCoins: 3
+    IncomeCooldownSeconds: 10
+  - Id: anjela
+    Type: goldfish
+    Price: 100
+    Sprite: {fileID: -4883325033515039919, guid: c0da84a380956d641ad279a36801f8f5, type: 3}
+    NormalSpeedRange: {x: 0.9, y: 1.1}
+    MaxHungrySpeed: 1.6
+    SteerSpeed: 7
+    MaxTiltAngle: 20
+    SizeModifier: {x: 0.75, y: 0.85}
+    LifetimeSeconds: 90
+    HungerGrowthPercentPerSecond: 1
+    BreedChancePercent: 20
+    BreedCooldownSeconds: 12
+    IncomeCoins: 3
+    IncomeCooldownSeconds: 10
   - Id: goldfish_basic
     Type: goldfish
     Price: 100
@@ -28,7 +58,202 @@ MonoBehaviour:
     BreedCooldownSeconds: 12
     IncomeCoins: 3
     IncomeCooldownSeconds: 10
-  - Id: pinkfish_fit
+  - Id: arnold
+    Type: goldfish
+    Price: 100
+    Sprite: {fileID: -994488155361241586, guid: 1f22d50f192062541bee0110eaa9d342, type: 3}
+    NormalSpeedRange: {x: 0.9, y: 1.1}
+    MaxHungrySpeed: 1.6
+    SteerSpeed: 7
+    MaxTiltAngle: 20
+    SizeModifier: {x: 0.75, y: 0.85}
+    LifetimeSeconds: 90
+    HungerGrowthPercentPerSecond: 1
+    BreedChancePercent: 20
+    BreedCooldownSeconds: 12
+    IncomeCoins: 3
+    IncomeCooldownSeconds: 10
+  - Id: bob
+    Type: goldfish
+    Price: 100
+    Sprite: {fileID: 5899847947390980637, guid: df5ee6f2075166041b9c626e873e07a8, type: 3}
+    NormalSpeedRange: {x: 0.9, y: 1.1}
+    MaxHungrySpeed: 1.6
+    SteerSpeed: 7
+    MaxTiltAngle: 20
+    SizeModifier: {x: 0.75, y: 0.85}
+    LifetimeSeconds: 90
+    HungerGrowthPercentPerSecond: 1
+    BreedChancePercent: 20
+    BreedCooldownSeconds: 12
+    IncomeCoins: 3
+    IncomeCooldownSeconds: 10
+  - Id: don
+    Type: goldfish
+    Price: 100
+    Sprite: {fileID: -50035154117627066, guid: c289bb986bdd30348a4304409b1a082a, type: 3}
+    NormalSpeedRange: {x: 0.9, y: 1.1}
+    MaxHungrySpeed: 1.6
+    SteerSpeed: 7
+    MaxTiltAngle: 20
+    SizeModifier: {x: 0.75, y: 0.85}
+    LifetimeSeconds: 90
+    HungerGrowthPercentPerSecond: 1
+    BreedChancePercent: 20
+    BreedCooldownSeconds: 12
+    IncomeCoins: 3
+    IncomeCooldownSeconds: 10
+  - Id: rada
+    Type: goldfish
+    Price: 100
+    Sprite: {fileID: -4750768246309230181, guid: d17ca602f6475ae45a73bd4411caf06a, type: 3}
+    NormalSpeedRange: {x: 0.9, y: 1.1}
+    MaxHungrySpeed: 1.6
+    SteerSpeed: 7
+    MaxTiltAngle: 20
+    SizeModifier: {x: 0.75, y: 0.85}
+    LifetimeSeconds: 90
+    HungerGrowthPercentPerSecond: 1
+    BreedChancePercent: 20
+    BreedCooldownSeconds: 12
+    IncomeCoins: 3
+    IncomeCooldownSeconds: 10
+  - Id: guf
+    Type: goldfish
+    Price: 100
+    Sprite: {fileID: -3808209942748953583, guid: 548b2669749cd5f41a5bbf1ef1ac885c, type: 3}
+    NormalSpeedRange: {x: 0.9, y: 1.1}
+    MaxHungrySpeed: 1.6
+    SteerSpeed: 7
+    MaxTiltAngle: 20
+    SizeModifier: {x: 0.75, y: 0.85}
+    LifetimeSeconds: 90
+    HungerGrowthPercentPerSecond: 1
+    BreedChancePercent: 20
+    BreedCooldownSeconds: 12
+    IncomeCoins: 3
+    IncomeCooldownSeconds: 10
+  - Id: henri
+    Type: goldfish
+    Price: 100
+    Sprite: {fileID: -898784395450028382, guid: 80c89cb77cbddb44d81f6fcfa9ea4094, type: 3}
+    NormalSpeedRange: {x: 0.9, y: 1.1}
+    MaxHungrySpeed: 1.6
+    SteerSpeed: 7
+    MaxTiltAngle: 20
+    SizeModifier: {x: 0.75, y: 0.85}
+    LifetimeSeconds: 90
+    HungerGrowthPercentPerSecond: 1
+    BreedChancePercent: 20
+    BreedCooldownSeconds: 12
+    IncomeCoins: 3
+    IncomeCooldownSeconds: 10
+  - Id: rostik
+    Type: goldfish
+    Price: 100
+    Sprite: {fileID: -7594075220088317876, guid: 712345a6c772d7249812550faba9e326, type: 3}
+    NormalSpeedRange: {x: 0.9, y: 1.1}
+    MaxHungrySpeed: 1.6
+    SteerSpeed: 7
+    MaxTiltAngle: 20
+    SizeModifier: {x: 0.75, y: 0.85}
+    LifetimeSeconds: 90
+    HungerGrowthPercentPerSecond: 1
+    BreedChancePercent: 20
+    BreedCooldownSeconds: 12
+    IncomeCoins: 3
+    IncomeCooldownSeconds: 10
+  - Id: jorj
+    Type: goldfish
+    Price: 100
+    Sprite: {fileID: -7719252563467750587, guid: 6b5da091fe83bec44b3e2e40c54a202c, type: 3}
+    NormalSpeedRange: {x: 0.9, y: 1.1}
+    MaxHungrySpeed: 1.6
+    SteerSpeed: 7
+    MaxTiltAngle: 20
+    SizeModifier: {x: 0.75, y: 0.85}
+    LifetimeSeconds: 90
+    HungerGrowthPercentPerSecond: 1
+    BreedChancePercent: 20
+    BreedCooldownSeconds: 12
+    IncomeCoins: 3
+    IncomeCooldownSeconds: 10
+  - Id: kreg
+    Type: goldfish
+    Price: 100
+    Sprite: {fileID: -5228351262240428557, guid: aa51135779cc59049888ba02c09c2837, type: 3}
+    NormalSpeedRange: {x: 0.9, y: 1.1}
+    MaxHungrySpeed: 1.6
+    SteerSpeed: 7
+    MaxTiltAngle: 20
+    SizeModifier: {x: 0.75, y: 0.85}
+    LifetimeSeconds: 90
+    HungerGrowthPercentPerSecond: 1
+    BreedChancePercent: 20
+    BreedCooldownSeconds: 12
+    IncomeCoins: 3
+    IncomeCooldownSeconds: 10
+  - Id: lolita
+    Type: goldfish
+    Price: 100
+    Sprite: {fileID: 7560709110574160751, guid: cac25c9ee0c8c2e429df36da9d2889a7, type: 3}
+    NormalSpeedRange: {x: 0.9, y: 1.1}
+    MaxHungrySpeed: 1.6
+    SteerSpeed: 7
+    MaxTiltAngle: 20
+    SizeModifier: {x: 0.75, y: 0.85}
+    LifetimeSeconds: 90
+    HungerGrowthPercentPerSecond: 1
+    BreedChancePercent: 20
+    BreedCooldownSeconds: 12
+    IncomeCoins: 3
+    IncomeCooldownSeconds: 10
+  - Id: mr fish
+    Type: goldfish
+    Price: 100
+    Sprite: {fileID: 2338302899981648393, guid: 5e9bfcc927576264e90340f5bc2a103e, type: 3}
+    NormalSpeedRange: {x: 0.9, y: 1.1}
+    MaxHungrySpeed: 1.6
+    SteerSpeed: 7
+    MaxTiltAngle: 20
+    SizeModifier: {x: 0.75, y: 0.85}
+    LifetimeSeconds: 90
+    HungerGrowthPercentPerSecond: 1
+    BreedChancePercent: 20
+    BreedCooldownSeconds: 12
+    IncomeCoins: 3
+    IncomeCooldownSeconds: 10
+  - Id: vitalya
+    Type: goldfish
+    Price: 100
+    Sprite: {fileID: -6314339103545763668, guid: 6a90c651748358146a1a9f1089ed153e, type: 3}
+    NormalSpeedRange: {x: 0.9, y: 1.1}
+    MaxHungrySpeed: 1.6
+    SteerSpeed: 7
+    MaxTiltAngle: 20
+    SizeModifier: {x: 0.75, y: 0.85}
+    LifetimeSeconds: 90
+    HungerGrowthPercentPerSecond: 1
+    BreedChancePercent: 20
+    BreedCooldownSeconds: 12
+    IncomeCoins: 3
+    IncomeCooldownSeconds: 10
+  - Id: tom
+    Type: goldfish
+    Price: 100
+    Sprite: {fileID: 5820220284585779677, guid: 44479bfa566e61647b9b3e17d96e2a67, type: 3}
+    NormalSpeedRange: {x: 0.9, y: 1.1}
+    MaxHungrySpeed: 1.6
+    SteerSpeed: 7
+    MaxTiltAngle: 20
+    SizeModifier: {x: 0.75, y: 0.85}
+    LifetimeSeconds: 90
+    HungerGrowthPercentPerSecond: 1
+    BreedChancePercent: 20
+    BreedCooldownSeconds: 12
+    IncomeCoins: 3
+    IncomeCooldownSeconds: 10
+  - Id: kira
     Type: pinkfish
     Price: 250
     Sprite: {fileID: -6109183866432475690, guid: b37b99657144e8e43b2ffc484d2bc392, type: 3}
@@ -43,7 +268,7 @@ MonoBehaviour:
     BreedCooldownSeconds: 11
     IncomeCoins: 10
     IncomeCooldownSeconds: 14
-  - Id: bluefish_fat
+  - Id: sasha
     Type: bluefish
     Price: 300
     Sprite: {fileID: -3803863093779294543, guid: a17ccf93abad92c41ba955bc32a6e2b6, type: 3}

@@ -7,9 +7,7 @@ namespace UI.FeedJar
         private readonly FeedJarView _feedJarView;
         private readonly FeedManager _feedManager;
 
-        public float CurrentPercentOfReadiness { get; private set; }
-
-        public FeedJarPresenter(FeedJarView feedJarView, FeedManager feedManager)
+        public FeedJarPresenter(FeedJarView feedJarView, FeedManager feedManager, FeederConfig feederConfig)
         {
             _feedJarView = feedJarView;
             _feedManager = feedManager;
@@ -18,21 +16,19 @@ namespace UI.FeedJar
 
             _feedJarView.Init(() =>
             {
-                if (_feedManager.IsReady)
+                if (_feedManager.TryFeed())
                 {
-                    _feedManager.TryFeed();
+                    _feedJarView.OnFeedUsed();
                 }
                 else
                 {
                     _feedJarView.PlayShakeAnimation();
                 }
-            });
+            }, feederConfig);
         }
 
         private void ChangeFeedJarPercentage(float percentage)
         {
-            CurrentPercentOfReadiness = percentage;
-
             _feedJarView.SetPercentOfReadiness(percentage);
         }
     }

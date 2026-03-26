@@ -14,9 +14,7 @@ namespace Core.Feed
         private float _currentTime;
 
         public event Action<float> _normalizedTime;
-
-        public bool IsReady => _isReady;
-
+        
         public FeedManager(FoodPool foodPool, FeederConfig config)
         {
             _foodPool = foodPool;
@@ -25,13 +23,13 @@ namespace Core.Feed
             Reset();
         }
 
-        public void TryFeed()
+        public bool TryFeed()
         {
-            if (!_isReady) return;
+            if (!_isReady) return false;    
 
             var cam = Camera.main;
 
-            if (cam == null) return;
+            if (cam == null) return false;
 
             var foodAmount = UnityEngine.Random.Range(_config.FoodPiecesCount.x, _config.FoodPiecesCount.y + 1);
             var nutritionPerPiece = _config.TotalHungerRestorePerUse / foodAmount;
@@ -52,6 +50,8 @@ namespace Core.Feed
             }
 
             Reset();
+
+            return true;
         }
 
         public void Reset()

@@ -19,10 +19,10 @@ MonoBehaviour:
   NeighborRadius: 1.6
   SeparationRadius: 1
   AlignmentWeight: 5
-  CohesionWeight: 3
-  SeparationWeight: 140
+  CohesionWeight: 2
+  SeparationWeight: 160
   PartnerSearchRadius: 1
-  ObstacleAvoidanceWeight: 140
+  ObstacleAvoidanceWeight: 120
   FoodWeight: 60
   FoodSearchRadius: 4
   EatTimer: {x: 2, y: 3}
