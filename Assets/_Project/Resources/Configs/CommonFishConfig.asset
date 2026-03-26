@@ -16,11 +16,12 @@ MonoBehaviour:
   MarginTop: 0.1
   MarginBottom: 0.1
   BoundsWeight: 80
-  NeighborRadius: 2
-  SeparationRadius: 1.4
+  NeighborRadius: 1.6
+  SeparationRadius: 1
   AlignmentWeight: 5
-  CohesionWeight: 2
+  CohesionWeight: 3
   SeparationWeight: 140
+  PartnerSearchRadius: 1
   ObstacleAvoidanceWeight: 140
   FoodWeight: 60
   FoodSearchRadius: 4

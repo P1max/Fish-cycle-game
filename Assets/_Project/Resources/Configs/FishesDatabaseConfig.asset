@@ -21,7 +21,7 @@ MonoBehaviour:
     MaxHungrySpeed: 1.6
     SteerSpeed: 7
     MaxTiltAngle: 20
-    SizeModifier: {x: 0.9, y: 1}
+    SizeModifier: {x: 0.75, y: 0.85}
     LifetimeSeconds: 90
     HungerGrowthPercentPerSecond: 1
     BreedChancePercent: 20
@@ -36,7 +36,7 @@ MonoBehaviour:
     MaxHungrySpeed: 1.8
     SteerSpeed: 7
     MaxTiltAngle: 20
-    SizeModifier: {x: 0.7, y: 0.8}
+    SizeModifier: {x: 0.55, y: 0.65}
     LifetimeSeconds: 70
     HungerGrowthPercentPerSecond: 0.4
     BreedChancePercent: 15
@@ -47,11 +47,11 @@ MonoBehaviour:
     Type: bluefish
     Price: 300
     Sprite: {fileID: -3803863093779294543, guid: a17ccf93abad92c41ba955bc32a6e2b6, type: 3}
-    NormalSpeedRange: {x: 1.5, y: 2}
+    NormalSpeedRange: {x: 0.7, y: 0.75}
     MaxHungrySpeed: 3
     SteerSpeed: 7
     MaxTiltAngle: 20
-    SizeModifier: {x: 1.1, y: 1.2}
+    SizeModifier: {x: 0.95, y: 1.05}
     LifetimeSeconds: 100
     HungerGrowthPercentPerSecond: 0.1
     BreedChancePercent: 14

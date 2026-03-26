@@ -33,12 +33,12 @@ namespace UI.Conveyor
             _buyAction = action;
         }
 
-        public void SetData(Sprite sprite, float lifeTime, float income, float fishPrice)
+        public void SetData(Sprite sprite, float lifeTime, int income, int fishPrice)
         {
             _fishSprite.sprite = sprite;
-            _lifeTimeText.text = lifeTime.ToString("F2");
-            _incomeText.text = income.ToString("F2");
-            _fishPrice.text = fishPrice.ToString("F2");
+            _lifeTimeText.text = $"{lifeTime} s";
+            _incomeText.text = $"{income} $/s";
+            _fishPrice.text = fishPrice.ToString();
         }
     }
 }

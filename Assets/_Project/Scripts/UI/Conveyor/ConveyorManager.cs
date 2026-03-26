@@ -156,7 +156,7 @@ namespace UI.Conveyor
 
             var quality = CalculateQuality(_balance.CurrentCoinsCount);
             var lifeTime = baseConfig.LifetimeSeconds * quality;
-            var income = baseConfig.IncomeCoins * quality;
+            var income = Mathf.RoundToInt(baseConfig.IncomeCoins * quality);
             var price = Mathf.RoundToInt(baseConfig.Price * quality);
 
             if (_balance.CurrentCoinsCount <= 0) price = 0;

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ConveyorConfig
   m_EditorClassIdentifier: 
   ConveyorSpeed: 70
-  ItemSpacing: 40
+  ItemSpacing: 25
   FreeQualityRange: {x: 0.3, y: 0.7}
   DefaultFishQuality: 1
   DefaultQualityCoinsRange: {x: 100, y: 500}
