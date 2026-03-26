@@ -11,7 +11,6 @@ namespace UI.Conveyor
 {
     public class ConveyorManager : MonoBehaviour
     {
-        [Header("References")]
         [SerializeField] private RectTransform _container;
 
         [Inject] private ConveyorConfig _config;

@@ -1,4 +1,5 @@
 using Spawners;
+using UnityEngine;
 
 public class FishEconomy
 {
@@ -6,6 +7,8 @@ public class FishEconomy
     private readonly CoinsPool _coinsPool;
 
     private float _coinTimer;
+
+    public float TimeToNextCoin => Mathf.Max(0, _fish.Config.IncomeCooldownSeconds - _coinTimer);
 
     public FishEconomy(FishEntity fish, CoinsPool coinsPool)
     {

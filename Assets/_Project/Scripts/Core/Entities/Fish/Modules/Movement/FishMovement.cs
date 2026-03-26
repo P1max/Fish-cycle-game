@@ -32,6 +32,11 @@ public class FishMovement
         _isActive = true;
     }
 
+    public void Start()
+    {
+        _isActive = true;
+    }
+
     public void Stop()
     {
         _isActive = false;

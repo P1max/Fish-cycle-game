@@ -7,12 +7,12 @@ using UnityEditor.IMGUI.Controls;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace App.Scripts.Editor
+namespace _Project.Scripts.Editor
 {
     public class CreateScriptableObjectWindow : EditorWindow
     {
-        const string MenuPath = "Assets/Create Scriptable Object";
-        const int MenuPriority = -9999;
+        private const string _MENU_PATH = "Assets/Create Scriptable Object";
+        private const int _MENU_PRIORITY = -9999;
 
         string _targetFolderPath;
         List<Type> _scriptableObjectTypes;
@@ -39,7 +39,7 @@ namespace App.Scripts.Editor
             window.EnsureTreeView();
         }
 
-        [MenuItem(MenuPath, false, MenuPriority)]
+        [MenuItem(_MENU_PATH, false, _MENU_PRIORITY)]
         static void MenuCreateScriptableObject()
         {
             string folder = GetSelectedFolderAssetPath();

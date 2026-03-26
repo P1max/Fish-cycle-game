@@ -1,5 +1,4 @@
 using Core.Feed;
-using UnityEngine;
 
 namespace UI.FeedJar
 {
@@ -22,8 +21,6 @@ namespace UI.FeedJar
                 if (_feedManager.IsReady)
                 {
                     _feedManager.TryFeed();
-                    
-                    Debug.Log("Кормим! Ням ням!");
                 }
                 else
                 {

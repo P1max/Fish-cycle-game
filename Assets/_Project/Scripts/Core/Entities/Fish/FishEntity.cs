@@ -73,6 +73,21 @@ public class FishEntity : MonoBehaviour
         }
     }
 
+    private void Refresh()
+    {
+        name = Config.Id;
+        _isAlive = true;
+        _collider.enabled = true;
+
+        Hunger.Reset();
+        Economy.Reset();
+        LifeCycle.Reset();
+        Breeding.Reset();
+        FishVisual.ResetVisuals();
+        FishVisual.SetSprite(Config.Sprite);
+        Movement.Start();
+    }
+
     public void Die()
     {
         _isAlive = false;
@@ -96,20 +111,12 @@ public class FishEntity : MonoBehaviour
         var baseConfig = _fishesLoader.LoadedFishesDict[fishId];
         
         Config = baseConfig.Clone();
-        
         Config.LifetimeSeconds *= quality;
         Config.IncomeCoins = Mathf.RoundToInt(Config.IncomeCoins * quality);
         Config.Price = Mathf.RoundToInt(Config.Price * quality);
         
-        _collider.enabled = true;
-
-        Hunger.Reset();
-        Economy.Reset();
-        LifeCycle.Reset();
-        Breeding.Reset();
-        FishVisual.ResetVisuals();
-        FishVisual.SetSprite(Config.Sprite);
-
+        Refresh();
+        
         var randomSize = Random.Range(Config.SizeModifier.x, Config.SizeModifier.y);
 
         transform.localScale = new Vector3(randomSize, randomSize, 1f);

@@ -10,6 +10,8 @@ namespace Core.Entities.Fish.Modules.Breeding
 
         private float _cooldownTimer;
 
+        public float TimeToBreed => Mathf.Max(0, _cooldownTimer);
+
         public bool IsReady => _cooldownTimer <= 0f;
 
         public FishBreeding(FishEntity fish, BreedManager breedManager)
