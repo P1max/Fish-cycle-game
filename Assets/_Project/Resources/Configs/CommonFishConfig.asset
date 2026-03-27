@@ -27,3 +27,5 @@ MonoBehaviour:
   FoodSearchRadius: 4
   EatTimer: {x: 2, y: 3}
   WanderWeight: 10
+  DeathTimerThreshold: 10
+  HungerIndicatorThreshold: 60

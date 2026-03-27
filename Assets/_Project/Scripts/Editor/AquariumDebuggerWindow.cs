@@ -13,7 +13,7 @@ namespace _Project.Scripts.Editor
         private static void OpenWindow()
         {
             var window = GetWindow<AquariumDebuggerWindow>();
-            
+
             window.titleContent = new GUIContent("Отладка Аквариума");
             window.Show();
         }
@@ -28,18 +28,24 @@ namespace _Project.Scripts.Editor
         private void RefreshFishes()
         {
             _allFishes.Clear();
-            
+
             var fishesInScene = FindObjectsByType<FishEntity>(FindObjectsSortMode.None);
 
             foreach (var fish in fishesInScene)
                 _allFishes.Add(new FishDebugData(fish));
         }
 
-        protected void OnInspectorUpdate()
+        private void Update()
         {
             if (EditorApplication.isPlaying)
             {
-                RefreshFishes();
+                var fishesInScene = FindObjectsByType<FishEntity>(FindObjectsSortMode.None);
+
+                if (_allFishes.Count != fishesInScene.Length)
+                {
+                    RefreshFishes();
+                }
+
                 Repaint();
             }
             else if (_allFishes.Count > 0)

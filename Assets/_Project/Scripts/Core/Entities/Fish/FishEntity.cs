@@ -7,12 +7,20 @@ using Core.Fish.Modules.Visual;
 using Core.Game;
 using Core.Loaders;
 using Spawners;
+using TMPro;
 using Random = UnityEngine.Random;
 
 public class FishEntity : MonoBehaviour
 {
     [SerializeField] private Transform _visualTransform;
     [SerializeField] private SpriteRenderer _spriteRenderer;
+    
+    [Header("Indicator Settings")]
+    [SerializeField] private GameObject _bubbleContainer;
+    [SerializeField] private SpriteRenderer _indicatorIcon;
+    [SerializeField] private TextMeshPro _indicatorText;
+    [SerializeField] private Sprite _hungerSprite;
+    [SerializeField] private Sprite _deathSprite;
 
     private FishesLoader _fishesLoader;
     private Collider2D _collider;
@@ -32,6 +40,7 @@ public class FishEntity : MonoBehaviour
     public FishVisual FishVisual { get; private set; }
     public FishScanner Scanner { get; private set; }
     public FishBreeding Breeding { get; private set; }
+    public FishIndicator Indicator { get; private set; }
     public float BaseSpeed { get; private set; }
 
     private void Update()
@@ -44,6 +53,7 @@ public class FishEntity : MonoBehaviour
         Economy.Tick(delta);
         LifeCycle.Tick(delta);
         Breeding.Tick(delta);
+        Indicator.Tick();
     }
 
     private void FixedUpdate()
@@ -93,6 +103,7 @@ public class FishEntity : MonoBehaviour
         _isAlive = false;
         Movement.Stop();
         FishVisual.SetDeadVisuals();
+        Indicator.Hide();
     }
 
     public void Collect()
@@ -142,6 +153,7 @@ public class FishEntity : MonoBehaviour
         FishVisual = new FishVisual(this, _visualTransform, _spriteRenderer);
         Scanner = new FishScanner(this, fishesCache, foodPool, coinsPool);
         Breeding = new FishBreeding(this, breedManager);
+        Indicator = new FishIndicator(this, _bubbleContainer, _indicatorIcon, _indicatorText, _hungerSprite, _deathSprite);
 
         _isAlive = true;
     }

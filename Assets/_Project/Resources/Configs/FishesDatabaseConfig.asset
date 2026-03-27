@@ -23,7 +23,7 @@ MonoBehaviour:
     MaxTiltAngle: 20
     SizeModifier: {x: 0.75, y: 0.85}
     LifetimeSeconds: 90
-    HungerGrowthPercentPerSecond: 1
+    HungerGrowthPercentPerSecond: 4
     BreedChancePercent: 20
     BreedCooldownSeconds: 12
     IncomeCoins: 3
@@ -38,7 +38,7 @@ MonoBehaviour:
     MaxTiltAngle: 20
     SizeModifier: {x: 0.75, y: 0.85}
     LifetimeSeconds: 90
-    HungerGrowthPercentPerSecond: 1
+    HungerGrowthPercentPerSecond: 6
     BreedChancePercent: 20
     BreedCooldownSeconds: 12
     IncomeCoins: 3
@@ -53,7 +53,7 @@ MonoBehaviour:
     MaxTiltAngle: 20
     SizeModifier: {x: 0.75, y: 0.85}
     LifetimeSeconds: 90
-    HungerGrowthPercentPerSecond: 1
+    HungerGrowthPercentPerSecond: 4
     BreedChancePercent: 20
     BreedCooldownSeconds: 12
     IncomeCoins: 3
@@ -83,7 +83,7 @@ MonoBehaviour:
     MaxTiltAngle: 20
     SizeModifier: {x: 0.75, y: 0.85}
     LifetimeSeconds: 90
-    HungerGrowthPercentPerSecond: 1
+    HungerGrowthPercentPerSecond: 4
     BreedChancePercent: 20
     BreedCooldownSeconds: 12
     IncomeCoins: 3
@@ -98,7 +98,7 @@ MonoBehaviour:
     MaxTiltAngle: 20
     SizeModifier: {x: 0.75, y: 0.85}
     LifetimeSeconds: 90
-    HungerGrowthPercentPerSecond: 1
+    HungerGrowthPercentPerSecond: 5
     BreedChancePercent: 20
     BreedCooldownSeconds: 12
     IncomeCoins: 3
@@ -113,7 +113,7 @@ MonoBehaviour:
     MaxTiltAngle: 20
     SizeModifier: {x: 0.75, y: 0.85}
     LifetimeSeconds: 90
-    HungerGrowthPercentPerSecond: 1
+    HungerGrowthPercentPerSecond: 5
     BreedChancePercent: 20
     BreedCooldownSeconds: 12
     IncomeCoins: 3
@@ -127,11 +127,11 @@ MonoBehaviour:
     SteerSpeed: 7
     MaxTiltAngle: 20
     SizeModifier: {x: 0.75, y: 0.85}
-    LifetimeSeconds: 90
-    HungerGrowthPercentPerSecond: 1
+    LifetimeSeconds: 60
+    HungerGrowthPercentPerSecond: 4
     BreedChancePercent: 20
     BreedCooldownSeconds: 12
-    IncomeCoins: 3
+    IncomeCoins: 15
     IncomeCooldownSeconds: 10
   - Id: henri
     Type: goldfish
@@ -143,11 +143,11 @@ MonoBehaviour:
     MaxTiltAngle: 20
     SizeModifier: {x: 0.75, y: 0.85}
     LifetimeSeconds: 90
-    HungerGrowthPercentPerSecond: 1
+    HungerGrowthPercentPerSecond: 5
     BreedChancePercent: 20
     BreedCooldownSeconds: 12
-    IncomeCoins: 3
-    IncomeCooldownSeconds: 10
+    IncomeCoins: 13
+    IncomeCooldownSeconds: 9
   - Id: rostik
     Type: goldfish
     Price: 100
@@ -157,8 +157,8 @@ MonoBehaviour:
     SteerSpeed: 7
     MaxTiltAngle: 20
     SizeModifier: {x: 0.75, y: 0.85}
-    LifetimeSeconds: 90
-    HungerGrowthPercentPerSecond: 1
+    LifetimeSeconds: 70
+    HungerGrowthPercentPerSecond: 5
     BreedChancePercent: 20
     BreedCooldownSeconds: 12
     IncomeCoins: 3
@@ -173,7 +173,7 @@ MonoBehaviour:
     MaxTiltAngle: 20
     SizeModifier: {x: 0.75, y: 0.85}
     LifetimeSeconds: 90
-    HungerGrowthPercentPerSecond: 1
+    HungerGrowthPercentPerSecond: 4
     BreedChancePercent: 20
     BreedCooldownSeconds: 12
     IncomeCoins: 3
@@ -203,7 +203,7 @@ MonoBehaviour:
     MaxTiltAngle: 20
     SizeModifier: {x: 0.75, y: 0.85}
     LifetimeSeconds: 90
-    HungerGrowthPercentPerSecond: 1
+    HungerGrowthPercentPerSecond: 5
     BreedChancePercent: 20
     BreedCooldownSeconds: 12
     IncomeCoins: 3
@@ -218,7 +218,7 @@ MonoBehaviour:
     MaxTiltAngle: 20
     SizeModifier: {x: 0.75, y: 0.85}
     LifetimeSeconds: 90
-    HungerGrowthPercentPerSecond: 1
+    HungerGrowthPercentPerSecond: 4
     BreedChancePercent: 20
     BreedCooldownSeconds: 12
     IncomeCoins: 3
@@ -233,7 +233,7 @@ MonoBehaviour:
     MaxTiltAngle: 20
     SizeModifier: {x: 0.75, y: 0.85}
     LifetimeSeconds: 90
-    HungerGrowthPercentPerSecond: 1
+    HungerGrowthPercentPerSecond: 4
     BreedChancePercent: 20
     BreedCooldownSeconds: 12
     IncomeCoins: 3
@@ -248,7 +248,7 @@ MonoBehaviour:
     MaxTiltAngle: 20
     SizeModifier: {x: 0.75, y: 0.85}
     LifetimeSeconds: 90
-    HungerGrowthPercentPerSecond: 1
+    HungerGrowthPercentPerSecond: 4
     BreedChancePercent: 20
     BreedCooldownSeconds: 12
     IncomeCoins: 3
@@ -263,7 +263,7 @@ MonoBehaviour:
     MaxTiltAngle: 20
     SizeModifier: {x: 0.55, y: 0.65}
     LifetimeSeconds: 70
-    HungerGrowthPercentPerSecond: 0.4
+    HungerGrowthPercentPerSecond: 4
     BreedChancePercent: 15
     BreedCooldownSeconds: 11
     IncomeCoins: 10
@@ -278,7 +278,7 @@ MonoBehaviour:
     MaxTiltAngle: 20
     SizeModifier: {x: 0.95, y: 1.05}
     LifetimeSeconds: 100
-    HungerGrowthPercentPerSecond: 0.1
+    HungerGrowthPercentPerSecond: 6
     BreedChancePercent: 14
     BreedCooldownSeconds: 15
     IncomeCoins: 30
