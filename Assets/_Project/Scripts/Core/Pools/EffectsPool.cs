@@ -7,7 +7,7 @@ namespace Spawners
     {
         protected override void LoadPrefab()
         {
-            Prefab = Resources.Load<VFXEntity>("Prefabs/Heart");
+            Prefab = Resources.Load<VFXEntity>("Prefabs/VFX_Birth");
         }
 
         protected override void OnItemCreated(VFXEntity item)
