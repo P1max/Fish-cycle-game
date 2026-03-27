@@ -1,16 +1,16 @@
 using System;
 using DG.Tweening;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace Core.Fish.Modules.Visual
 {
     public class FishVisual
     {
+        private static readonly int _grayscaleAmount = Shader.PropertyToID("_GrayscaleAmount");
+
         private readonly FishEntity _fishEntity;
         private readonly Transform _visualTransform;
         private readonly SpriteRenderer _spriteRenderer;
-        private readonly float _wiggleOffset;
 
         private Sequence _sequence;
 
@@ -19,15 +19,22 @@ namespace Core.Fish.Modules.Visual
             _fishEntity = fishEntity;
             _visualTransform = visualTransform;
             _spriteRenderer = spriteRenderer;
-            
-            _wiggleOffset = Random.Range(0f, 100f);
         }
 
         public void SetDeadVisuals()
         {
+            var grayscaleValue = 0f;
+            var mpb = new MaterialPropertyBlock();
+            _spriteRenderer.GetPropertyBlock(mpb);
+
             _sequence = DOTween.Sequence()
                 .Append(_visualTransform.DORotate(new Vector3(0, 0, 180f), 1.5f))
-                .Join(_spriteRenderer.DOColor(Color.gray, 1.5f));
+                .Join(DOTween.To(() => grayscaleValue, x =>
+                {
+                    grayscaleValue = x;
+                    mpb.SetFloat(_grayscaleAmount, grayscaleValue);
+                    _spriteRenderer.SetPropertyBlock(mpb);
+                }, 1f, 1.5f));
 
             _sequence.Play();
         }
@@ -52,7 +59,9 @@ namespace Core.Fish.Modules.Visual
 
             _visualTransform.localRotation = Quaternion.identity;
             _visualTransform.localPosition = Vector3.zero;
+
             _spriteRenderer.color = Color.white;
+            _spriteRenderer.SetPropertyBlock(null);
         }
 
         public void SetSprite(Sprite sprite)
