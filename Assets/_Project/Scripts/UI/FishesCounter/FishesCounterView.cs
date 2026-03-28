@@ -8,7 +8,6 @@ namespace UI
     {
         [SerializeField] private TextMeshProUGUI _fishCountText;
 
-        private int _maxFishesCounter;
         private Color _originalColor;
         private Vector3 _originalScale;
         private Sequence _animationSequence;
@@ -18,12 +17,10 @@ namespace UI
             _originalColor = _fishCountText.color;
             _originalScale = _fishCountText.transform.localScale;
         }
-
-        public void Init(int maxFishesCounter) => _maxFishesCounter = maxFishesCounter;
-
-        public void SetCurrentFishesCount(int currentFishesCount)
+        
+        public void SetCurrentFishesCount(int currentFishesCount, int maxFishesCount)
         {
-            _fishCountText.text = $"{currentFishesCount}/{_maxFishesCounter}";
+            _fishCountText.text = $"{currentFishesCount}/{maxFishesCount}";
         }
 
         public void PlayLimitReachedAnimation()

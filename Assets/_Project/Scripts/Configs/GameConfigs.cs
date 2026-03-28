@@ -43,6 +43,10 @@ namespace Core.Configs
         [TitleGroup("Системные конфиги")]
         [InlineEditor(InlineEditorObjectFieldModes.Boxed)]
         public FishesDatabaseConfig FishesDatabase;
+        
+        [TitleGroup("Системные конфиги")]
+        [InlineEditor(InlineEditorObjectFieldModes.Boxed)]
+        public UpgradesConfig UpgradesConfig;
 
 #if UNITY_EDITOR
         [Space(10)]

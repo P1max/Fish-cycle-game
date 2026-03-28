@@ -1,10 +1,20 @@
 using Core.Entities.VFX;
 using UnityEngine;
+using Zenject;
 
 namespace Spawners
 {
     public class EffectsPool : BaseEntityPool<VFXEntity>
     {
+        [Inject] private AquariumConfig _aquariumConfig;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            
+            transform.localScale =  Vector3.one * _aquariumConfig.DefaultEntitiesScale * _aquariumConfig.FishesDefaultScale;
+        }
+
         protected override void LoadPrefab()
         {
             Prefab = Resources.Load<VFXEntity>("Prefabs/VFX_Birth");

@@ -97,7 +97,7 @@ namespace UI.FeedJar
             _rect.localScale = _originalScale;
         }
 
-        public void SetPercentOfReadiness(float percentOfReadiness)
+        public void SetPercentOfReadiness(float percentOfReadiness, float currentCooldown)
         {
             if (!isActiveAndEnabled) return;
 
@@ -117,7 +117,7 @@ namespace UI.FeedJar
             }
             else
             {
-                var remainingTime = _config.CooldownSeconds * (1f - percentOfReadiness);
+                var remainingTime = currentCooldown * (1f - percentOfReadiness);
 
                 _timerText.text = Mathf.CeilToInt(remainingTime) + "s";
 
@@ -125,10 +125,9 @@ namespace UI.FeedJar
             }
         }
 
-        public void Init(Action onCLick, FeederConfig config)
+        public void Init(Action onClick)
         {
-            _onCLick = onCLick;
-            _config = config;
+            _onCLick = onClick;
         }
     }
 }

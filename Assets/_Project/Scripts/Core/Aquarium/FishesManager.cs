@@ -1,4 +1,5 @@
 using System;
+using Core.Game.Upgrade;
 using Spawners;
 using UnityEngine;
 
@@ -8,17 +9,29 @@ namespace Core.Game
     {
         private readonly FishPool _fishPool;
         private readonly AquariumConfig _config;
+        private readonly UpgradeManager _upgradeManager;
 
-        public event Action<int> OnFishCountChanged;
+        public event Action<int, int> OnFishCountChanged;
 
         public int CurrentFishCount { get; private set; }
+        public int MaxFishesCount { get; private set; }
 
         public bool CanAddFish => CurrentFishCount < _config.MaxFishCount;
 
-        public FishesManager(FishPool fishPool, AquariumConfig config)
+        public FishesManager(FishPool fishPool, AquariumConfig config, UpgradeManager upgradeManager)
         {
             _fishPool = fishPool;
             _config = config;
+            _upgradeManager = upgradeManager;
+
+            MaxFishesCount = _config.MaxFishCount;
+
+            _upgradeManager.OnAquariumUpgrade += (newData) =>
+            {
+                MaxFishesCount = newData.NewMaxFishesCount;
+
+                OnFishCountChanged?.Invoke(CurrentFishCount, MaxFishesCount);
+            };
         }
 
         private void HandleFishDeath(FishEntity fish)
@@ -26,7 +39,7 @@ namespace Core.Game
             fish.OnReadyToPool -= HandleFishDeath;
 
             CurrentFishCount--;
-            OnFishCountChanged?.Invoke(CurrentFishCount);
+            OnFishCountChanged?.Invoke(CurrentFishCount, MaxFishesCount);
         }
 
         public bool TryAddFish(string fishId, float quality = 1f, Vector2 spawnPosition = default)
@@ -40,7 +53,7 @@ namespace Core.Game
             fish.OnReadyToPool += HandleFishDeath;
 
             CurrentFishCount++;
-            OnFishCountChanged?.Invoke(CurrentFishCount);
+            OnFishCountChanged?.Invoke(CurrentFishCount, MaxFishesCount);
 
             return true;
         }

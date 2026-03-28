@@ -25,8 +25,7 @@ MonoBehaviour:
   ObstacleAvoidanceWeight: 120
   FoodWeight: 60
   FoodSearchRadius: 4
-  EatTimer: {x: 2, y: 3}
+  EatTimer: {x: 1, y: 2}
   WanderWeight: 10
   DeathTimerThreshold: 10
   HungerIndicatorThreshold: 60
-  DeadMaterial: {fileID: 2100000, guid: 4f2cd42a5d1954146a6526857f0cf687, type: 2}

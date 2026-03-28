@@ -129,7 +129,7 @@ public class FishEntity : MonoBehaviour
         
         var randomSize = Random.Range(Config.SizeModifier.x, Config.SizeModifier.y);
 
-        transform.localScale = new Vector3(randomSize, randomSize, 1f);
+        transform.localScale *= randomSize;
         
         BaseSpeed = Random.Range(Config.NormalSpeedRange.x, Config.NormalSpeedRange.y);
     }

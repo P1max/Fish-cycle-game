@@ -1,11 +1,14 @@
 using System.Linq;
+using _Project.UI.AquariumUpgrader;
 using Core.Boot;
 using Core.Configs;
 using Core.Feed;
 using Core.Game;
+using Core.Game.Upgrade;
 using Core.Loaders;
 using Spawners;
 using UI;
+using UI.Background;
 using UI.FeedJar;
 using UI.MoneyCounter;
 using UnityEngine;
@@ -23,6 +26,7 @@ namespace Installers
             var feederConfig = _configs.Feeder;
             var commonFishConfig = _configs.CommonFish;
             var conveyorConfig = _configs.Conveyor;
+            var upgradesConfig = _configs.UpgradesConfig;
 
             var activeFishesList = _configs.FishesDatabase.Fishes;
 
@@ -40,6 +44,7 @@ namespace Installers
             Container.Bind<AquariumConfig>().FromInstance(aquariumConfig).AsSingle();
             Container.Bind<ConveyorConfig>().FromInstance(conveyorConfig).AsSingle();
             Container.Bind<CommonFishConfig>().FromInstance(commonFishConfig).AsSingle();
+            Container.Bind<UpgradesConfig>().FromInstance(upgradesConfig).AsSingle();
 
             Container.Bind<FishesLoader>().AsSingle().WithArguments(activeFishesList);
 
@@ -60,9 +65,16 @@ namespace Installers
             Container.Bind<CoinsCounterPresenter>().AsSingle().NonLazy();
             Container.Bind<CoinsCounterView>().FromComponentInHierarchy().AsSingle();
 
+            Container.Bind<AquariumUpgraderPresenter>().AsSingle().NonLazy();
+            Container.Bind<AquariumUpgraderView>().FromComponentInHierarchy().AsSingle();
+
+            Container.Bind<BackgroundPresenter>().AsSingle().NonLazy();
+            Container.Bind<BackgroundView>().FromComponentInHierarchy().AsSingle();
+
             Container.BindInterfacesAndSelfTo<FeedManager>().AsSingle();
             Container.Bind<FishesManager>().AsSingle().NonLazy();
             Container.Bind<BalanceManager>().AsSingle().NonLazy();
+            Container.Bind<UpgradeManager>().AsSingle().NonLazy();
 
             Container.Bind<AquariumBounds>().FromComponentInHierarchy().AsSingle();
             Container.Bind<UITankBounds>().FromComponentInHierarchy().AsSingle();

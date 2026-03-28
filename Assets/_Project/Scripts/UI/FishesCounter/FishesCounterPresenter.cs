@@ -12,8 +12,6 @@ namespace UI
             _view = view;
             _fishesManager = fishesManager;
             
-            _view.Init(aquariumConfig.MaxFishCount);
-            
             fishesManager.OnFishCountChanged += _view.SetCurrentFishesCount;
         }
 

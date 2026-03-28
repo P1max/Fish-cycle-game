@@ -31,7 +31,7 @@ namespace Spawners
             }
             else
             {
-                item = Instantiate(Prefab, transform, true);
+                item = Instantiate(Prefab, transform, false);
                 
                 OnItemCreated(item);
             }

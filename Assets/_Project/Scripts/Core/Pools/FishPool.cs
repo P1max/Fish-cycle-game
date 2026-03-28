@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Core.Game;
+using Core.Game.Upgrade;
 using Core.Loaders;
 using UnityEngine;
 using Zenject;
@@ -8,20 +9,29 @@ namespace Spawners
 {
     public class FishPool : BaseEntityPool<FishEntity>
     {
-        [Inject] private FoodPool _foodPool;
-        [Inject] private CoinsPool _coinsPool;
-        [Inject] private CommonFishConfig _commonFishConfig;
-        [Inject] private FishesLoader _fishesLoader;
         [Inject] private AquariumBoundsManager _aquariumBoundsManager;
+        [Inject] private UpgradeManager _upgradeManager;
+        [Inject] private CommonFishConfig _commonFishConfig;
+        [Inject] private AquariumConfig _aquariumConfig;
+        [Inject] private FishesLoader _fishesLoader;
         [Inject] private BreedManager _breedManager;
+        [Inject] private CoinsPool _coinsPool;
+        [Inject] private FoodPool _foodPool;
 
         private Dictionary<Collider2D, FishEntity> _fishesCache;
+        private float _defaultScale;
 
         protected override void Awake()
         {
             base.Awake();
 
+            _defaultScale = _aquariumConfig.DefaultEntitiesScale * _aquariumConfig.FishesDefaultScale;
+            transform.localScale = Vector3.one * _defaultScale;
+
             _fishesCache = new Dictionary<Collider2D, FishEntity>();
+
+            _upgradeManager.OnAquariumUpgrade += (newData) =>
+                transform.localScale = Vector3.one * _defaultScale * newData.NewAquariumScale;
         }
 
         protected override void LoadPrefab()

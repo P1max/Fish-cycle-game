@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 597cedc382bc40e6bf16a817f8f2f146, type: 3}
   m_Name: FeederConfig
   m_EditorClassIdentifier: 
-  CooldownSeconds: 5
+  CooldownSeconds: 8
   TotalHungerRestorePerUse: 180
   FoodPiecesCount: {x: 4, y: 6}

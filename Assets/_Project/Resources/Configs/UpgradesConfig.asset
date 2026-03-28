@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f576da177fb84adcbcd1363e54c52bfc, type: 3}
+  m_Name: UpgradesConfig
+  m_EditorClassIdentifier: 
+  LevelsUpgrades:
+  - Level: 1
+    UpgradeCost: 20
+    NewMaxFishesCount: 11
+    NewAquariumScale: 0.95
+    FoodCountIncrementToDefault: 1
+    HungerRestorePerUseIncrementToDefault: 50
+    NewFeederCooldown: 7.2
+  - Level: 2
+    UpgradeCost: 50
+    NewMaxFishesCount: 12
+    NewAquariumScale: 0.9
+    FoodCountIncrementToDefault: 2
+    HungerRestorePerUseIncrementToDefault: 90
+    NewFeederCooldown: 6.7
+  - Level: 3
+    UpgradeCost: 500
+    NewMaxFishesCount: 15
+    NewAquariumScale: 0.8
+    FoodCountIncrementToDefault: 3
+    HungerRestorePerUseIncrementToDefault: 150
+    NewFeederCooldown: 5.9
+  InitialBackgroundScale: 1.5
+  FinalBackgroundScale: 1
