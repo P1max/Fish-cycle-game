@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: d74db3a3765dafd49a4c50c67df17c56
+guid: c5471db1042207146b6898138c0cd095
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7360822156904328290
-    second: death 1_0
+      213: -529945575390591003
+    second: red circle_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: death 1_0
+      name: red circle_0
       rect:
         serializedVersion: 2
-        x: 1
-        y: 1
-        width: 302
-        height: 287
+        x: 0
+        y: 0
+        width: 244
+        height: 244
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 26c6b1d90c4e62660800000000000000
-      internalID: 7360822156904328290
+      spriteID: 5e7cd849e4145a8f0800000000000000
+      internalID: -529945575390591003
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      death 1_0: 7360822156904328290
+      red circle_0: -529945575390591003
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

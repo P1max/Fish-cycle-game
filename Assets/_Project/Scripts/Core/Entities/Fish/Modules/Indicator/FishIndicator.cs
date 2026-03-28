@@ -6,80 +6,88 @@ namespace Core.Fish.Modules.Visual
 {
     public class FishIndicator
     {
-        private readonly GameObject _bubbleContainer;
-        private readonly SpriteRenderer _iconRenderer;
+        private readonly GameObject _hungryContainer;
+        private readonly GameObject _deathContainer;
         private readonly TextMeshPro _timerText;
-        private readonly Sprite _hungerSprite;
-        private readonly Sprite _deathSprite;
         private readonly FishEntity _fish;
-        private readonly Vector3 _originalScale;
+        private readonly Vector3 _originalHungryConScale;
+        private readonly Vector3 _originalDeathConScale;
 
-        private bool _isShowingDeath;
-        private Sequence _popSequence;
+        private Sequence _popHungrySequence;
+        private Sequence _popDeathSequence;
 
-        public FishIndicator(FishEntity fish, GameObject bubbleContainer, SpriteRenderer iconRenderer,
-            TextMeshPro timerText, Sprite hungerSprite, Sprite deathSprite)
+        public FishIndicator(FishEntity fish, GameObject hungryContainer, GameObject deathContainer, TextMeshPro timerText)
         {
             _fish = fish;
-            _bubbleContainer = bubbleContainer;
-            _iconRenderer = iconRenderer;
+            _hungryContainer = hungryContainer;
+            _deathContainer = deathContainer;
             _timerText = timerText;
-            _hungerSprite = hungerSprite;
-            _deathSprite = deathSprite;
 
-            _originalScale = _bubbleContainer.transform.localScale;
-            _bubbleContainer.transform.localScale = Vector3.zero;
-            _bubbleContainer.SetActive(false);
+            _originalHungryConScale = _hungryContainer.transform.localScale;
+            _originalDeathConScale = _deathContainer.transform.localScale;
+
+            _hungryContainer.transform.localScale = Vector3.zero;
+            _deathContainer.transform.localScale = Vector3.zero;
+
+            _hungryContainer.SetActive(false);
+            _deathContainer.SetActive(false);
         }
 
-        private void ShowHunger()
-        {
-            if (_isShowingDeath) return;
-
-            _iconRenderer.sprite = _hungerSprite;
-            _timerText.text = "";
-
-            PopUp();
-        }
-
-        private void PopUp()
-        {
-            if (_bubbleContainer.activeSelf) return;
-
-            _bubbleContainer.SetActive(true);
-            _bubbleContainer.transform.localScale = Vector3.zero;
-
-            _popSequence?.Kill();
-
-            _popSequence = DOTween.Sequence()
-                .Append(_bubbleContainer.transform.DOScale(_originalScale, 0.4f).SetEase(Ease.OutBack));
-        }
+        private void ShowHunger() => PopUpHungry();
 
         private void ShowDeathTimer(float remainingSeconds)
         {
-            if (!_isShowingDeath)
-            {
-                _isShowingDeath = true;
-                _iconRenderer.sprite = _deathSprite;
-
-                PopUp();
-            }
-
             _timerText.text = Mathf.CeilToInt(remainingSeconds).ToString();
-            _timerText.color = remainingSeconds <= 3f ? Color.red : Color.white;
+
+            PopUpDeath();
         }
 
-        public void Hide()
+        private void PopUpHungry()
         {
-            if (!_bubbleContainer.activeSelf) return;
+            if (_hungryContainer.activeSelf) return;
 
-            _isShowingDeath = false;
+            _hungryContainer.SetActive(true);
+            _hungryContainer.transform.localScale = Vector3.zero;
 
-            _popSequence?.Kill();
+            _popHungrySequence?.Kill();
 
-            _bubbleContainer.transform.DOScale(Vector3.zero, 0.2f)
+            _popHungrySequence = DOTween.Sequence()
+                .Append(_hungryContainer.transform.DOScale(_originalHungryConScale, 0.4f).SetEase(Ease.OutBack));
+        }
+
+        private void PopUpDeath()
+        {
+            if (_deathContainer.activeSelf) return;
+
+            _deathContainer.SetActive(true);
+            _deathContainer.transform.localScale = Vector3.zero;
+
+            _popDeathSequence?.Kill();
+
+            _popDeathSequence = DOTween.Sequence()
+                .Append(_deathContainer.transform.DOScale(_originalDeathConScale, 0.4f).SetEase(Ease.OutBack));
+        }
+
+        public void HideDeath()
+        {
+            if (!_deathContainer.activeSelf) return;
+
+            _popDeathSequence?.Kill();
+
+            _deathContainer.transform.DOScale(Vector3.zero, 0.2f)
                 .SetEase(Ease.InBack)
-                .OnComplete(() => _bubbleContainer.SetActive(false));
+                .OnComplete(() => _deathContainer.SetActive(false));
+        }
+
+        public void HideHungry()
+        {
+            if (!_hungryContainer.activeSelf) return;
+
+            _popHungrySequence?.Kill();
+
+            _hungryContainer.transform.DOScale(Vector3.zero, 0.2f)
+                .SetEase(Ease.InBack)
+                .OnComplete(() => _hungryContainer.SetActive(false));
         }
 
         public void Tick()
@@ -88,13 +96,18 @@ namespace Core.Fish.Modules.Visual
             {
                 ShowDeathTimer(_fish.LifeCycle.TimeToDeath);
             }
-            else if (_fish.Hunger.CurrentHungerPercent >= _fish.CommonFishConfig.HungerIndicatorThreshold)
+            else
+            {
+                HideDeath();
+            }
+
+            if (_fish.Hunger.CurrentHungerPercent >= _fish.CommonFishConfig.HungerIndicatorThreshold)
             {
                 ShowHunger();
             }
             else
             {
-                Hide();
+                HideHungry();
             }
         }
     }

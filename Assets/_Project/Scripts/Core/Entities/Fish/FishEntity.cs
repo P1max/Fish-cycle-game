@@ -16,11 +16,9 @@ public class FishEntity : MonoBehaviour
     [SerializeField] private SpriteRenderer _spriteRenderer;
     
     [Header("Indicator Settings")]
-    [SerializeField] private GameObject _bubbleContainer;
-    [SerializeField] private SpriteRenderer _indicatorIcon;
-    [SerializeField] private TextMeshPro _indicatorText;
-    [SerializeField] private Sprite _hungerSprite;
-    [SerializeField] private Sprite _deathSprite;
+    [SerializeField] private GameObject _hungryContainer;
+    [SerializeField] private GameObject _deathContainer;
+    [SerializeField] private TextMeshPro _deathText;
 
     private FishesLoader _fishesLoader;
     private Collider2D _collider;
@@ -103,7 +101,8 @@ public class FishEntity : MonoBehaviour
         _isAlive = false;
         Movement.Stop();
         FishVisual.SetDeadVisuals();
-        Indicator.Hide();
+        Indicator.HideDeath();
+        Indicator.HideHungry();
     }
 
     public void Collect()
@@ -153,7 +152,7 @@ public class FishEntity : MonoBehaviour
         FishVisual = new FishVisual(this, _visualTransform, _spriteRenderer);
         Scanner = new FishScanner(this, fishesCache, foodPool, coinsPool);
         Breeding = new FishBreeding(this, breedManager);
-        Indicator = new FishIndicator(this, _bubbleContainer, _indicatorIcon, _indicatorText, _hungerSprite, _deathSprite);
+        Indicator = new FishIndicator(this, _hungryContainer, _deathContainer, _deathText);
 
         _isAlive = true;
     }
