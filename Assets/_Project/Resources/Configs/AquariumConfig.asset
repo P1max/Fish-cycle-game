@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93a0cd8c15744347b20c5c768cec231c, type: 3}
   m_Name: AquariumConfig
   m_EditorClassIdentifier: 
-  StartCoins: 300
-  StartFishCount: 3
-  MaxFishCount: 10
+  StartCoins: 350
+  StartFishCount: 0
+  MaxFishCount: 5
   DefaultEntitiesScale: 1
   FishesDefaultScale: 1
   CoinsDefaultScale: 0.9

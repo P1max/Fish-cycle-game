@@ -156,13 +156,8 @@ namespace UI.Conveyor
         {
             if (coins <= _config.CoinsForFreeFish && _aquarium.CurrentFishCount < _config.FishesCountForFreeFish)
                 return Random.Range(_config.FreeQualityRange.x, _config.FreeQualityRange.y);
-
-            if (coins <= _config.DefaultQualityCoinsRange.y)
-                return _config.DefaultFishQuality;
-
-            var t = Mathf.InverseLerp(_config.UpgradeQualityCoinsRange.x, _config.UpgradeQualityCoinsRange.y, coins);
-
-            return Mathf.Lerp(_config.UpgradeFishQualityRange.x, _config.UpgradeFishQualityRange.y, t);
+            
+            return _config.QualityCurve.Evaluate(coins);
         }
 
         private void ReRollItem(FishItemView view)

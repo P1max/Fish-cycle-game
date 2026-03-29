@@ -6,17 +6,17 @@ using Sirenix.OdinInspector;
 [Serializable]
 public class FishConfig : IValidatableConfig
 {
-    [BoxGroup("Основное", centerLabel: true)]
+    [BoxGroup("Иконка"), PreviewField(50, ObjectFieldAlignment.Right)]
+    public Sprite Sprite;
+    
+    [FoldoutGroup("Основное")]
     public string Id = "goldfish_basic";
 
-    [BoxGroup("Основное")]
+    [FoldoutGroup("Основное")]
     public string Type = "goldfish";
 
-    [BoxGroup("Основное")]
+    [FoldoutGroup("Основное")]
     public int Price = 100;
-
-    [BoxGroup("Основное"), PreviewField(50, ObjectFieldAlignment.Right)]
-    public Sprite Sprite;
 
     [FoldoutGroup("Движение и Физика")]
     [MinMaxSlider(0.5f, 5f, true)]

@@ -48,6 +48,18 @@ namespace Core.Configs
         [JsonProperty("upgradeQualityCoinsRange")]
         [LabelText("Диапазон монет (Улучшенный)")]
         public Vector2 UpgradeQualityCoinsRange = new(500, 50000);
+        
+        [BoxGroup("Качество: Улучшенные")]
+        [LabelText("Кривая качества от количества монет")]
+        public AnimationCurve QualityCurve = new(
+            new Keyframe(0f, 1f),
+            new Keyframe(800f, 1.2f),
+            new Keyframe(2000f, 1.2f),
+            new Keyframe(2001f, 1.7f),
+            new Keyframe(8000f, 2.5f),
+            new Keyframe(8001, 2.5f),
+            new Keyframe(50000, 3f)
+        );
 
         private void OnValidate()
         {
