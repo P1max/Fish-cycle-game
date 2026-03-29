@@ -7,19 +7,11 @@ using Core.Fish.Modules.Visual;
 using Core.Game;
 using Core.Loaders;
 using Spawners;
-using TMPro;
 using Random = UnityEngine.Random;
 
+[RequireComponent(typeof(FishVisual))]
 public class FishEntity : MonoBehaviour
 {
-    [SerializeField] private Transform _visualTransform;
-    [SerializeField] private SpriteRenderer _spriteRenderer;
-    
-    [Header("Indicator Settings")]
-    [SerializeField] private GameObject _hungryContainer;
-    [SerializeField] private GameObject _deathContainer;
-    [SerializeField] private TextMeshPro _deathText;
-
     private FishesLoader _fishesLoader;
     private Collider2D _collider;
     private bool _isAlive;
@@ -40,6 +32,11 @@ public class FishEntity : MonoBehaviour
     public FishBreeding Breeding { get; private set; }
     public FishIndicator Indicator { get; private set; }
     public float BaseSpeed { get; private set; }
+
+    private void Awake()
+    {
+        FishVisual = GetComponent<FishVisual>();
+    }
 
     private void Update()
     {
@@ -91,8 +88,10 @@ public class FishEntity : MonoBehaviour
         Economy.Reset();
         LifeCycle.Reset();
         Breeding.Reset();
+        
         FishVisual.ResetVisuals();
         FishVisual.SetSprite(Config.Sprite);
+        
         Movement.Start();
     }
 
@@ -150,10 +149,13 @@ public class FishEntity : MonoBehaviour
         Movement = new FishMovement(this, GetComponent<Rigidbody2D>(), _collider,
             aquariumBoundsManager);
 
-        FishVisual = new FishVisual(this, _visualTransform, _spriteRenderer);
+        FishVisual.Init(this);
+        
         Scanner = new FishScanner(this, fishesCache, foodPool, coinsPool);
         Breeding = new FishBreeding(this, breedManager);
-        Indicator = new FishIndicator(this, _hungryContainer, _deathContainer, _deathText);
+        
+        // Передаем ссылки на UI элементы из FishVisual в FishIndicator
+        Indicator = new FishIndicator(this, FishVisual.HungryContainer, FishVisual.DeathContainer, FishVisual.DeathText);
 
         _isAlive = true;
     }

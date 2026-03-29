@@ -69,7 +69,5 @@ public class FishMovement
         }
 
         _rigidbody.linearVelocity = _velocity;
-
-        _fishEntity.FishVisual.UpdateVisuals();
     }
 }

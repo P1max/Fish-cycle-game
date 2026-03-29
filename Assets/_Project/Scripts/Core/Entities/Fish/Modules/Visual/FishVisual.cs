@@ -1,28 +1,103 @@
 using System;
 using DG.Tweening;
+using Sirenix.OdinInspector;
 using UnityEngine;
+using TMPro;
+using Random = UnityEngine.Random;
 
 namespace Core.Fish.Modules.Visual
 {
-    public class FishVisual
+    public class FishVisual : MonoBehaviour
     {
         private static readonly int _grayscaleAmount = Shader.PropertyToID("_GrayscaleAmount");
 
-        private readonly FishEntity _fishEntity;
-        private readonly Transform _visualTransform;
-        private readonly SpriteRenderer _spriteRenderer;
+        [FoldoutGroup("Visual References")]
+        [SerializeField] private Transform _visualTransform;
 
+        [FoldoutGroup("Visual References")]
+        [SerializeField] private SpriteRenderer _spriteRenderer;
+
+        [FoldoutGroup("VFX (Bubbles)")]
+        [SerializeField] private ParticleSystem _bubbleParticles;
+
+        [FoldoutGroup("VFX (Bubbles)")]
+        [MinMaxSlider(1f, 20f, true)]
+        [LabelText("Интервал пузырьков (сек)")]
+        [SerializeField] private Vector2 _bubblesTimer = new(3f, 5f);
+
+        [FoldoutGroup("UI Indicators")]
+        [SerializeField] private GameObject _hungryContainer;
+
+        [FoldoutGroup("UI Indicators")]
+        [SerializeField] private GameObject _deathContainer;
+
+        [FoldoutGroup("UI Indicators")]
+        [SerializeField] private TextMeshPro _deathText;
+
+        private FishEntity _fishEntity;
         private Sequence _sequence;
+        private Tween _bubbleTimer;
 
-        public FishVisual(FishEntity fishEntity, Transform visualTransform, SpriteRenderer spriteRenderer)
+        public GameObject HungryContainer => _hungryContainer;
+        public GameObject DeathContainer => _deathContainer;
+        public TextMeshPro DeathText => _deathText;
+
+        public void Init(FishEntity fishEntity)
         {
             _fishEntity = fishEntity;
-            _visualTransform = visualTransform;
-            _spriteRenderer = spriteRenderer;
+        }
+
+        private void Update()
+        {
+            if (_fishEntity == null || !_fishEntity.IsAlive) return;
+
+            UpdateVisuals();
+        }
+
+        public void ResetVisuals()
+        {
+            _sequence?.Kill();
+            _sequence = null;
+
+            _visualTransform.localRotation = Quaternion.identity;
+            _visualTransform.localPosition = Vector3.zero;
+            _visualTransform.localScale = Vector3.one;
+
+            _spriteRenderer.color = Color.white;
+            _spriteRenderer.SetPropertyBlock(null);
+
+            StartBubbles();
+        }
+
+        public void SetSprite(Sprite sprite)
+        {
+            _spriteRenderer.sprite = sprite;
+        }
+
+        public void PlaySpawnAnimation(Vector3 targetScale)
+        {
+            _sequence?.Complete();
+            _sequence?.Kill();
+
+            _fishEntity.transform.localScale = Vector3.zero;
+
+            _sequence = DOTween.Sequence()
+                .Append(_fishEntity.transform.DOScale(targetScale, 0.3f).SetEase(Ease.OutQuad))
+                .Append(_fishEntity.transform.DOPunchScale(
+                    new Vector3(targetScale.x * -0.3f, targetScale.y * -0.3f, 0f),
+                    duration: 0.5f,
+                    vibrato: 5,
+                    elasticity: 1f
+                ))
+                .OnComplete(() => _fishEntity.transform.localScale = targetScale);
+
+            _sequence.Play();
         }
 
         public void SetDeadVisuals()
         {
+            StopBubbles();
+
             var grayscaleValue = 0f;
             var mpb = new MaterialPropertyBlock();
             _spriteRenderer.GetPropertyBlock(mpb);
@@ -41,6 +116,8 @@ namespace Core.Fish.Modules.Visual
 
         public void PlayCollectAnimation(Action onComplete)
         {
+            StopBubbles();
+
             _sequence?.Complete();
             _sequence?.Kill();
 
@@ -52,45 +129,34 @@ namespace Core.Fish.Modules.Visual
             _sequence.Play();
         }
 
-        public void PlaySpawnAnimation(Vector3 targetScale)
+        private void StartBubbles()
         {
-            _sequence?.Complete();
-            _sequence?.Kill();
-
-            // Ставим размер в 0
-            _fishEntity.transform.localScale = Vector3.zero;
-
-            _sequence = DOTween.Sequence()
-                .Append(_fishEntity.transform.DOScale(targetScale, 0.3f).SetEase(Ease.OutQuad))
-                .Append(_fishEntity.transform.DOPunchScale(
-                    new Vector3(targetScale.x * -0.3f, targetScale.y * -0.3f, 0f),
-                    duration: 0.5f,
-                    vibrato: 5,
-                    elasticity: 1f
-                ))
-                .OnComplete(() => _fishEntity.transform.localScale = targetScale);
-
-            _sequence.Play();
+            _bubbleTimer?.Kill();
+            ScheduleNextBubble();
         }
 
-        public void ResetVisuals()
+        private void StopBubbles()
         {
-            _sequence?.Kill();
-            _sequence = null;
-
-            _visualTransform.localRotation = Quaternion.identity;
-            _visualTransform.localPosition = Vector3.zero;
-
-            _spriteRenderer.color = Color.white;
-            _spriteRenderer.SetPropertyBlock(null);
+            _bubbleTimer?.Kill();
         }
 
-        public void SetSprite(Sprite sprite)
+        private void ScheduleNextBubble()
         {
-            _spriteRenderer.sprite = sprite;
+            if (_fishEntity == null || !_fishEntity.IsAlive) return;
+
+            var randomDelay = Random.Range(_bubblesTimer.x, _bubblesTimer.y);
+
+            _bubbleTimer = DOVirtual.DelayedCall(randomDelay, () =>
+            {
+                if (_fishEntity == null || !_fishEntity.IsAlive) return;
+
+                _bubbleParticles.Emit(1);
+
+                ScheduleNextBubble();
+            });
         }
 
-        public void UpdateVisuals()
+        private void UpdateVisuals()
         {
             if (_fishEntity.Movement.Velocity.x > 0.3f)
                 _visualTransform.localScale = new Vector3(-1 * Mathf.Abs(_visualTransform.localScale.x), _visualTransform.localScale.y,
@@ -104,14 +170,18 @@ namespace Core.Fish.Modules.Visual
                 -_fishEntity.Config.MaxTiltAngle,
                 _fishEntity.Config.MaxTiltAngle);
 
-            var tiltDirection = -_visualTransform.localScale.x;
+            var tiltDirection = -Mathf.Sign(_visualTransform.localScale.x);
             var targetRotation = Quaternion.Euler(0, 0, targetAngleZ * tiltDirection);
 
             _visualTransform.localRotation = Quaternion.Slerp(
                 _visualTransform.localRotation,
                 targetRotation,
-                _fishEntity.Config.SteerSpeed * Time.fixedDeltaTime
+                _fishEntity.Config.SteerSpeed * Time.deltaTime
             );
+
+            var isFacingRight = _visualTransform.localScale.x < 0;
+
+            _bubbleParticles.transform.localRotation = Quaternion.Euler(0, isFacingRight ? 180f : 0f, 0);
         }
     }
 }

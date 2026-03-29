@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CooldownSeconds: 8
   TotalHungerRestorePerUse: 180
-  FoodPiecesCount: {x: 4, y: 6}
+  FoodPiecesCount: {x: 3, y: 5}
