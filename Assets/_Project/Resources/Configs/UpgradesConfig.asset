@@ -14,25 +14,39 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LevelsUpgrades:
   - Level: 1
-    UpgradeCost: 20
-    NewMaxFishesCount: 11
+    UpgradeCost: 1500
+    NewMaxFishesCount: 9
     NewAquariumScale: 0.9
-    FoodCountIncrementToDefault: 1
-    HungerRestorePerUseIncrementToDefault: 50
-    NewFeederCooldown: 7.2
-  - Level: 2
-    UpgradeCost: 50
-    NewMaxFishesCount: 12
-    NewAquariumScale: 0.8
     FoodCountIncrementToDefault: 2
-    HungerRestorePerUseIncrementToDefault: 90
-    NewFeederCooldown: 6.7
+    HungerRestorePerUseIncrementToDefault: 80
+    NewFeederCooldown: 11
+  - Level: 2
+    UpgradeCost: 4500
+    NewMaxFishesCount: 14
+    NewAquariumScale: 0.8
+    FoodCountIncrementToDefault: 4
+    HungerRestorePerUseIncrementToDefault: 170
+    NewFeederCooldown: 10
   - Level: 3
-    UpgradeCost: 500
-    NewMaxFishesCount: 15
+    UpgradeCost: 12000
+    NewMaxFishesCount: 20
     NewAquariumScale: 0.7
-    FoodCountIncrementToDefault: 3
-    HungerRestorePerUseIncrementToDefault: 150
-    NewFeederCooldown: 5.9
+    FoodCountIncrementToDefault: 6
+    HungerRestorePerUseIncrementToDefault: 280
+    NewFeederCooldown: 9
+  - Level: 4
+    UpgradeCost: 35000
+    NewMaxFishesCount: 28
+    NewAquariumScale: 0.6
+    FoodCountIncrementToDefault: 8
+    HungerRestorePerUseIncrementToDefault: 420
+    NewFeederCooldown: 8
+  - Level: 5
+    UpgradeCost: 100000
+    NewMaxFishesCount: 40
+    NewAquariumScale: 0.5
+    FoodCountIncrementToDefault: 11
+    HungerRestorePerUseIncrementToDefault: 620
+    NewFeederCooldown: 7
   InitialBackgroundScale: 1.5
   FinalBackgroundScale: 1

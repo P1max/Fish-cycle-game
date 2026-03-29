@@ -12,12 +12,59 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6befd2bfa616457f94eb2fa481432e2c, type: 3}
   m_Name: ConveyorConfig
   m_EditorClassIdentifier: 
-  ConveyorSpeed: 90
+  ConveyorSpeed: 80
   ItemSpacing: 25
   FreeQualityRange: {x: 0.3, y: 0.7}
   CoinsForFreeFish: 150
   FishesCountForFreeFish: 2
-  DefaultFishQuality: 1
-  DefaultQualityCoinsRange: {x: 150, y: 400}
-  UpgradeFishQualityRange: {x: 1.4, y: 5}
-  UpgradeQualityCoinsRange: {x: 400, y: 20000}
+  QualityCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 500
+      value: 1.5
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1500
+      value: 1.5
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1501
+      value: 2
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 5000
+      value: 2
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

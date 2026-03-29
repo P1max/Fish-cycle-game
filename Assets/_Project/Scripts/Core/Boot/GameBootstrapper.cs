@@ -1,6 +1,7 @@
 using System.Linq;
 using Core.Game;
 using Core.Loaders;
+using DG.Tweening;
 using UnityEngine;
 using Zenject;
 
@@ -26,6 +27,8 @@ namespace Core.Boot
         {
             Debug.Log("Старт игры");
 
+            DOTween.SetTweensCapacity(500, 250);
+            
             SpawnInitialFishes();
         }
 

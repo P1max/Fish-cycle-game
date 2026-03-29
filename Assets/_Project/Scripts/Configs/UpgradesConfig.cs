@@ -13,10 +13,6 @@ public class UpgradesConfig : ScriptableObject, IValidatableConfig
     [Tooltip("Начальный масштаб фона (например, 1.5 - сильно приближен)")]
     public float InitialBackgroundScale = 1.5f;
 
-    [BoxGroup("Формулы: Фон")]
-    [Tooltip("Конечный масштаб фона на максимальном уровне (обычно 1)")]
-    public float FinalBackgroundScale = 1f;
-
     public int TotalLevels => LevelsUpgrades.Count;
 
     private void OnValidate()

@@ -29,26 +29,6 @@ namespace Core.Configs
         [LabelText("Количество рыб в аквариуме для бесплатной рыбы")]
         public int FishesCountForFreeFish = 1;
 
-        [BoxGroup("Качество: Обычные")]
-        [JsonProperty("defultFishQuality")]
-        [LabelText("Базовый множитель")]
-        public float DefaultFishQuality = 1f;
-
-        [BoxGroup("Качество: Обычные")]
-        [JsonProperty("defultQualityCoinsRange")]
-        [LabelText("Диапазон монет (Базовый)")]
-        public Vector2 DefaultQualityCoinsRange = new(100, 500);
-
-        [BoxGroup("Качество: Улучшенные")]
-        [JsonProperty("upgradeFishQualityRange")]
-        [LabelText("Диапазон множителя (Улучшенный)")]
-        public Vector2 UpgradeFishQualityRange = new(2, 8);
-
-        [BoxGroup("Качество: Улучшенные")]
-        [JsonProperty("upgradeQualityCoinsRange")]
-        [LabelText("Диапазон монет (Улучшенный)")]
-        public Vector2 UpgradeQualityCoinsRange = new(500, 50000);
-        
         [BoxGroup("Качество: Улучшенные")]
         [LabelText("Кривая качества от количества монет")]
         public AnimationCurve QualityCurve = new(
@@ -70,19 +50,9 @@ namespace Core.Configs
         {
             ConveyorSpeed = Mathf.Max(0.1f, ConveyorSpeed);
             ItemSpacing = Mathf.Max(0f, ItemSpacing);
-            DefaultFishQuality = Mathf.Max(0.1f, DefaultFishQuality);
 
             FreeQualityRange.x = Mathf.Max(0.1f, FreeQualityRange.x);
             FreeQualityRange.y = Mathf.Max(FreeQualityRange.x, FreeQualityRange.y);
-
-            DefaultQualityCoinsRange.x = Mathf.Max(1f, DefaultQualityCoinsRange.x);
-            DefaultQualityCoinsRange.y = Mathf.Max(DefaultQualityCoinsRange.x + 1f, DefaultQualityCoinsRange.y);
-
-            UpgradeQualityCoinsRange.x = DefaultQualityCoinsRange.y; 
-            UpgradeQualityCoinsRange.y = Mathf.Max(UpgradeQualityCoinsRange.x + 1f, UpgradeQualityCoinsRange.y);
-            
-            UpgradeFishQualityRange.x = Mathf.Max(DefaultFishQuality, UpgradeFishQualityRange.x);
-            UpgradeFishQualityRange.y = Mathf.Max(UpgradeFishQualityRange.x, UpgradeFishQualityRange.y);
         }
     }
 }

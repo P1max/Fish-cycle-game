@@ -20,7 +20,10 @@ namespace Core.Entities.Fish.Modules.Breeding
             _breedManager = breedManager;
         }
 
-        public void Reset() => ResetCooldown();
+        public void Reset()
+        {
+            _cooldownTimer = 0f;
+        }
 
         public void ResetCooldown()
         {

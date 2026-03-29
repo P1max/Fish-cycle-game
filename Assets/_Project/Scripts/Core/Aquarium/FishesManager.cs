@@ -16,7 +16,7 @@ namespace Core.Game
         public int CurrentFishCount { get; private set; }
         public int MaxFishesCount { get; private set; }
 
-        public bool CanAddFish => CurrentFishCount < _config.MaxFishCount;
+        public bool CanAddFish => CurrentFishCount < MaxFishesCount;
 
         public FishesManager(FishPool fishPool, AquariumConfig config, UpgradeManager upgradeManager)
         {

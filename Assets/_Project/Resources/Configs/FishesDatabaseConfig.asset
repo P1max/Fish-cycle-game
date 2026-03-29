@@ -17,8 +17,9 @@ MonoBehaviour:
     Id: goldfish
     Type: worker
     Price: 100
-    NormalSpeedRange: {x: 0.9, y: 1.1}
-    MaxHungrySpeed: 1.6
+    CanBeFree: 1
+    NormalSpeedRange: {x: 0.8, y: 1.4}
+    MaxHungrySpeed: 2
     SteerSpeed: 7
     MaxTiltAngle: 20
     SizeModifier: {x: 0.75, y: 0.85}
@@ -32,11 +33,12 @@ MonoBehaviour:
     Id: rostik
     Type: worker
     Price: 120
-    NormalSpeedRange: {x: 0.9, y: 1.1}
-    MaxHungrySpeed: 1.6
+    CanBeFree: 1
+    NormalSpeedRange: {x: 0.7, y: 1.2}
+    MaxHungrySpeed: 1.8
     SteerSpeed: 7
     MaxTiltAngle: 20
-    SizeModifier: {x: 0.75, y: 0.85}
+    SizeModifier: {x: 0.85, y: 0.95}
     LifetimeSeconds: 140
     HungerGrowthPercentPerSecond: 1.2
     BreedChancePercent: 12
@@ -47,11 +49,12 @@ MonoBehaviour:
     Id: guf
     Type: worker
     Price: 150
-    NormalSpeedRange: {x: 0.9, y: 1.1}
+    CanBeFree: 1
+    NormalSpeedRange: {x: 0.9, y: 1.5}
     MaxHungrySpeed: 1.6
     SteerSpeed: 7
     MaxTiltAngle: 20
-    SizeModifier: {x: 0.75, y: 0.85}
+    SizeModifier: {x: 0.55, y: 0.55}
     LifetimeSeconds: 110
     HungerGrowthPercentPerSecond: 1.8
     BreedChancePercent: 15
@@ -62,8 +65,9 @@ MonoBehaviour:
     Id: alex
     Type: worker
     Price: 180
-    NormalSpeedRange: {x: 0.9, y: 1.1}
-    MaxHungrySpeed: 1.6
+    CanBeFree: 1
+    NormalSpeedRange: {x: 0.8, y: 1.3}
+    MaxHungrySpeed: 1.9
     SteerSpeed: 7
     MaxTiltAngle: 20
     SizeModifier: {x: 0.75, y: 0.85}
@@ -77,11 +81,12 @@ MonoBehaviour:
     Id: kreg
     Type: selectioner
     Price: 150
-    NormalSpeedRange: {x: 0.9, y: 1.1}
-    MaxHungrySpeed: 1.6
+    CanBeFree: 1
+    NormalSpeedRange: {x: 0.8, y: 1.3}
+    MaxHungrySpeed: 1.7
     SteerSpeed: 7
     MaxTiltAngle: 20
-    SizeModifier: {x: 0.75, y: 0.85}
+    SizeModifier: {x: 0.65, y: 0.75}
     LifetimeSeconds: 90
     HungerGrowthPercentPerSecond: 2
     BreedChancePercent: 40
@@ -92,8 +97,9 @@ MonoBehaviour:
     Id: jorj
     Type: selectioner
     Price: 200
-    NormalSpeedRange: {x: 0.9, y: 1.1}
-    MaxHungrySpeed: 1.6
+    CanBeFree: 1
+    NormalSpeedRange: {x: 0.8, y: 1.3}
+    MaxHungrySpeed: 1.7
     SteerSpeed: 7
     MaxTiltAngle: 20
     SizeModifier: {x: 0.75, y: 0.85}
@@ -107,11 +113,12 @@ MonoBehaviour:
     Id: anjela
     Type: selectioner
     Price: 250
-    NormalSpeedRange: {x: 0.9, y: 1.1}
-    MaxHungrySpeed: 1.6
+    CanBeFree: 1
+    NormalSpeedRange: {x: 0.8, y: 1.3}
+    MaxHungrySpeed: 1.8
     SteerSpeed: 7
     MaxTiltAngle: 20
-    SizeModifier: {x: 0.75, y: 0.85}
+    SizeModifier: {x: 0.7, y: 0.8}
     LifetimeSeconds: 85
     HungerGrowthPercentPerSecond: 1.8
     BreedChancePercent: 50
@@ -122,11 +129,12 @@ MonoBehaviour:
     Id: rada
     Type: selectioner
     Price: 300
-    NormalSpeedRange: {x: 0.9, y: 1.1}
-    MaxHungrySpeed: 1.6
+    CanBeFree: 1
+    NormalSpeedRange: {x: 0.9, y: 1.4}
+    MaxHungrySpeed: 1.8
     SteerSpeed: 7
     MaxTiltAngle: 20
-    SizeModifier: {x: 0.75, y: 0.85}
+    SizeModifier: {x: 0.7, y: 0.8}
     LifetimeSeconds: 110
     HungerGrowthPercentPerSecond: 1.5
     BreedChancePercent: 30
@@ -137,11 +145,12 @@ MonoBehaviour:
     Id: bob
     Type: suetolog
     Price: 220
-    NormalSpeedRange: {x: 0.9, y: 1.1}
-    MaxHungrySpeed: 1.6
+    CanBeFree: 1
+    NormalSpeedRange: {x: 1.4, y: 1.8}
+    MaxHungrySpeed: 2.4
     SteerSpeed: 7
     MaxTiltAngle: 20
-    SizeModifier: {x: 0.75, y: 0.85}
+    SizeModifier: {x: 0.85, y: 0.9}
     LifetimeSeconds: 45
     HungerGrowthPercentPerSecond: 4
     BreedChancePercent: 5
@@ -152,8 +161,9 @@ MonoBehaviour:
     Id: vitalya
     Type: suetolog
     Price: 350
-    NormalSpeedRange: {x: 0.9, y: 1.1}
-    MaxHungrySpeed: 1.6
+    CanBeFree: 1
+    NormalSpeedRange: {x: 1.5, y: 1.9}
+    MaxHungrySpeed: 2.7
     SteerSpeed: 7
     MaxTiltAngle: 20
     SizeModifier: {x: 0.75, y: 0.85}
@@ -167,11 +177,12 @@ MonoBehaviour:
     Id: arnold
     Type: suetolog
     Price: 450
-    NormalSpeedRange: {x: 0.9, y: 1.1}
-    MaxHungrySpeed: 1.6
+    CanBeFree: 1
+    NormalSpeedRange: {x: 1.3, y: 1.75}
+    MaxHungrySpeed: 2.3
     SteerSpeed: 7
     MaxTiltAngle: 20
-    SizeModifier: {x: 0.75, y: 0.85}
+    SizeModifier: {x: 0.85, y: 0.9}
     LifetimeSeconds: 35
     HungerGrowthPercentPerSecond: 5
     BreedChancePercent: 2
@@ -182,11 +193,12 @@ MonoBehaviour:
     Id: sasha
     Type: aristocrat
     Price: 500
-    NormalSpeedRange: {x: 0.7, y: 0.75}
-    MaxHungrySpeed: 3
+    CanBeFree: 0
+    NormalSpeedRange: {x: 0.55, y: 0.9}
+    MaxHungrySpeed: 1.4
     SteerSpeed: 7
     MaxTiltAngle: 20
-    SizeModifier: {x: 0.95, y: 1.05}
+    SizeModifier: {x: 1.05, y: 1.15}
     LifetimeSeconds: 240
     HungerGrowthPercentPerSecond: 0.8
     BreedChancePercent: 8
@@ -197,11 +209,12 @@ MonoBehaviour:
     Id: henri
     Type: aristocrat
     Price: 700
-    NormalSpeedRange: {x: 0.9, y: 1.1}
-    MaxHungrySpeed: 1.6
+    CanBeFree: 0
+    NormalSpeedRange: {x: 0.8, y: 1.4}
+    MaxHungrySpeed: 1.8
     SteerSpeed: 7
     MaxTiltAngle: 20
-    SizeModifier: {x: 0.75, y: 0.85}
+    SizeModifier: {x: 0.8, y: 0.9}
     LifetimeSeconds: 300
     HungerGrowthPercentPerSecond: 0.6
     BreedChancePercent: 5
@@ -212,11 +225,12 @@ MonoBehaviour:
     Id: mr fish
     Type: aristocrat
     Price: 900
-    NormalSpeedRange: {x: 0.9, y: 1.1}
-    MaxHungrySpeed: 1.6
+    CanBeFree: 0
+    NormalSpeedRange: {x: 0.9, y: 1.4}
+    MaxHungrySpeed: 1.8
     SteerSpeed: 7
     MaxTiltAngle: 20
-    SizeModifier: {x: 0.75, y: 0.85}
+    SizeModifier: {x: 0.55, y: 0.75}
     LifetimeSeconds: 270
     HungerGrowthPercentPerSecond: 0.7
     BreedChancePercent: 10
@@ -227,7 +241,8 @@ MonoBehaviour:
     Id: kira
     Type: aristocrat
     Price: 1200
-    NormalSpeedRange: {x: 1.1, y: 1.3}
+    CanBeFree: 0
+    NormalSpeedRange: {x: 1.1, y: 1.4}
     MaxHungrySpeed: 1.8
     SteerSpeed: 7
     MaxTiltAngle: 20
@@ -242,8 +257,9 @@ MonoBehaviour:
     Id: don
     Type: legendary
     Price: 2000
-    NormalSpeedRange: {x: 0.9, y: 1.1}
-    MaxHungrySpeed: 1.6
+    CanBeFree: 0
+    NormalSpeedRange: {x: 1, y: 1.4}
+    MaxHungrySpeed: 2.2
     SteerSpeed: 7
     MaxTiltAngle: 20
     SizeModifier: {x: 0.75, y: 0.85}
@@ -257,8 +273,9 @@ MonoBehaviour:
     Id: nastya
     Type: legendary
     Price: 3500
-    NormalSpeedRange: {x: 0.9, y: 1.1}
-    MaxHungrySpeed: 1.6
+    CanBeFree: 0
+    NormalSpeedRange: {x: 0.9, y: 1.35}
+    MaxHungrySpeed: 2.2
     SteerSpeed: 7
     MaxTiltAngle: 20
     SizeModifier: {x: 0.75, y: 0.85}
@@ -272,11 +289,12 @@ MonoBehaviour:
     Id: lesha
     Type: legendary
     Price: 5000
-    NormalSpeedRange: {x: 0.9, y: 1.1}
-    MaxHungrySpeed: 1.6
+    CanBeFree: 0
+    NormalSpeedRange: {x: 1.2, y: 1.5}
+    MaxHungrySpeed: 2.4
     SteerSpeed: 7
     MaxTiltAngle: 20
-    SizeModifier: {x: 0.75, y: 0.85}
+    SizeModifier: {x: 0.65, y: 0.75}
     LifetimeSeconds: 200
     HungerGrowthPercentPerSecond: 2.5
     BreedChancePercent: 10

@@ -23,6 +23,7 @@ namespace UI.Conveyor
 
         private List<FishItemView> _items;
         private List<string> _allFishIds;
+        private List<string> _freeFishIds;
         private FishItemView _prefab;
         private RectTransform _viewport;
         private float _stepDistance;
@@ -35,6 +36,10 @@ namespace UI.Conveyor
 
         private void OnBalanceManagerChanged(int newBalance) => RefreshOffscreenItems();
 
+        private bool IsFreeFishCondition() =>
+            _balanceManager.CurrentCoinsCount <= _config.CoinsForFreeFish &&
+            _aquarium.CurrentFishCount < _config.FishesCountForFreeFish;
+
         private void Start()
         {
             _items = new List<FishItemView>();
@@ -45,6 +50,18 @@ namespace UI.Conveyor
                 Debug.LogError("[ConveyorManager] Нет доступных рыб в словаре лоадера!");
 
                 return;
+            }
+
+            _freeFishIds = _fishesLoader.LoadedFishesDict
+                .Where(kvp => kvp.Value.CanBeFree)
+                .Select(kvp => kvp.Key)
+                .ToList();
+
+            if (_freeFishIds.Count == 0)
+            {
+                Debug.LogWarning("Нет рыб с флагом CanBeFree.");
+
+                _freeFishIds = _allFishIds;
             }
 
             _viewport = _container.parent.GetComponent<RectTransform>();
@@ -152,23 +169,30 @@ namespace UI.Conveyor
             }
         }
 
-        private float CalculateQuality(int coins)
-        {
-            if (coins <= _config.CoinsForFreeFish && _aquarium.CurrentFishCount < _config.FishesCountForFreeFish)
-                return Random.Range(_config.FreeQualityRange.x, _config.FreeQualityRange.y);
-            
-            return _config.QualityCurve.Evaluate(coins);
-        }
-
         private void ReRollItem(FishItemView view)
         {
-            var randomId = _allFishIds[Random.Range(0, _allFishIds.Count)];
+            bool isFree = IsFreeFishCondition();
+
+            var targetPool = isFree ? _freeFishIds : _allFishIds;
+            var randomId = targetPool[Random.Range(0, targetPool.Count)];
             var baseConfig = _fishesLoader.LoadedFishesDict[randomId];
 
-            var quality = CalculateQuality(_balanceManager.CurrentCoinsCount);
-            var lifeTime = baseConfig.LifetimeSeconds * quality;
+            float quality;
+            int price;
+
+            if (isFree)
+            {
+                quality = Random.Range(_config.FreeQualityRange.x, _config.FreeQualityRange.y);
+                price = 0;
+            }
+            else
+            {
+                quality = _config.QualityCurve.Evaluate(_balanceManager.CurrentCoinsCount);
+                price = Mathf.RoundToInt(baseConfig.Price * quality);
+            }
+
+            var lifeTime = Mathf.RoundToInt(baseConfig.LifetimeSeconds * quality);
             var income = Mathf.RoundToInt(baseConfig.IncomeCoins * quality);
-            var price = quality <= _config.FreeQualityRange.y ? 0 : Mathf.RoundToInt(baseConfig.Price * quality);
 
             view.SetData(baseConfig.Sprite, lifeTime, income, price);
 

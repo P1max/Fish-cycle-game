@@ -59,7 +59,7 @@ namespace Installers
             Container.Bind<FeedJarPresenter>().AsSingle().NonLazy();
             Container.Bind<FeedJarView>().FromComponentInHierarchy().AsSingle();
 
-            Container.Bind<FishesCounterPresenter>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<FishesCounterPresenter>().AsSingle().NonLazy();
             Container.Bind<FishesCounterView>().FromComponentInHierarchy().AsSingle();
 
             Container.BindInterfacesAndSelfTo<CoinsCounterPresenter>().AsSingle().NonLazy();

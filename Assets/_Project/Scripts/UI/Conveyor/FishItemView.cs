@@ -48,7 +48,7 @@ namespace UI.Conveyor
             _buyAction = action;
         }
 
-        public void SetData(Sprite sprite, float lifeTime, int income, int fishPrice)
+        public void SetData(Sprite sprite, int lifeTime, int income, int fishPrice)
         {
             _fishSprite.sprite = sprite;
             _fishSprite.color = new Color32(255, 255, 255, 255);

@@ -17,6 +17,10 @@ public class FishConfig : IValidatableConfig
 
     [FoldoutGroup("Основное")]
     public int Price = 100;
+    
+    [FoldoutGroup("Основное")]
+    [Tooltip("Может ли эта рыба выпадать бесплатно, если у игрока нет денег?")]
+    public bool CanBeFree;
 
     [FoldoutGroup("Движение и Физика")]
     [MinMaxSlider(0.5f, 5f, true)]
