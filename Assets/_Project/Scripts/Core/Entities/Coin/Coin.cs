@@ -14,15 +14,18 @@ namespace Core.Coin
 
         private BalanceManager _balanceManager;
         private Sequence _collectSequence;
+        private Sequence _spawnSequence;
         private Tween _autoCollectTimer;
         private Collider2D _collider;
         private CoinsPool _pool;
         private int _coinValue;
         private bool _isCollected;
+        private float _originalScale;
 
         private void Awake()
         {
             _collider = GetComponent<Collider2D>();
+            _originalScale = transform.localScale.x;
         }
 
         private void OnMouseDown()
@@ -53,6 +56,7 @@ namespace Core.Coin
             _isCollected = true;
 
             _autoCollectTimer?.Kill();
+            _spawnSequence?.Kill();
 
             _balanceManager.AddCoins(_coinValue);
 
@@ -67,13 +71,18 @@ namespace Core.Coin
             _collider.enabled = true;
 
             _collectSequence?.Kill();
+            _spawnSequence?.Kill();
             _autoCollectTimer?.Kill();
             transform.DOKill();
 
             transform.rotation = Quaternion.identity;
             _spriteRenderer.color = Color.white;
 
-            _autoCollectTimer = DOVirtual.DelayedCall(_autoCollectTime, Collect);
+            transform.localScale = Vector3.zero;
+
+            _spawnSequence = DOTween.Sequence()
+                .Append(transform.DOScale(_originalScale, 0.4f).SetEase(Ease.OutBack))
+                .OnComplete(() => _autoCollectTimer = DOVirtual.DelayedCall(_autoCollectTime, Collect));
         }
 
         public void Init(BalanceManager balanceManager, CoinsPool pool)

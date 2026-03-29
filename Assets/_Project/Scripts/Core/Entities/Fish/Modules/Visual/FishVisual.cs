@@ -41,6 +41,7 @@ namespace Core.Fish.Modules.Visual
         public GameObject HungryContainer => _hungryContainer;
         public GameObject DeathContainer => _deathContainer;
         public TextMeshPro DeathText => _deathText;
+        public float PoopAnimPreDelay => 0.35f;
 
         public void Init(FishEntity fishEntity)
         {
@@ -90,6 +91,25 @@ namespace Core.Fish.Modules.Visual
                     elasticity: 1f
                 ))
                 .OnComplete(() => _fishEntity.transform.localScale = targetScale);
+
+            _sequence.Play();
+        }
+
+        public void PlayPoopCoinAnimation(Action onCoinEject)
+        {
+            if (_fishEntity == null || !_fishEntity.IsAlive) return;
+
+            _sequence?.Complete();
+            _sequence?.Kill();
+
+            var sign = Mathf.Sign(_visualTransform.localScale.x);
+            var defaultScale = new Vector3(sign, 1f, 1f);
+
+            _sequence = DOTween.Sequence()
+                .Append(_visualTransform.DOScale(new Vector3(sign * 0.8f, 1.2f, 1f), 0.2f).SetEase(Ease.OutQuad))
+                .Append(_visualTransform.DOScale(new Vector3(sign * 1.2f, 0.8f, 1f), 0.15f).SetEase(Ease.OutQuad))
+                .AppendCallback(() => onCoinEject?.Invoke())
+                .Append(_visualTransform.DOScale(defaultScale, 0.2f).SetEase(Ease.OutBack));
 
             _sequence.Play();
         }
