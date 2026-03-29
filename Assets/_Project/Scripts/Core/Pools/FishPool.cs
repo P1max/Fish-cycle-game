@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Core.Game;
 using Core.Game.Upgrade;
 using Core.Loaders;
+using DG.Tweening;
 using UnityEngine;
 using Zenject;
 
@@ -20,6 +21,7 @@ namespace Spawners
 
         private Dictionary<Collider2D, FishEntity> _fishesCache;
         private float _defaultScale;
+        private Sequence _scaleAnimation;
 
         protected override void Awake()
         {
@@ -31,7 +33,11 @@ namespace Spawners
             _fishesCache = new Dictionary<Collider2D, FishEntity>();
 
             _upgradeManager.OnAquariumUpgrade += (newData) =>
-                transform.localScale = Vector3.one * _defaultScale * newData.NewAquariumScale;
+            {
+                transform.DOKill(true);
+
+                transform.DOScale(Vector3.one * _defaultScale * newData.NewAquariumScale, 1.5f).SetEase(Ease.InOutSine);
+            };
         }
 
         protected override void LoadPrefab()
