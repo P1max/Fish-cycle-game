@@ -62,7 +62,7 @@ namespace Installers
             Container.Bind<FishesCounterPresenter>().AsSingle().NonLazy();
             Container.Bind<FishesCounterView>().FromComponentInHierarchy().AsSingle();
 
-            Container.Bind<CoinsCounterPresenter>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<CoinsCounterPresenter>().AsSingle().NonLazy();
             Container.Bind<CoinsCounterView>().FromComponentInHierarchy().AsSingle();
 
             Container.Bind<AquariumUpgraderPresenter>().AsSingle().NonLazy();
