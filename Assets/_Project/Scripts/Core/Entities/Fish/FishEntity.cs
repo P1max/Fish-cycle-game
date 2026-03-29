@@ -128,10 +128,11 @@ public class FishEntity : MonoBehaviour
         Refresh();
         
         var randomSize = Random.Range(Config.SizeModifier.x, Config.SizeModifier.y);
+        var targetScale = Vector3.one * randomSize;
 
-        transform.localScale *= randomSize;
-        
         BaseSpeed = Random.Range(Config.NormalSpeedRange.x, Config.NormalSpeedRange.y);
+
+        FishVisual.PlaySpawnAnimation(targetScale);
     }
 
     public void Init(IReadOnlyDictionary<Collider2D, FishEntity> fishesCache, FoodPool foodPool, Collider2D thisCollider,

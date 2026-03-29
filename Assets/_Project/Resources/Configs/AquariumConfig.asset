@@ -17,5 +17,5 @@ MonoBehaviour:
   MaxFishCount: 10
   DefaultEntitiesScale: 1
   FishesDefaultScale: 1
-  CoinsDefaultScale: 1
+  CoinsDefaultScale: 0.85
   FoodDefaultScale: 1

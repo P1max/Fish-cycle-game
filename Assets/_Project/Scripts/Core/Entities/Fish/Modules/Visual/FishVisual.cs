@@ -52,6 +52,27 @@ namespace Core.Fish.Modules.Visual
             _sequence.Play();
         }
 
+        public void PlaySpawnAnimation(Vector3 targetScale)
+        {
+            _sequence?.Complete();
+            _sequence?.Kill();
+
+            // Ставим размер в 0
+            _fishEntity.transform.localScale = Vector3.zero;
+
+            _sequence = DOTween.Sequence()
+                .Append(_fishEntity.transform.DOScale(targetScale, 0.3f).SetEase(Ease.OutQuad))
+                .Append(_fishEntity.transform.DOPunchScale(
+                    new Vector3(targetScale.x * -0.3f, targetScale.y * -0.3f, 0f),
+                    duration: 0.5f,
+                    vibrato: 5,
+                    elasticity: 1f
+                ))
+                .OnComplete(() => _fishEntity.transform.localScale = targetScale);
+
+            _sequence.Play();
+        }
+
         public void ResetVisuals()
         {
             _sequence?.Kill();

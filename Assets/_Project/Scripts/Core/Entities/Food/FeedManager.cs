@@ -44,10 +44,10 @@ namespace Core.Feed
             if (cam == null) return false;
 
             var foodAmount = UnityEngine.Random.Range(_config.FoodPiecesCount.x, _config.FoodPiecesCount.y + 1) +
-                             _upgradeManager.CurrentLevelData.FoodCountIncrementToDefault;
+                             (_upgradeManager.CurrentLevelData?.FoodCountIncrementToDefault ?? 0);
 
-            var nutritionPerPiece = _config.TotalHungerRestorePerUse +
-                                    _upgradeManager.CurrentLevelData.HungerRestorePerUseIncrementToDefault / foodAmount;
+            var nutritionPerPiece = (_config.TotalHungerRestorePerUse +
+                                     (_upgradeManager.CurrentLevelData?.HungerRestorePerUseIncrementToDefault ?? 0)) / foodAmount;
 
             var topLeft = cam.ViewportToWorldPoint(new Vector3(0, 1, 0));
             var bottomRight = cam.ViewportToWorldPoint(new Vector3(1, 0, 0));
