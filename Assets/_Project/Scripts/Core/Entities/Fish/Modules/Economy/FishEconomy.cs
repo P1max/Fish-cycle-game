@@ -7,7 +7,7 @@ public class FishEconomy
     private readonly CoinsPool _coinsPool;
 
     private float _coinTimer;
-    private bool _isPooping; 
+    private bool _isPooping;
 
     public float TimeToNextCoin => Mathf.Max(0, _fish.Config.IncomeCooldownSeconds - _coinTimer);
 
@@ -22,8 +22,8 @@ public class FishEconomy
     private void SpawnCoin()
     {
         var offsetDistance = 0.5f;
-        var direction = Mathf.Sign(_fish.FishVisual.transform.localScale.x); 
-        var spawnOffset = new Vector3(direction * offsetDistance, 0, 0); 
+        var direction = Mathf.Sign(_fish.FishVisual.VisualTransform.localScale.x);
+        var spawnOffset = new Vector3(direction * offsetDistance, 0, 0);
         var spawnPos = _fish.transform.position + spawnOffset;
 
         _coinsPool.SpawnCoin(spawnPos, _fish.Config.IncomeCoins);

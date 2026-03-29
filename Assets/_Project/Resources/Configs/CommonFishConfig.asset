@@ -22,13 +22,13 @@ MonoBehaviour:
   CohesionWeight: 2
   SeparationWeight: 160
   PartnerSearchRadius: 1
-  ObstacleAvoidanceWeight: 120
+  ObstacleAvoidanceWeight: 140
   FoodWeight: 60
   FoodSearchRadius: 4
   EatTimer: {x: 1, y: 2}
   WanderWeight: 10
-  ScareRadius: 2
-  ScareWeight: 260
-  ScareDuration: 2
+  ScareRadius: 1.5
+  ScareWeight: 130
+  ScareDuration: 1.7
   DeathTimerThreshold: 10
   HungerIndicatorThreshold: 60

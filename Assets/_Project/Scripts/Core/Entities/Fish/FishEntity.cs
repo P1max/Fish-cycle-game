@@ -113,7 +113,7 @@ public class FishEntity : MonoBehaviour
 
         _isCollecting = true;
 
-        DOVirtual.DelayedCall(0.1f, () =>
+        DOVirtual.DelayedCall(0.01f, () =>
         {
             if (this != null && _collider != null)
             {
