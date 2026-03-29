@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Spawners
@@ -9,6 +10,8 @@ namespace Spawners
 
         private LinkedList<T> _activeItems;
         private LinkedList<T> _freeItems;
+
+        protected List<T> ActiveItems => _activeItems.ToList();
 
         protected virtual void Awake()
         {

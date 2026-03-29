@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8084851526900714231}
   - component: {fileID: 1492678005874174795}
   m_Layer: 0
-  m_Name: VFX_Birth
+  m_Name: BirthParticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f6c18d44744403988e714696e5875b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _id: birth
   _symbolRenderer: {fileID: 910366088911432791}
   _heartsParticles: {fileID: 187032511309794148}
   _animationDuration: 3

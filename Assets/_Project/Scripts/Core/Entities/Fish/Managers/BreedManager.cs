@@ -34,7 +34,7 @@ namespace Core.Game
                 
                 _fishesManager.TryAddFish(childFishId, spawnPosition: spawnPos);
                 
-                _effectsPool.SpawnEffect(spawnPos);
+                _effectsPool.SpawnEffect("birth", spawnPos);
             }
         }
     }

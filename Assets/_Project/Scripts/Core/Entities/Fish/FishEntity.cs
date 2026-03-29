@@ -7,6 +7,7 @@ using Core.Fish.Modules.Visual;
 using Core.Game;
 using Core.Loaders;
 using Spawners;
+using DG.Tweening;
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(FishVisual))]
@@ -15,6 +16,7 @@ public class FishEntity : MonoBehaviour
     private FishesLoader _fishesLoader;
     private Collider2D _collider;
     private bool _isAlive;
+    private bool _isCollecting;
 
     public event Action<FishEntity> OnReadyToPool;
     public event Action<FishEntity> OnReturnToPool;
@@ -82,16 +84,17 @@ public class FishEntity : MonoBehaviour
     {
         name = Config.Id;
         _isAlive = true;
+        _isCollecting = false;
         _collider.enabled = true;
 
         Hunger.Reset();
         Economy.Reset();
         LifeCycle.Reset();
         Breeding.Reset();
-        
+
         FishVisual.ResetVisuals();
         FishVisual.SetSprite(Config.Sprite);
-        
+
         Movement.Start();
     }
 
@@ -106,9 +109,17 @@ public class FishEntity : MonoBehaviour
 
     public void Collect()
     {
-        if (_isAlive) return;
+        if (_isAlive || _isCollecting) return;
 
-        _collider.enabled = false;
+        _isCollecting = true;
+
+        DOVirtual.DelayedCall(0.1f, () =>
+        {
+            if (this != null && _collider != null)
+            {
+                _collider.enabled = false;
+            }
+        });
 
         OnReadyToPool?.Invoke(this);
 
@@ -118,14 +129,14 @@ public class FishEntity : MonoBehaviour
     public void SetConfig(string fishId, float quality)
     {
         var baseConfig = _fishesLoader.LoadedFishesDict[fishId];
-        
+
         Config = baseConfig.Clone();
         Config.LifetimeSeconds *= quality;
         Config.IncomeCoins = Mathf.RoundToInt(Config.IncomeCoins * quality);
         Config.Price = Mathf.RoundToInt(Config.Price * quality);
-        
+
         Refresh();
-        
+
         var randomSize = Random.Range(Config.SizeModifier.x, Config.SizeModifier.y);
         var targetScale = Vector3.one * randomSize;
 
@@ -150,11 +161,9 @@ public class FishEntity : MonoBehaviour
             aquariumBoundsManager);
 
         FishVisual.Init(this);
-        
+
         Scanner = new FishScanner(this, fishesCache, foodPool, coinsPool);
         Breeding = new FishBreeding(this, breedManager);
-        
-        // Передаем ссылки на UI элементы из FishVisual в FishIndicator
         Indicator = new FishIndicator(this, FishVisual.HungryContainer, FishVisual.DeathContainer, FishVisual.DeathText);
 
         _isAlive = true;

@@ -23,6 +23,8 @@ namespace Spawners
         private float _defaultScale;
         private Sequence _scaleAnimation;
 
+        public List<FishEntity> ActiveFishes => ActiveItems;
+
         protected override void Awake()
         {
             base.Awake();

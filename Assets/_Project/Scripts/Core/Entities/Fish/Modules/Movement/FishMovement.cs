@@ -15,6 +15,10 @@ public class FishMovement
     public bool IsChasingFood { get; set; }
     public Vector2 Velocity => _velocity;
 
+    public Vector2 ScareSource { get; private set; }
+    public float ScareTimer { get; private set; }
+    public bool IsScared => ScareTimer > 0;
+
     public FishMovement(FishEntity fishEntity, Rigidbody2D rigidbody, Collider2D collider, AquariumBoundsManager aquariumBoundsManager)
     {
         _fishEntity = fishEntity;
@@ -27,6 +31,7 @@ public class FishMovement
             new WanderSteering(),
             new BoidsSteering(),
             new FoodSteering(collider),
+            new FleeSteering()
         };
 
         _isActive = true;
@@ -44,9 +49,17 @@ public class FishMovement
         _rigidbody.linearVelocity = Vector2.zero;
     }
 
+    public void ApplyScare(Vector2 sourcePosition, float duration)
+    {
+        ScareSource = sourcePosition;
+        ScareTimer = duration;
+    }
+
     public void Tick()
     {
         if (_fishEntity.Config == null || !_isActive || _behaviors == null) return;
+
+        if (ScareTimer > 0) ScareTimer -= Time.fixedDeltaTime;
 
         var acceleration = Vector2.zero;
 
@@ -55,18 +68,20 @@ public class FishMovement
 
         _velocity += acceleration * Time.fixedDeltaTime;
 
-        var targetSpeedLimit = IsChasingFood ? _fishEntity.Config.MaxHungrySpeed : _fishEntity.BaseSpeed;
+        var targetSpeedLimit = IsScared
+            ? _fishEntity.Config.MaxHungrySpeed * 1.5f
+            : (IsChasingFood ? _fishEntity.Config.MaxHungrySpeed : _fishEntity.BaseSpeed);
 
-        _currentSpeedLimit = Mathf.Lerp(_currentSpeedLimit, targetSpeedLimit, Time.fixedDeltaTime * 3f);
+        var lerpSpeed = IsScared ? 5f : 3f;
+
+        _currentSpeedLimit = Mathf.Lerp(_currentSpeedLimit, targetSpeedLimit, Time.fixedDeltaTime * lerpSpeed);
 
         _velocity = Vector2.ClampMagnitude(_velocity, _currentSpeedLimit);
 
         var speed = _velocity.magnitude;
 
-        if (!IsChasingFood && speed < _fishEntity.BaseSpeed && speed > 0.1f && !IsNearEdge)
-        {
+        if (!IsChasingFood && !IsScared && speed < _fishEntity.BaseSpeed && speed > 0.1f && !IsNearEdge) 
             _velocity = Vector2.Lerp(_velocity, _velocity.normalized * _fishEntity.BaseSpeed, Time.fixedDeltaTime * 2f);
-        }
 
         _rigidbody.linearVelocity = _velocity;
     }

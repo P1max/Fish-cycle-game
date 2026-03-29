@@ -27,5 +27,8 @@ MonoBehaviour:
   FoodSearchRadius: 4
   EatTimer: {x: 1, y: 2}
   WanderWeight: 10
+  ScareRadius: 2
+  ScareWeight: 260
+  ScareDuration: 2
   DeathTimerThreshold: 10
   HungerIndicatorThreshold: 60

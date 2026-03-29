@@ -40,6 +40,13 @@ public class CommonFishConfig : ScriptableObject, IValidatableConfig
 
     [BoxGroup("Своё мнение")]
     public float WanderWeight = 13f;
+    
+    [BoxGroup("Испуг (Клик)")]
+    public float ScareRadius = 5f;
+    [BoxGroup("Испуг (Клик)")]
+    public float ScareWeight = 100f;
+    [BoxGroup("Испуг (Клик)")]
+    public float ScareDuration = 1.5f;
 
     [BoxGroup("UI Индикаторы")]
     [Tooltip("За сколько секунд до смерти появляется таймер")]
@@ -70,6 +77,8 @@ public class CommonFishConfig : ScriptableObject, IValidatableConfig
         WanderWeight = Mathf.Max(0f, WanderWeight);
         FoodWeight = Mathf.Max(0f, FoodWeight);
         FoodSearchRadius = Mathf.Max(0.1f, FoodSearchRadius);
+        ScareRadius = Mathf.Max(0.1f, ScareRadius);
+        ScareWeight = Mathf.Max(0f, ScareWeight);
 
         DeathTimerThreshold = Mathf.Max(0.1f, DeathTimerThreshold);
         HungerIndicatorThreshold = Mathf.Clamp(HungerIndicatorThreshold, 0f, 100f);

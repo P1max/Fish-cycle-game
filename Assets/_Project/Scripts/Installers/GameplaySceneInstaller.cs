@@ -78,6 +78,7 @@ namespace Installers
 
             Container.Bind<AquariumBounds>().FromComponentInHierarchy().AsSingle();
             Container.Bind<UITankBounds>().FromComponentInHierarchy().AsSingle();
+            Container.Bind<WaterInteractionManager>().FromComponentInHierarchy().AsSingle();
 
             Container.Bind<AquariumBoundsManager>().AsSingle().NonLazy();
             Container.Bind<BreedManager>().AsSingle().NonLazy();

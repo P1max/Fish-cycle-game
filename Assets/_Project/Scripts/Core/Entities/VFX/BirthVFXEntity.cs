@@ -1,20 +1,18 @@
 using DG.Tweening;
-using Spawners;
 using UnityEngine;
 
 namespace Core.Entities.VFX
 {
-    public class VFXEntity : MonoBehaviour
+    public class BirthVFXEntity : BaseVFXEntity
     {
         [SerializeField] private SpriteRenderer _symbolRenderer;
         [SerializeField] private ParticleSystem _heartsParticles;
 
-        private EffectsPool _pool;
         private Vector3 _defaultSymbolScale;
         private Sequence _sequence;
 
         [Header("Animation Settings")]
-        [SerializeField] private float _animationDuration = 1.5f;
+        [SerializeField] private float _animationDuration = 3f;
         [SerializeField] private float _floatUpHeight = 1.5f;
 
         private void Awake()
@@ -22,12 +20,7 @@ namespace Core.Entities.VFX
             _defaultSymbolScale = _symbolRenderer.transform.localScale;
         }
 
-        public void Init(EffectsPool pool)
-        {
-            _pool = pool;
-        }
-
-        public void Play(Vector2 position)
+        public override void Play(Vector2 position)
         {
             transform.position = position;
 
@@ -38,9 +31,7 @@ namespace Core.Entities.VFX
             _symbolRenderer.transform.localScale = Vector3.zero;
 
             var emission = _heartsParticles.emission;
-            
             emission.enabled = true;
-            
             _heartsParticles.Play();
 
             var targetPosition = new Vector3(position.x, position.y + _floatUpHeight, transform.position.z);
@@ -52,7 +43,7 @@ namespace Core.Entities.VFX
                 .OnComplete(() =>
                 {
                     emission.enabled = false;
-                    _pool.ReturnToPool(this);
+                    ReturnToPool(); // Вызываем метод базового класса
                 });
         }
     }
