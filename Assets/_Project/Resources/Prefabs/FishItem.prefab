@@ -1015,6 +1015,9 @@ MonoBehaviour:
   _button: {fileID: 2600230171114061648}
   _rect: {fileID: 8036425210513387872}
   _purchasedText: {fileID: 388910406786405307}
+  _coin: {fileID: 3954905178729641292}
+  _defaultItemPriceColor: {r: 0.94509804, g: 0.88235295, b: 0.23137255, a: 1}
+  _freeItemColor: {r: 0.54804033, g: 1, b: 0.2783019, a: 1}
 --- !u!1 &3949928358051038856
 GameObject:
   m_ObjectHideFlags: 0

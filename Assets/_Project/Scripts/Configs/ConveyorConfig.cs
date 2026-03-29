@@ -21,6 +21,14 @@ namespace Core.Configs
         [LabelText("Диапазон качества (Бесплатный)")]
         public Vector2 FreeQualityRange = new(0.3f, 0.7f);
 
+        [BoxGroup("Качество: Бесплатные")]
+        [LabelText("Количество коинов для бесплатной рыбы")]
+        public int CoinsForFreeFish = 100;
+        
+        [BoxGroup("Качество: Бесплатные")]
+        [LabelText("Количество рыб в аквариуме для бесплатной рыбы")]
+        public int FishesCountForFreeFish = 1;
+
         [BoxGroup("Качество: Обычные")]
         [JsonProperty("defultFishQuality")]
         [LabelText("Базовый множитель")]

@@ -24,11 +24,11 @@ MonoBehaviour:
   PartnerSearchRadius: 1
   ObstacleAvoidanceWeight: 140
   FoodWeight: 60
-  FoodSearchRadius: 4
+  FoodSearchRadius: 5
   EatTimer: {x: 1, y: 2}
   WanderWeight: 10
   ScareRadius: 1.5
-  ScareWeight: 130
+  ScareWeight: 100
   ScareDuration: 1.7
   DeathTimerThreshold: 10
   HungerIndicatorThreshold: 60

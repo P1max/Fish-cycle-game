@@ -15,7 +15,7 @@ namespace UI.Conveyor
         [SerializeField] private RectTransform _container;
 
         [Inject] private ConveyorConfig _config;
-        [Inject] private BalanceManager _balance;
+        [Inject] private BalanceManager _balanceManager;
         [Inject] private FishesManager _aquarium;
         [Inject] private FishesLoader _fishesLoader;
         [Inject] private FishesCounterPresenter _fishesCounterPresenter;
@@ -31,10 +31,9 @@ namespace UI.Conveyor
         private float _lastKnownSpacing;
         private float _despawnThresholdX;
 
-        private void Awake()
-        {
-            _prefab = Resources.Load<FishItemView>("Prefabs/FishItem");
-        }
+        private void Awake() => _prefab = Resources.Load<FishItemView>("Prefabs/FishItem");
+
+        private void OnBalanceManagerChanged(int newBalance) => RefreshOffscreenItems();
 
         private void Start()
         {
@@ -62,6 +61,8 @@ namespace UI.Conveyor
             _despawnThresholdX = _viewport.rect.xMax + (_itemWidth / 2f);
 
             InitializeConveyor();
+
+            _balanceManager.OnCoinsCountChanged += OnBalanceManagerChanged;
         }
 
         private void Update()
@@ -81,12 +82,24 @@ namespace UI.Conveyor
             CheckCarousel();
         }
 
+        private void UpdateItemsPositions()
+        {
+            var basePosX = _items[0].Rect.anchoredPosition.x;
+
+            for (var i = 1; i < _items.Count; i++)
+            {
+                var rect = _items[i].Rect;
+
+                rect.anchoredPosition = new Vector2(basePosX - i * _stepDistance, rect.anchoredPosition.y);
+            }
+        }
+
         private void InitializeConveyor()
         {
             _lastKnownSpacing = _config.ItemSpacing;
             _stepDistance = _itemWidth + _config.ItemSpacing;
 
-            var maxItemsNeeded = Mathf.CeilToInt(_viewport.rect.width / _itemWidth) + 2;
+            var maxItemsNeeded = Mathf.CeilToInt(_viewport.rect.width / _itemWidth) + 1;
             var startX = _viewport.rect.xMin - (_itemWidth / 2f);
 
             _container.anchoredPosition = new Vector2(0, _container.anchoredPosition.y);
@@ -102,18 +115,6 @@ namespace UI.Conveyor
                 ReRollItem(view);
 
                 _items.Add(view);
-            }
-        }
-
-        private void UpdateItemsPositions()
-        {
-            var basePosX = _items[0].Rect.anchoredPosition.x;
-
-            for (var i = 1; i < _items.Count; i++)
-            {
-                var rect = _items[i].Rect;
-
-                rect.anchoredPosition = new Vector2(basePosX - i * _stepDistance, rect.anchoredPosition.y);
             }
         }
 
@@ -137,9 +138,23 @@ namespace UI.Conveyor
             }
         }
 
+        private void RefreshOffscreenItems()
+        {
+            if (_items == null || _items.Count == 0) return;
+
+            foreach (var item in _items)
+            {
+                var localPosInViewport = _viewport.InverseTransformPoint(item.transform.position);
+                var rightEdge = localPosInViewport.x + (_itemWidth / 2f);
+
+                if (rightEdge <= _viewport.rect.xMin - 5f)
+                    ReRollItem(item);
+            }
+        }
+
         private float CalculateQuality(int coins)
         {
-            if (coins <= 100 && _aquarium.CurrentFishCount < 1)
+            if (coins <= _config.CoinsForFreeFish && _aquarium.CurrentFishCount < _config.FishesCountForFreeFish)
                 return Random.Range(_config.FreeQualityRange.x, _config.FreeQualityRange.y);
 
             if (coins <= _config.DefaultQualityCoinsRange.y)
@@ -155,12 +170,10 @@ namespace UI.Conveyor
             var randomId = _allFishIds[Random.Range(0, _allFishIds.Count)];
             var baseConfig = _fishesLoader.LoadedFishesDict[randomId];
 
-            var quality = CalculateQuality(_balance.CurrentCoinsCount);
+            var quality = CalculateQuality(_balanceManager.CurrentCoinsCount);
             var lifeTime = baseConfig.LifetimeSeconds * quality;
             var income = Mathf.RoundToInt(baseConfig.IncomeCoins * quality);
             var price = quality <= _config.FreeQualityRange.y ? 0 : Mathf.RoundToInt(baseConfig.Price * quality);
-
-            if (_balance.CurrentCoinsCount <= 0) price = 0;
 
             view.SetData(baseConfig.Sprite, lifeTime, income, price);
 
@@ -180,7 +193,7 @@ namespace UI.Conveyor
                 return;
             }
 
-            if (!_balance.TrySpendCoins(price))
+            if (!_balanceManager.TrySpendCoins(price))
             {
                 _coinsCounterPresenter.PlayNotEnoughMoneyAnimation();
                 view.PlayShakeAnimation();
@@ -189,8 +202,9 @@ namespace UI.Conveyor
             }
 
             _aquarium.TryAddFish(fishId, quality);
-
             view.SetPurchasedState();
+
+            RefreshOffscreenItems();
         }
     }
 }

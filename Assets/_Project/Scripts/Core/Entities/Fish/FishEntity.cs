@@ -73,6 +73,9 @@ public class FishEntity : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(currentPosition, CommonFishConfig.SeparationRadius);
 
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(currentPosition, CommonFishConfig.FoodSearchRadius);
+
         if (Movement != null && IsAlive)
         {
             Gizmos.color = Color.blue;

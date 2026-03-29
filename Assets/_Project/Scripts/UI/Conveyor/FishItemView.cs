@@ -15,6 +15,11 @@ namespace UI.Conveyor
         [SerializeField] private RectTransform _rect;
         [SerializeField] private TextMeshProUGUI _purchasedText;
 
+        [SerializeField] private GameObject _coin;
+        [SerializeField] private Color _defaultItemPriceColor;
+        [SerializeField] private Color _freeItemColor;
+        
+
         private Action<bool> _buyAction;
         private bool _purchased;
 
@@ -49,8 +54,20 @@ namespace UI.Conveyor
             _fishSprite.color = new Color32(255, 255, 255, 255);
             _lifeTimeText.text = $"{lifeTime} s";
             _incomeText.text = $"{income} $/s";
-            _fishPrice.text = fishPrice == 0 ? "Free" : fishPrice.ToString();
 
+            if (fishPrice <= 0)
+            {
+                _fishPrice.text = "Free";
+                _fishPrice.color = _freeItemColor;
+                _coin.SetActive(false);
+            }
+            else
+            {
+                _fishPrice.text = $"{fishPrice}";
+                _fishPrice.color = _defaultItemPriceColor;
+                _coin.SetActive(true);
+            }
+            
             _purchased = false;
             _purchasedText.gameObject.SetActive(false);
         }
