@@ -8,7 +8,7 @@ public class FeederConfig : ScriptableObject, IValidatableConfig
     public float CooldownSeconds = 8f;
 
     [Tooltip("Общее количество сытости, которое дает одно нажатие на кормушку.")]
-    public int TotalHungerRestorePerUse = 140;
+    public float TotalHungerRestorePerUse = 140;
 
     [Tooltip("Минимальное и максимальное количество частичек корма за один клик.")]
     [MinMaxSlider(1, 15, true)]

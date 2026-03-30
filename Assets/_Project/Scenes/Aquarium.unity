@@ -4011,7 +4011,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76a826926f1a4ec0a047475d4c34868a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _configs: {fileID: 11400000, guid: a7abbd8b2d802d14091f00d2386e1230, type: 2}
+  _configProvider: {fileID: 11400000, guid: 480872c3dd65bdd41863358ad34e9237, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

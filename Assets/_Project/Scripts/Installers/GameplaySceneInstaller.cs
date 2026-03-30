@@ -1,7 +1,7 @@
-using System.Linq;
 using _Project.UI.AquariumUpgrader;
 using Core.Boot;
 using Core.Configs;
+using Core.Configs.Providers;
 using Core.Feed;
 using Core.Game;
 using Core.Game.Upgrade;
@@ -18,38 +18,17 @@ namespace Installers
 {
     public class GameplaySceneInstaller : MonoInstaller
     {
-        [SerializeField] private GameConfigs _configs;
+        [SerializeField] private GameConfigProvider _configProvider;
 
         public override void InstallBindings()
         {
-            var aquariumConfig = _configs.Aquarium;
-            var feederConfig = _configs.Feeder;
-            var commonFishConfig = _configs.CommonFish;
-            var conveyorConfig = _configs.Conveyor;
-            var upgradesConfig = _configs.UpgradesConfig;
+            Container.Bind<AquariumConfig>().FromInstance(_configProvider.GetAquariumConfig()).AsSingle();
+            Container.Bind<FeederConfig>().FromInstance(_configProvider.GetFeederConfig()).AsSingle();
+            Container.Bind<CommonFishConfig>().FromInstance(_configProvider.GetCommonFishConfig()).AsSingle();
+            Container.Bind<ConveyorConfig>().FromInstance(_configProvider.GetConveyorConfig()).AsSingle();
+            Container.Bind<UpgradesConfig>().FromInstance(_configProvider.GetUpgradesConfig()).AsSingle();
 
-            var activeFishesList = _configs.FishesDatabase.Fishes;
-
-            if (_configs.UseJsonConfig)
-            {
-                aquariumConfig = Instantiate(_configs.Aquarium);
-                feederConfig = Instantiate(_configs.Feeder);
-                commonFishConfig = Instantiate(_configs.CommonFish);
-                conveyorConfig = Instantiate(_configs.Conveyor);
-                activeFishesList = _configs.FishesDatabase.Fishes.Select(f => f.Clone()).ToList();
-            }
-
-            Container.Bind<GameConfigs>().FromInstance(_configs).AsSingle();
-            Container.Bind<FeederConfig>().FromInstance(feederConfig).AsSingle();
-            Container.Bind<AquariumConfig>().FromInstance(aquariumConfig).AsSingle();
-            Container.Bind<ConveyorConfig>().FromInstance(conveyorConfig).AsSingle();
-            Container.Bind<CommonFishConfig>().FromInstance(commonFishConfig).AsSingle();
-            Container.Bind<UpgradesConfig>().FromInstance(upgradesConfig).AsSingle();
-
-            Container.Bind<FishesLoader>().AsSingle().WithArguments(activeFishesList);
-
-            Container.Bind<ConfigValidator>().AsSingle()
-                .WithArguments(_configs, aquariumConfig, feederConfig, conveyorConfig, commonFishConfig).NonLazy();
+            Container.Bind<FishesLoader>().AsSingle().WithArguments(_configProvider.GetActiveFishes());
 
             Container.Bind<FishPool>().FromComponentInHierarchy().AsSingle();
             Container.Bind<CoinsPool>().FromComponentInHierarchy().AsSingle();
