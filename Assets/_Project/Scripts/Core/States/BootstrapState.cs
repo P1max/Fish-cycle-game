@@ -29,7 +29,7 @@ namespace _Project.Core.States
             foreach (var initable in group)
                 initable.Init();
 
-            Debug.Log($"[Bootstrap] Слой {groupName} инициализирован");
+            Debug.Log($"Слой {groupName} инициализирован");
         }
 
         public void Enter()
