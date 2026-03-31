@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
+using _Project.Core.Interfaces;
 using UnityEngine;
 
 namespace Spawners
 {
-    public abstract class BaseEntityPool<T> : MonoBehaviour where T : MonoBehaviour
+    public abstract class BaseEntityPool<T> : MonoBehaviour, ICoreInit where T : MonoBehaviour
     {
         protected T Prefab;
 
@@ -12,14 +13,6 @@ namespace Spawners
         private LinkedList<T> _freeItems;
 
         protected List<T> ActiveItems => _activeItems.ToList();
-
-        protected virtual void Awake()
-        {
-            _activeItems = new LinkedList<T>();
-            _freeItems = new LinkedList<T>();
-
-            LoadPrefab();
-        }
 
         protected abstract void LoadPrefab();
 
@@ -55,6 +48,14 @@ namespace Spawners
 
         protected virtual void OnItemCreated(T item)
         {
+        }
+
+        public virtual void Init()
+        {
+            _activeItems = new LinkedList<T>();
+            _freeItems = new LinkedList<T>();
+
+            LoadPrefab();
         }
     }
 }

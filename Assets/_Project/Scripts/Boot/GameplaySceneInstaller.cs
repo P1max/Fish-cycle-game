@@ -23,6 +23,15 @@ namespace Installers
 
         public override void InstallBindings()
         {
+            BindConfigs();
+            BindPools();
+            BindGameplayCore();
+            BindUI();
+            BindStateMachine();
+        }
+
+        private void BindConfigs()
+        {
             Container.Bind<AquariumConfig>().FromInstance(_configProvider.GetAquariumConfig()).AsSingle();
             Container.Bind<FeederConfig>().FromInstance(_configProvider.GetFeederConfig()).AsSingle();
             Container.Bind<CommonFishConfig>().FromInstance(_configProvider.GetCommonFishConfig()).AsSingle();
@@ -30,44 +39,57 @@ namespace Installers
             Container.Bind<UpgradesConfig>().FromInstance(_configProvider.GetUpgradesConfig()).AsSingle();
 
             Container.Bind<FishesConfigsLoader>().AsSingle().WithArguments(_configProvider.GetActiveFishes());
+        }
 
-            Container.Bind<FishPool>().FromComponentInHierarchy().AsSingle();
-            Container.Bind<CoinsPool>().FromComponentInHierarchy().AsSingle();
-            Container.Bind<FoodPool>().FromComponentInHierarchy().AsSingle();
-            Container.Bind<EffectsPool>().FromComponentInHierarchy().AsSingle();
+        private void BindPools()
+        {
+            Container.BindInterfacesAndSelfTo<FishPool>().FromComponentInHierarchy().AsSingle();
+            Container.BindInterfacesAndSelfTo<CoinsPool>().FromComponentInHierarchy().AsSingle();
+            Container.BindInterfacesAndSelfTo<FoodPool>().FromComponentInHierarchy().AsSingle();
+            Container.BindInterfacesAndSelfTo<EffectsPool>().FromComponentInHierarchy().AsSingle();
+        }
 
-            Container.Bind<FeedJarPresenter>().AsSingle().NonLazy();
+        private void BindGameplayCore()
+        {
+            Container.BindInterfacesAndSelfTo<FeedManager>().AsSingle();
+            Container.BindInterfacesAndSelfTo<FishesManager>().AsSingle();
+            Container.BindInterfacesAndSelfTo<BalanceManager>().AsSingle();
+            Container.BindInterfacesAndSelfTo<UpgradeManager>().AsSingle();
+            Container.BindInterfacesAndSelfTo<BreedManager>().AsSingle();
+
+            Container.Bind<AquariumBoundsManager>().AsSingle();
+
+            Container.BindInterfacesAndSelfTo<AquariumBounds>().FromComponentInHierarchy().AsSingle();
+            Container.BindInterfacesAndSelfTo<WaterInteractionManager>().FromComponentInHierarchy().AsSingle();
+        }
+
+        private void BindUI()
+        {
+            Container.BindInterfacesAndSelfTo<UITankBounds>().FromComponentInHierarchy().AsSingle();
+
+            Container.BindInterfacesAndSelfTo<FeedJarPresenter>().AsSingle();
             Container.Bind<FeedJarView>().FromComponentInHierarchy().AsSingle();
 
-            Container.BindInterfacesAndSelfTo<FishesCounterPresenter>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<FishesCounterPresenter>().AsSingle();
             Container.Bind<FishesCounterView>().FromComponentInHierarchy().AsSingle();
 
-            Container.BindInterfacesAndSelfTo<CoinsCounterPresenter>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<CoinsCounterPresenter>().AsSingle();
             Container.Bind<CoinsCounterView>().FromComponentInHierarchy().AsSingle();
 
-            Container.Bind<AquariumUpgraderPresenter>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<AquariumUpgraderPresenter>().AsSingle();
             Container.Bind<AquariumUpgraderView>().FromComponentInHierarchy().AsSingle();
 
-            Container.Bind<BackgroundPresenter>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<BackgroundPresenter>().AsSingle();
             Container.Bind<BackgroundView>().FromComponentInHierarchy().AsSingle();
+        }
 
-            Container.BindInterfacesAndSelfTo<FeedManager>().AsSingle();
-            Container.Bind<FishesManager>().AsSingle().NonLazy();
-            Container.Bind<BalanceManager>().AsSingle().NonLazy();
-            Container.Bind<UpgradeManager>().AsSingle().NonLazy();
-
-            Container.Bind<AquariumBounds>().FromComponentInHierarchy().AsSingle();
-            Container.Bind<UITankBounds>().FromComponentInHierarchy().AsSingle();
-            Container.Bind<WaterInteractionManager>().FromComponentInHierarchy().AsSingle();
-
-            Container.Bind<AquariumBoundsManager>().AsSingle().NonLazy();
-            Container.Bind<BreedManager>().AsSingle().NonLazy();
-
+        private void BindStateMachine()
+        {
             Container.Bind<GameStateMachine>().AsSingle();
             Container.Bind<BootstrapState>().AsSingle();
             Container.Bind<PlayState>().AsSingle();
 
-            Container.BindInterfacesTo<GameBootstrapper>().AsSingle();
+            Container.Bind<IInitializable>().To<GameBootstrapper>().AsSingle();
         }
     }
 }

@@ -13,14 +13,6 @@ namespace Spawners
 
         public IReadOnlyDictionary<Collider2D, FoodPiece> FoodCache => _foodCache;
 
-        protected override void Awake()
-        {
-            base.Awake();
-
-            transform.localScale = Vector3.one * _aquariumConfig.DefaultEntitiesScale * _aquariumConfig.FoodDefaultScale;
-            _foodCache = new Dictionary<Collider2D, FoodPiece>();
-        }
-
         protected override void LoadPrefab()
         {
             Prefab = Resources.Load<FoodPiece>("Prefabs/Entities/Food");
@@ -31,6 +23,14 @@ namespace Spawners
             food.Init(this);
 
             _foodCache.Add(food.GetComponent<Collider2D>(), food);
+        }
+
+        public override void Init()
+        {
+            base.Init();
+
+            transform.localScale = Vector3.one * (_aquariumConfig.DefaultEntitiesScale * _aquariumConfig.FoodDefaultScale);
+            _foodCache = new Dictionary<Collider2D, FoodPiece>();
         }
     }
 }

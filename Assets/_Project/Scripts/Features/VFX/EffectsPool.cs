@@ -1,26 +1,18 @@
 using System.Collections.Generic;
+using _Project.Core.Interfaces;
 using Core.Entities.VFX;
 using UnityEngine;
 using Zenject;
 
 namespace Spawners
 {
-    public class EffectsPool : MonoBehaviour
+    public class EffectsPool : MonoBehaviour, ICoreInit
     {
         [Inject] private AquariumConfig _aquariumConfig;
 
         private Dictionary<string, BaseVFXEntity> _prefabsMap;
         private Dictionary<string, Queue<BaseVFXEntity>> _freeItems;
-
-        private void Awake()
-        {
-            transform.localScale = Vector3.one * _aquariumConfig.DefaultEntitiesScale * _aquariumConfig.FishesDefaultScale;
-
-            _prefabsMap = new Dictionary<string, BaseVFXEntity>();
-            _freeItems = new Dictionary<string, Queue<BaseVFXEntity>>();
-
-            LoadPrefabsFromResources();
-        }
+        
 
         private void LoadPrefabsFromResources()
         {
@@ -79,6 +71,16 @@ namespace Spawners
         {
             effect.gameObject.SetActive(false);
             _freeItems[effect.Id].Enqueue(effect);
+        }
+
+        public void Init()
+        {
+            transform.localScale = Vector3.one * (_aquariumConfig.DefaultEntitiesScale * _aquariumConfig.FishesDefaultScale);
+
+            _prefabsMap = new Dictionary<string, BaseVFXEntity>();
+            _freeItems = new Dictionary<string, Queue<BaseVFXEntity>>();
+
+            LoadPrefabsFromResources();
         }
     }
 }

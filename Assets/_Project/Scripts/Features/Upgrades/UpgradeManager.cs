@@ -1,14 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using _Project.Core.Interfaces;
 using UnityEngine;
 
 namespace Core.Game.Upgrade
 {
-    public class UpgradeManager
+    public class UpgradeManager : IGameplayInit
     {
-        private readonly Dictionary<int, UpgradesConfig.LevelData> _levelsMap;
+        private readonly UpgradesConfig _upgradesConfig;
 
+        private Dictionary<int, UpgradesConfig.LevelData> _levelsMap;
         private int _currentLevel;
 
         public event Action<UpgradesConfig.LevelData> OnAquariumUpgrade;
@@ -22,9 +24,7 @@ namespace Core.Game.Upgrade
 
         public UpgradeManager(UpgradesConfig upgradesConfig)
         {
-            _levelsMap = upgradesConfig.LevelsUpgrades.ToDictionary(x => x.Level, x => x);
-
-            SetLevel(0);
+            _upgradesConfig = upgradesConfig;
         }
 
         private void SetLevel(int level)
@@ -60,7 +60,15 @@ namespace Core.Game.Upgrade
         public void UpgradeLevel()
         {
             SetLevel(_currentLevel + 1);
+            
             OnAquariumUpgrade?.Invoke(CurrentLevelData);
+        }
+
+        public void Init()
+        {
+            _levelsMap = _upgradesConfig.LevelsUpgrades.ToDictionary(x => x.Level, x => x);
+
+            SetLevel(0);
         }
     }
 }

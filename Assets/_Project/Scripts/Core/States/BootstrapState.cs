@@ -8,12 +8,28 @@ namespace _Project.Core.States
     public class BootstrapState : IGameState
     {
         private readonly GameStateMachine _stateMachine;
-        private readonly List<IGameInit> _initables;
+        private readonly List<ICoreInit> _coreInits;
+        private readonly List<IGameplayInit> _gameplayInits;
+        private readonly List<IUIInit> _uiInits;
 
-        public BootstrapState(GameStateMachine stateMachine, List<IGameInit> initables)
+        public BootstrapState(
+            GameStateMachine stateMachine,
+            List<ICoreInit> coreInits,
+            List<IGameplayInit> gameplayInits,
+            List<IUIInit> uiInits)
         {
             _stateMachine = stateMachine;
-            _initables = initables;
+            _coreInits = coreInits;
+            _gameplayInits = gameplayInits;
+            _uiInits = uiInits;
+        }
+
+        private void InitGroup(IEnumerable<IInit> group, string groupName)
+        {
+            foreach (var initable in group)
+                initable.Init();
+
+            Debug.Log($"[Bootstrap] Слой {groupName} инициализирован");
         }
 
         public void Enter()
@@ -22,10 +38,9 @@ namespace _Project.Core.States
 
             DOTween.SetTweensCapacity(500, 250);
 
-            foreach (var initable in _initables)
-            {
-                initable.Init();
-            }
+            InitGroup(_coreInits, "Core");
+            InitGroup(_gameplayInits, "Gameplay");
+            InitGroup(_uiInits, "UI");
 
             _stateMachine.Enter<PlayState>();
         }

@@ -1,15 +1,18 @@
+using System;
+using _Project.Core.Interfaces;
 using Core.Game;
 using Core.Game.Upgrade;
 using UI.MoneyCounter;
 
 namespace _Project.UI.AquariumUpgrader
 {
-    public class AquariumUpgraderPresenter
+    public class AquariumUpgraderPresenter : IUIInit, IDisposable
     {
         private readonly AquariumUpgraderView _view;
         private readonly UpgradeManager _upgradeManager;
         private readonly BalanceManager _balanceManager;
         private readonly CoinsCounterPresenter _coinsCounterPresenter;
+
 
         public AquariumUpgraderPresenter(AquariumUpgraderView view, UpgradeManager upgradeManager, BalanceManager balanceManager,
             CoinsCounterPresenter coinsCounterPresenter)
@@ -18,12 +21,15 @@ namespace _Project.UI.AquariumUpgrader
             _upgradeManager = upgradeManager;
             _balanceManager = balanceManager;
             _coinsCounterPresenter = coinsCounterPresenter;
+        }
 
-            _upgradeManager.OnAquariumUpgrade += _ => _view.SetUpgradeCost(_upgradeManager.NextLevelCost);
+        private void HandleUpgrade(UpgradesConfig.LevelData upgradeData) => _view.SetUpgradeCost(_upgradeManager.NextLevelCost);
 
-            _view.SetUpgradeCost(_upgradeManager.NextLevelCost);
+        public void Init()
+        {
+            _upgradeManager.OnAquariumUpgrade += HandleUpgrade;
 
-            _view.OnButtonClicked += () =>
+            _view.Init(() =>
             {
                 if (!_upgradeManager.IsMaxLevel)
                 {
@@ -31,7 +37,13 @@ namespace _Project.UI.AquariumUpgrader
                         _upgradeManager.UpgradeLevel();
                     else _coinsCounterPresenter.PlayNotEnoughMoneyAnimation();
                 }
-            };
+            });
+            _view.SetUpgradeCost(_upgradeManager.NextLevelCost);
+        }
+
+        public void Dispose()
+        {
+            _upgradeManager.OnAquariumUpgrade -= HandleUpgrade;
         }
     }
 }

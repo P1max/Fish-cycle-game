@@ -1,11 +1,12 @@
 using System;
+using _Project.Core.Interfaces;
 using Core.Game.Upgrade;
 using Spawners;
 using UnityEngine;
 
 namespace Core.Game
 {
-    public class FishesManager
+    public class FishesManager : IGameplayInit, IDisposable
     {
         private readonly FishPool _fishPool;
         private readonly AquariumConfig _config;
@@ -23,15 +24,13 @@ namespace Core.Game
             _fishPool = fishPool;
             _config = config;
             _upgradeManager = upgradeManager;
+        }
 
-            MaxFishesCount = _config.MaxFishCount;
+        private void HandleAquariumUpgrade(UpgradesConfig.LevelData upgradeData)
+        {
+            MaxFishesCount = upgradeData.NewMaxFishesCount;
 
-            _upgradeManager.OnAquariumUpgrade += (newData) =>
-            {
-                MaxFishesCount = newData.NewMaxFishesCount;
-
-                OnFishCountChanged?.Invoke(CurrentFishCount, MaxFishesCount);
-            };
+            OnFishCountChanged?.Invoke(CurrentFishCount, MaxFishesCount);
         }
 
         private void HandleFishDeath(FishEntity fish)
@@ -56,6 +55,18 @@ namespace Core.Game
             OnFishCountChanged?.Invoke(CurrentFishCount, MaxFishesCount);
 
             return true;
+        }
+
+        public void Init()
+        {
+            MaxFishesCount = _config.MaxFishCount;
+
+            _upgradeManager.OnAquariumUpgrade += HandleAquariumUpgrade;
+        }
+
+        public void Dispose()
+        {
+            _upgradeManager.OnAquariumUpgrade -= HandleAquariumUpgrade;
         }
     }
 }

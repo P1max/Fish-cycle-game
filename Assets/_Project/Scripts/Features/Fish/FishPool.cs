@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Core.Game;
 using Core.Game.Upgrade;
@@ -8,7 +9,7 @@ using Zenject;
 
 namespace Spawners
 {
-    public class FishPool : BaseEntityPool<FishEntity>
+    public class FishPool : BaseEntityPool<FishEntity>, IDisposable
     {
         [Inject] private AquariumBoundsManager _aquariumBoundsManager;
         [Inject] private UpgradeManager _upgradeManager;
@@ -25,21 +26,10 @@ namespace Spawners
 
         public List<FishEntity> ActiveFishes => ActiveItems;
 
-        protected override void Awake()
+        private void HandleUpgrade(UpgradesConfig.LevelData newData)
         {
-            base.Awake();
-
-            _defaultScale = _aquariumConfig.DefaultEntitiesScale * _aquariumConfig.FishesDefaultScale;
-            transform.localScale = Vector3.one * _defaultScale;
-
-            _fishesCache = new Dictionary<Collider2D, FishEntity>();
-
-            _upgradeManager.OnAquariumUpgrade += (newData) =>
-            {
-                transform.DOKill(true);
-
-                transform.DOScale(Vector3.one * _defaultScale * newData.NewAquariumScale, 1.5f).SetEase(Ease.InOutSine);
-            };
+            transform.DOKill(true);
+            transform.DOScale(Vector3.one * (_defaultScale * newData.NewAquariumScale), 1.5f).SetEase(Ease.InOutSine);
         }
 
         protected override void LoadPrefab()
@@ -53,8 +43,28 @@ namespace Spawners
 
             _fishesCache.Add(col, fish);
 
-            fish.Init(_fishesCache, _foodPool, col, _commonFishConfig, _coinsPool, _aquariumBoundsManager, _breedManager, _fishesConfigsLoader);
+            fish.Init(_fishesCache, _foodPool, col, _commonFishConfig, _coinsPool, _aquariumBoundsManager, _breedManager,
+                _fishesConfigsLoader);
+
             fish.OnReturnToPool += ReturnToPool;
+        }
+
+        public override void Init()
+        {
+            base.Init();
+
+            _defaultScale = _aquariumConfig.DefaultEntitiesScale * _aquariumConfig.FishesDefaultScale;
+            transform.localScale = Vector3.one * _defaultScale;
+
+            _fishesCache = new Dictionary<Collider2D, FishEntity>();
+
+            _upgradeManager.OnAquariumUpgrade += HandleUpgrade;
+        }
+
+        public void Dispose()
+        {
+            if (_upgradeManager != null)
+                _upgradeManager.OnAquariumUpgrade -= HandleUpgrade;
         }
     }
 }

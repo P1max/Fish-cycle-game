@@ -1,16 +1,21 @@
+using _Project.Core.Interfaces;
 using Spawners;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
 
-public class WaterInteractionManager : MonoBehaviour
+public class WaterInteractionManager : MonoBehaviour, IGameplayInit
 {
     [Inject] private FishPool _fishPool;
     [Inject] private CommonFishConfig _commonFishConfig;
     [Inject] private EffectsPool _effectsPool;
 
+    private bool _isInit;
+
     private void Update()
     {
+        if (!_isInit) return;
+
         if (Input.GetMouseButtonDown(0)) HandleWaterClick();
     }
 
@@ -24,16 +29,12 @@ public class WaterInteractionManager : MonoBehaviour
 
         Vector2 clickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-        // Вода просто проверяет: есть тут кто? (Монетка, рыба, еда - неважно)
         var hitCollider = Physics2D.OverlapPoint(clickPosition);
 
         if (hitCollider != null)
-            return; // Кто-то другой сам обработает клик. Отбой!
+            return;
 
-        // --- ЕСЛИ ТУТ ПУСТО - БУЛЬКАЕМ ---
-
-        if (_effectsPool != null) 
-            _effectsPool.SpawnEffect("bubbles", clickPosition); // Убедись, что тут правильный ID партикла
+        _effectsPool.SpawnEffect("bubbles", clickPosition);
 
         var allFishes = _fishPool.ActiveFishes;
 
@@ -49,5 +50,10 @@ public class WaterInteractionManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void Init()
+    {
+        _isInit = true;
     }
 }

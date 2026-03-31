@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace UI.FeedJar
 {
-    public class FeedJarView : MonoBehaviour
+    public class FeedJarView : BaseView
     {
         [SerializeField] private Image _jar;
         [SerializeField] private Button _button;
@@ -42,40 +42,10 @@ namespace UI.FeedJar
         private Color _originalColor;
         private bool _isReadyState;
 
-        private void Awake()
-        {
-            _button.onClick.AddListener(OnClick);
-            _originalScale = _rect.localScale;
-            _originalColor = _jar.color;
-        }
-
-        public void OnClick()
-        {
-            if (!isActiveAndEnabled) return;
-
-            _onCLick?.Invoke();
-        }
-
-        public void OnFeedUsed()
-        {
-            _isReadyState = false;
-            StopReadyAnimation();
-        }
-
-        public void PlayShakeAnimation()
-        {
-            _shakeSeq?.Kill(true);
-
-            _jar.color = _originalColor;
-
-            _shakeSeq = DOTween.Sequence()
-                .Insert(0, _rect.DOPunchAnchorPos(new Vector2(16f, 0), 0.7f, vibrato: 10, elasticity: 1f))
-                .Insert(0, _jar.DOColor(_animColor, _colorInDuration).SetEase(_colorInEase))
-                .Insert(_colorInDuration, _jar.DOColor(_originalColor, _colorOutDuration).SetEase(_colorOutEase));
-        }
-
         private void PlayReadyAnimation()
         {
+            if (!_isInit) return;
+
             StopReadyAnimation();
 
             _readySeq = DOTween.Sequence()
@@ -90,6 +60,8 @@ namespace UI.FeedJar
 
         private void StopReadyAnimation()
         {
+            if (!_isInit) return;
+
             _readySeq?.Kill();
 
             _rect.DOKill();
@@ -97,9 +69,32 @@ namespace UI.FeedJar
             _rect.localScale = _originalScale;
         }
 
+        public void OnFeedUsed()
+        {
+            if (!_isInit) return;
+
+            _isReadyState = false;
+
+            StopReadyAnimation();
+        }
+
+        public void PlayShakeAnimation()
+        {
+            if (!_isInit) return;
+
+            _shakeSeq?.Kill(true);
+
+            _jar.color = _originalColor;
+
+            _shakeSeq = DOTween.Sequence()
+                .Insert(0, _rect.DOPunchAnchorPos(new Vector2(16f, 0), 0.7f, vibrato: 10, elasticity: 1f))
+                .Insert(0, _jar.DOColor(_animColor, _colorInDuration).SetEase(_colorInEase))
+                .Insert(_colorInDuration, _jar.DOColor(_originalColor, _colorOutDuration).SetEase(_colorOutEase));
+        }
+
         public void SetPercentOfReadiness(float percentOfReadiness, float currentCooldown)
         {
-            if (!isActiveAndEnabled) return;
+            if (!_isInit) return;
 
             _progressBar.fillAmount = Mathf.Lerp(_fillRange.x, _fillRange.y, percentOfReadiness);
 
@@ -127,7 +122,16 @@ namespace UI.FeedJar
 
         public void Init(Action onClick)
         {
+            if (_isInit) return;
+
             _onCLick = onClick;
+
+            _originalScale = _rect.localScale;
+            _originalColor = _jar.color;
+
+            _button.onClick.AddListener(() => _onCLick?.Invoke());
+
+            _isInit = true;
         }
     }
 }

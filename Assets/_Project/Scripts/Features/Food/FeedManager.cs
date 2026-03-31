@@ -1,4 +1,5 @@
 using System;
+using _Project.Core.Interfaces;
 using Core.Game.Upgrade;
 using Spawners;
 using UnityEngine;
@@ -6,7 +7,7 @@ using Zenject;
 
 namespace Core.Feed
 {
-    public class FeedManager : ITickable
+    public class FeedManager : IGameplayInit, IDisposable, ITickable
     {
         private readonly FoodPool _foodPool;
         private readonly FeederConfig _config;
@@ -21,19 +22,15 @@ namespace Core.Feed
         public event Action<float> OnNormalizedTime;
 
         public float ActiveCooldown => _activeCooldown;
-
+        
         public FeedManager(FoodPool foodPool, FeederConfig config, UpgradeManager upgradeManager)
         {
             _foodPool = foodPool;
             _config = config;
             _upgradeManager = upgradeManager;
-
-            _nextCooldown = _config.CooldownSeconds;
-
-            _upgradeManager.OnAquariumUpgrade += (newData) => _nextCooldown = newData.NewFeederCooldown;
-
-            Reset();
         }
+
+        private void HandleUpgrade(UpgradesConfig.LevelData upgradeData) => _nextCooldown = upgradeData.NewFeederCooldown;
 
         public bool TryFeed()
         {
@@ -87,6 +84,20 @@ namespace Core.Feed
             OnNormalizedTime?.Invoke(Mathf.Clamp(_currentTime / _activeCooldown, 0, 1));
 
             if (_currentTime >= _activeCooldown) _isReady = true;
+        }
+
+        public void Init()
+        {
+            _nextCooldown = _config.CooldownSeconds;
+
+            _upgradeManager.OnAquariumUpgrade += HandleUpgrade;
+
+            Reset();
+        }
+
+        public void Dispose()
+        {
+            _upgradeManager.OnAquariumUpgrade -= HandleUpgrade;
         }
     }
 }

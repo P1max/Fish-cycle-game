@@ -1,32 +1,31 @@
+using _Project.Core.Interfaces;
 using Core.Game;
 using UnityEngine;
 using Zenject;
 
 namespace UI
 {
-    public class UITankBounds : MonoBehaviour
+    public class UITankBounds : MonoBehaviour, IGameplayInit
     {
         [Inject] private AquariumBoundsManager _boundsManager;
 
         private RectTransform _rectTransform;
+        private bool _isInit;
 
         private void Awake()
         {
             _rectTransform = GetComponent<RectTransform>();
         }
 
-        private void Start()
+        private void OnRectTransformDimensionsChange()
         {
             UpdateWorldBounds();
         }
 
-        private void OnRectTransformDimensionsChange()
-        {
-            if (_boundsManager != null && _rectTransform != null) UpdateWorldBounds();
-        }
-
         private void UpdateWorldBounds()
         {
+            if (!_isInit) return;
+            
             var corners = new Vector3[4];
 
             _rectTransform.GetWorldCorners(corners);
@@ -37,6 +36,13 @@ namespace UI
             var worldRect = new Rect(corners[0].x, corners[0].y, width, height);
 
             _boundsManager.SetBounds(worldRect);
+        }
+
+        public void Init()
+        {
+            _isInit = true;
+            
+            UpdateWorldBounds();
         }
     }
 }

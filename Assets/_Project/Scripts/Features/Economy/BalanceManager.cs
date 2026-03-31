@@ -1,16 +1,19 @@
 using System;
+using _Project.Core.Interfaces;
 
 namespace Core.Game
 {
-    public class BalanceManager
+    public class BalanceManager : IGameplayInit
     {
+        private readonly AquariumConfig _config;
+        
         public event Action<int> OnCoinsCountChanged;
 
         public int CurrentCoinsCount { get; private set; }
 
         public BalanceManager(AquariumConfig config)
         {
-            CurrentCoinsCount = config.StartCoins;
+            _config = config;
         }
 
         public void AddCoins(int amount)
@@ -29,6 +32,11 @@ namespace Core.Game
             OnCoinsCountChanged?.Invoke(CurrentCoinsCount);
 
             return true;
+        }
+
+        public void Init()
+        {
+            CurrentCoinsCount = _config.StartCoins;
         }
     }
 }

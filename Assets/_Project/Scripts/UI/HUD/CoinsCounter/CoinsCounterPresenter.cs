@@ -1,9 +1,10 @@
+using System;
+using _Project.Core.Interfaces;
 using Core.Game;
-using Zenject;
 
 namespace UI.MoneyCounter
 {
-    public class CoinsCounterPresenter : IInitializable
+    public class CoinsCounterPresenter : IUIInit, IDisposable
     {
         private readonly CoinsCounterView _view;
         private readonly BalanceManager _balanceManager;
@@ -14,18 +15,21 @@ namespace UI.MoneyCounter
             _balanceManager = balanceManager;
         }
 
-        public void Initialize()
+        private void UpdateView(int count) => _view.SetCurrentCoinsCount(count);
+
+        public void PlayNotEnoughMoneyAnimation() => _view.PlayNotEnoughMoneyAnimation();
+
+        public void Init()
         {
             _balanceManager.OnCoinsCountChanged += UpdateView;
 
+            _view.Init();
             _view.SetCurrentCoinsCount(_balanceManager.CurrentCoinsCount, true);
         }
 
-        private void UpdateView(int count)
+        public void Dispose()
         {
-            _view.SetCurrentCoinsCount(count);
+            _balanceManager.OnCoinsCountChanged -= UpdateView;
         }
-
-        public void PlayNotEnoughMoneyAnimation() => _view.PlayNotEnoughMoneyAnimation();
     }
 }

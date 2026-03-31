@@ -1,9 +1,11 @@
+using System;
+using _Project.Core.Interfaces;
 using Core.Game.Upgrade;
 using UnityEngine;
 
 namespace UI.Background
 {
-    public class BackgroundPresenter
+    public class BackgroundPresenter : IUIInit, IDisposable
     {
         private readonly BackgroundView _view;
         private readonly UpgradeManager _upgradeManager;
@@ -14,10 +16,6 @@ namespace UI.Background
             _view = view;
             _upgradeManager = upgradeManager;
             _config = config;
-
-            _upgradeManager.OnAquariumUpgrade += HandleUpgrade;
-
-            UpdateScale(false);
         }
 
         private void HandleUpgrade(UpgradesConfig.LevelData levelData)
@@ -32,6 +30,20 @@ namespace UI.Background
             var targetScale = Mathf.Lerp(_config.InitialBackgroundScale, 1f, progress);
 
             _view.SetScale(targetScale, animate);
+        }
+
+        public void Init()
+        {
+            _upgradeManager.OnAquariumUpgrade += HandleUpgrade;
+
+            _view.Init();
+
+            UpdateScale(false);
+        }
+
+        public void Dispose()
+        {
+            _upgradeManager.OnAquariumUpgrade -= HandleUpgrade;
         }
     }
 }
