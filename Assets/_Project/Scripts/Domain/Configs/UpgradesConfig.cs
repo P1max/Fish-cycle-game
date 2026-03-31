@@ -6,19 +6,17 @@ using UnityEngine;
 
 public class UpgradesConfig : ScriptableObject, IValidatableConfig
 {
-    [BoxGroup("Параметры улучшений аквариума")]
-    public List<LevelData> LevelsUpgrades = new();
-
     [BoxGroup("Формулы: Фон")]
     [Tooltip("Начальный масштаб фона (например, 1.5 - сильно приближен)")]
     public float InitialBackgroundScale = 1.5f;
 
+    [Title("Уровни прокачки аквариума")]
+    [TableList(ShowIndexLabels = true, AlwaysExpanded = true)]
+    public List<LevelData> LevelsUpgrades = new();
+
     public int TotalLevels => LevelsUpgrades.Count;
 
-    private void OnValidate()
-    {
-        ValidateData();
-    }
+    private void OnValidate() => ValidateData();
 
     public void ValidateData()
     {

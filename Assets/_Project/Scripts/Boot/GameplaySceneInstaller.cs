@@ -2,7 +2,6 @@ using _Project.Core.States;
 using _Project.UI.AquariumUpgrader;
 using App;
 using Core.Configs;
-using Core.Configs.Providers;
 using Core.Feed;
 using Core.Game;
 using Core.Game.Upgrade;
@@ -19,7 +18,7 @@ namespace Installers
 {
     public class GameplaySceneInstaller : MonoInstaller
     {
-        [SerializeField] private GameConfigProvider _configProvider;
+        [SerializeField] private DataSource _dataSource;
 
         public override void InstallBindings()
         {
@@ -32,13 +31,22 @@ namespace Installers
 
         private void BindConfigs()
         {
-            Container.Bind<AquariumConfig>().FromInstance(_configProvider.GetAquariumConfig()).AsSingle();
-            Container.Bind<FeederConfig>().FromInstance(_configProvider.GetFeederConfig()).AsSingle();
-            Container.Bind<CommonFishConfig>().FromInstance(_configProvider.GetCommonFishConfig()).AsSingle();
-            Container.Bind<ConveyorConfig>().FromInstance(_configProvider.GetConveyorConfig()).AsSingle();
-            Container.Bind<UpgradesConfig>().FromInstance(_configProvider.GetUpgradesConfig()).AsSingle();
+            var provider = _dataSource.ActiveProvider;
 
-            Container.Bind<FishesConfigsLoader>().AsSingle().WithArguments(_configProvider.GetActiveFishes());
+            if (provider == null)
+            {
+                Debug.LogError("Active Provider is not set in GameSettings");
+
+                return;
+            }
+
+            Container.Bind<AquariumConfig>().FromInstance(provider.GetAquariumConfig()).AsSingle();
+            Container.Bind<FeederConfig>().FromInstance(provider.GetFeederConfig()).AsSingle();
+            Container.Bind<CommonFishConfig>().FromInstance(provider.GetCommonFishConfig()).AsSingle();
+            Container.Bind<ConveyorConfig>().FromInstance(provider.GetConveyorConfig()).AsSingle();
+            Container.Bind<UpgradesConfig>().FromInstance(provider.GetUpgradesConfig()).AsSingle();
+
+            Container.Bind<FishesConfigsLoader>().AsSingle().WithArguments(provider.GetActiveFishes());
         }
 
         private void BindPools()

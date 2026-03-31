@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2669356b153410c9e8d88399af81970, type: 3}
   m_Name: JsonConfigProvider
   m_EditorClassIdentifier: 
-  _jsonFile: {fileID: 4900000, guid: 49b61173a3a64362be9878d13d6bcabf, type: 3}
+  _jsonFile: {fileID: 4900000, guid: 225ac156db4b1a2489fbc9834dbcd8e0, type: 3}
   _baseAquarium: {fileID: 11400000, guid: 5dbe7dfd146a81c429155134efba1d8e, type: 2}
   _baseFeeder: {fileID: 11400000, guid: 39ddfe5547b2e5a47868ec73f377a7a6, type: 2}
   _baseConveyor: {fileID: 11400000, guid: 4a750eb6283c694439ba8e470bfe15ad, type: 2}

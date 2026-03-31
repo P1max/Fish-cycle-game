@@ -4,12 +4,16 @@ using Sirenix.OdinInspector;
 
 public class FeederConfig : ScriptableObject, IValidatableConfig
 {
+    [Title("Настройки кормушки")]
+    [BoxGroup("Баланс")]
     [Tooltip("Время восстановления кормушки в секундах.")]
     public float CooldownSeconds = 8f;
 
+    [BoxGroup("Баланс")]
     [Tooltip("Общее количество сытости, которое дает одно нажатие на кормушку.")]
     public float TotalHungerRestorePerUse = 140;
 
+    [BoxGroup("Баланс")]
     [Tooltip("Минимальное и максимальное количество частичек корма за один клик.")]
     [MinMaxSlider(1, 15, true)]
     public Vector2Int FoodPiecesCount = new(3, 6);
