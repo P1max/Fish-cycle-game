@@ -32,6 +32,9 @@ namespace Core.Fish.Modules.Visual
         [SerializeField] private GameObject _deathContainer;
 
         [FoldoutGroup("UI Indicators")]
+        [SerializeField] private SpriteRenderer _deathPulseCircle;
+
+        [FoldoutGroup("UI Indicators")]
         [SerializeField] private TextMeshPro _deathText;
 
         private FishEntity _fishEntity;
@@ -40,6 +43,7 @@ namespace Core.Fish.Modules.Visual
 
         public GameObject HungryContainer => _hungryContainer;
         public GameObject DeathContainer => _deathContainer;
+        public SpriteRenderer DeathPulseCircle => _deathPulseCircle;
         public TextMeshPro DeathText => _deathText;
         public Transform VisualTransform => _visualTransform;
         public float PoopAnimPreDelay => 0.35f;
@@ -106,8 +110,10 @@ namespace Core.Fish.Modules.Visual
             var originalScale = _fishEntity.transform.localScale.x;
 
             _sequence = DOTween.Sequence()
-                .Append(_fishEntity.transform.DOScale(new Vector3(originalScale * 0.8f, originalScale * 1.2f, 1f), 0.2f).SetEase(Ease.OutQuad))
-                .Append(_fishEntity.transform.DOScale(new Vector3(originalScale * 1.2f, originalScale * 0.8f, 1f), 0.15f).SetEase(Ease.OutQuad))
+                .Append(_fishEntity.transform.DOScale(new Vector3(originalScale * 0.8f, originalScale * 1.2f, 1f), 0.2f)
+                    .SetEase(Ease.OutQuad))
+                .Append(_fishEntity.transform.DOScale(new Vector3(originalScale * 1.2f, originalScale * 0.8f, 1f), 0.15f)
+                    .SetEase(Ease.OutQuad))
                 .AppendCallback(() => onCoinEject?.Invoke())
                 .Append(_fishEntity.transform.DOScale(originalScale, 0.2f).SetEase(Ease.OutBack));
 

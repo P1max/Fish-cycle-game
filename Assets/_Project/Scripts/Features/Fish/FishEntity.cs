@@ -167,7 +167,7 @@ public class FishEntity : MonoBehaviour
 
         Scanner = new FishScanner(this, fishesCache, foodPool, coinsPool);
         Breeding = new FishBreeding(this, breedManager);
-        Indicator = new FishIndicator(this, FishVisual.HungryContainer, FishVisual.DeathContainer, FishVisual.DeathText);
+        Indicator = new FishIndicator(this, FishVisual.HungryContainer, FishVisual.DeathContainer, FishVisual.DeathText, FishVisual.DeathPulseCircle);
 
         _isAlive = true;
     }

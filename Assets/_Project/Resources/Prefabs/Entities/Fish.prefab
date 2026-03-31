@@ -219,6 +219,7 @@ MonoBehaviour:
   _bubblesTimer: {x: 5, y: 9}
   _hungryContainer: {fileID: 9164603882975318229}
   _deathContainer: {fileID: 7917079937460335434}
+  _deathPulseCircle: {fileID: 9115100180543348095}
   _deathText: {fileID: 6471511039613358953}
 --- !u!114 &8971864282221579735
 MonoBehaviour:
@@ -5213,7 +5214,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.01, z: 0.05}
-  m_LocalScale: {x: 0.9, y: 0.9, z: 1}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1036641779512365509}
