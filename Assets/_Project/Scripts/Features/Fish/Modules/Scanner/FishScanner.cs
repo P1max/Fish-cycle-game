@@ -7,7 +7,7 @@ namespace Core.Fish.Modules
 {
     public class FishScanner
     {
-        private static readonly Collider2D[] _buffer = new Collider2D[100];
+        private static readonly Collider2D[] _buffer = new Collider2D[120];
 
         private readonly FishEntity _fish;
         private readonly IReadOnlyDictionary<Collider2D, FishEntity> _fishesCache;

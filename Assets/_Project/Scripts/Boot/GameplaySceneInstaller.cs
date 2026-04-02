@@ -6,9 +6,11 @@ using Core.Feed;
 using Core.Game;
 using Core.Game.Upgrade;
 using Core.Loaders;
+using Features.BotBalancer.AI;
 using Spawners;
 using UI;
 using UI.Background;
+using UI.Conveyor;
 using UI.FeedJar;
 using UI.MoneyCounter;
 using UnityEngine;
@@ -19,11 +21,13 @@ namespace Installers
     public class GameplaySceneInstaller : MonoInstaller
     {
         [SerializeField] private DataSource _dataSource;
+        [SerializeField] private BotProfileConfig _botProfileAsset;
 
         public override void InstallBindings()
         {
             BindConfigs();
             BindPools();
+            BindBot();
             BindGameplayCore();
             BindUI();
             BindStateMachine();
@@ -64,6 +68,7 @@ namespace Installers
             Container.BindInterfacesAndSelfTo<BalanceManager>().AsSingle();
             Container.BindInterfacesAndSelfTo<UpgradeManager>().AsSingle();
             Container.BindInterfacesAndSelfTo<BreedManager>().AsSingle();
+            Container.BindInterfacesAndSelfTo<StoreManager>().AsSingle();
 
             Container.Bind<AquariumBoundsManager>().AsSingle();
 
@@ -71,8 +76,24 @@ namespace Installers
             Container.BindInterfacesAndSelfTo<WaterInteractionManager>().FromComponentInHierarchy().AsSingle();
         }
 
+        private void BindBot()
+        {
+            Container.BindInterfacesAndSelfTo<Features.BotBalancer.BotSetupService>().AsSingle();
+
+            Container.Bind<BotProfileConfig>().FromInstance(_botProfileAsset).AsSingle();
+
+            Container.Bind<IBotAction>().To<FeedFishesAction>().AsSingle();
+            Container.Bind<IBotAction>().To<BuyFishAction>().AsSingle();
+            Container.Bind<IBotAction>().To<CollectCoinsAction>().AsSingle();
+            Container.Bind<IBotAction>().To<UpgradeAquariumAction>().AsSingle();
+            Container.Bind<IBotAction>().To<CollectDeadFishAction>().AsSingle();
+
+            Container.BindInterfacesAndSelfTo<BotController>().AsSingle();
+        }
+
         private void BindUI()
         {
+            Container.Bind<UI.Core.UIRoot>().FromComponentInHierarchy().AsSingle();
             Container.BindInterfacesAndSelfTo<UITankBounds>().FromComponentInHierarchy().AsSingle();
 
             Container.BindInterfacesAndSelfTo<FeedJarPresenter>().AsSingle();
@@ -89,6 +110,9 @@ namespace Installers
 
             Container.BindInterfacesAndSelfTo<BackgroundPresenter>().AsSingle();
             Container.Bind<BackgroundView>().FromComponentInHierarchy().AsSingle();
+
+            Container.BindInterfacesAndSelfTo<ConveyorPresenter>().AsSingle();
+            Container.BindInterfacesAndSelfTo<ConveyorView>().FromComponentInHierarchy().AsSingle();
         }
 
         private void BindStateMachine()

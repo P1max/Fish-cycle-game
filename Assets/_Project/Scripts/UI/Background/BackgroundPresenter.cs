@@ -20,7 +20,7 @@ namespace UI.Background
 
         private void HandleUpgrade(UpgradesConfig.LevelData levelData)
         {
-            UpdateScale(animate: true);
+            UpdateScale(true);
         }
 
         private void UpdateScale(bool animate)

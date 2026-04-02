@@ -10,10 +10,12 @@ namespace Spawners
     {
         [Inject] private BalanceManager _balanceManager;
         [Inject] private AquariumConfig _aquariumConfig;
-        
+
         private Dictionary<Collider2D, Coin> _coinsCache;
-        
+
         public IReadOnlyDictionary<Collider2D, Coin> CoinsCache => _coinsCache;
+
+        public List<Coin> ActiveCoins => ActiveItems;
 
         protected override void LoadPrefab()
         {
@@ -23,13 +25,13 @@ namespace Spawners
         protected override void OnItemCreated(Coin item)
         {
             item.Init(_balanceManager, this);
-            
+
             _coinsCache.Add(item.GetComponent<Collider2D>(), item);
         }
 
         public void SpawnCoin(Vector2 position, int value)
         {
-            var coin = Get(); 
+            var coin = Get();
 
             coin.Spawn(position, value);
         }

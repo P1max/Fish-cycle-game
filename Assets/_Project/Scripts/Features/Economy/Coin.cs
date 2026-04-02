@@ -49,7 +49,7 @@ namespace Core.Coin
                 .OnComplete(() => _pool.ReturnToPool(this));
         }
 
-        private void Collect()
+        public void Collect()
         {
             if (_isCollected) return;
 

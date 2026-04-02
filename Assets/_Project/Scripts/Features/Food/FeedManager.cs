@@ -22,6 +22,8 @@ namespace Core.Feed
         public event Action<float> OnNormalizedTime;
 
         public float ActiveCooldown => _activeCooldown;
+
+        public bool IsReady => _isReady;
         
         public FeedManager(FoodPool foodPool, FeederConfig config, UpgradeManager upgradeManager)
         {
