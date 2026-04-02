@@ -20,6 +20,8 @@ namespace Core.Feed
         private float _nextCooldown;
 
         public event Action<float> OnNormalizedTime;
+        
+        public event Action OnFeederUsed;
 
         public float ActiveCooldown => _activeCooldown;
 
@@ -63,6 +65,8 @@ namespace Core.Feed
             }
 
             Reset();
+            
+            OnFeederUsed?.Invoke();
 
             return true;
         }

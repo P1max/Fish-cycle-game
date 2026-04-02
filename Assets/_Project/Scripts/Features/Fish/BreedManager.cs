@@ -1,6 +1,8 @@
+using System;
 using _Project.Core.Interfaces;
 using Spawners;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Core.Game
 {
@@ -10,6 +12,8 @@ namespace Core.Game
         private readonly EffectsPool _effectsPool;
 
         private bool _isInit;
+
+        public event Action OnFishBorn;
 
         public BreedManager(FishesManager fishesManager, EffectsPool effectsPool)
         {
@@ -37,9 +41,12 @@ namespace Core.Game
 
                 var childFishId = Random.value > 0.5f ? firstFish.Config.Id : secondFish.Config.Id;
 
-                _fishesManager.TryAddFish(childFishId, spawnPosition: spawnPos);
+                if (_fishesManager.TryAddFish(childFishId, spawnPosition: spawnPos))
+                {
+                    _effectsPool.SpawnEffect("birth", spawnPos);
 
-                _effectsPool.SpawnEffect("birth", spawnPos);
+                    OnFishBorn?.Invoke();
+                }
             }
         }
 

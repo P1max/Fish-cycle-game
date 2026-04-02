@@ -7,6 +7,7 @@ using Core.Game;
 using Core.Game.Upgrade;
 using Core.Loaders;
 using Features.BotBalancer.AI;
+using Features.BotBalancer.Analytics;
 using Spawners;
 using UI;
 using UI.Background;
@@ -89,6 +90,7 @@ namespace Installers
             Container.Bind<IBotAction>().To<CollectDeadFishAction>().AsSingle();
 
             Container.BindInterfacesAndSelfTo<BotController>().AsSingle();
+            Container.BindInterfacesAndSelfTo<BotAnalyticsService>().AsSingle();
         }
 
         private void BindUI()

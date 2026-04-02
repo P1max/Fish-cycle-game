@@ -39,57 +39,7 @@ namespace UI.Conveyor
             _slots = new Dictionary<FishItemView, SlotData>();
         }
 
-        public void Init()
-        {
-            _view.OnItemRerollRequested += HandleRerollRequested;
-            _view.OnItemClicked += HandleItemClicked;
-
-            _balanceManager.OnCoinsCountChanged += HandleBalanceChanged;
-            _storeManager.OnPurchaseFailedNotEnoughMoney += _coinsCounterPresenter.PlayNotEnoughMoneyAnimation;
-            _storeManager.OnPurchaseFailedAquariumFull += _fishesCounterPresenter.PlayLimitReachedAnimation;
-
-            _lastKnownSpacing = _config.ItemSpacing;
-
-            _view.Init(_config.ConveyorSpeed, _config.ItemSpacing);
-        }
-
-        public void Dispose()
-        {
-            _view.OnItemRerollRequested -= HandleRerollRequested;
-            _view.OnItemClicked -= HandleItemClicked;
-
-            if (_balanceManager != null)
-                _balanceManager.OnCoinsCountChanged -= HandleBalanceChanged;
-
-            if (_storeManager != null)
-            {
-                _storeManager.OnPurchaseFailedNotEnoughMoney -= _coinsCounterPresenter.PlayNotEnoughMoneyAnimation;
-                _storeManager.OnPurchaseFailedAquariumFull -= _fishesCounterPresenter.PlayLimitReachedAnimation;
-            }
-        }
-
-        public void Tick()
-        {
-            foreach (var (view, data) in _slots)
-            {
-                if (data.Lot == null) continue;
-
-                if (data.Lot.IsPurchased && !data.IsVisuallyPurchased)
-                {
-                    view.SetPurchasedState();
-                    data.IsVisuallyPurchased = true;
-                }
-
-                if (!data.Lot.IsVisible && _view.IsViewVisible(view))
-                    data.Lot.IsVisible = true;
-            }
-
-            if (!Mathf.Approximately(_config.ItemSpacing, _lastKnownSpacing))
-            {
-                _lastKnownSpacing = _config.ItemSpacing;
-                _view.UpdateSpacing(_lastKnownSpacing);
-            }
-        }
+        private void HandleBalanceChanged(int newBalance) => _view.RefreshOffscreenItems();
 
         private void HandleRerollRequested(FishItemView view)
         {
@@ -131,7 +81,57 @@ namespace UI.Conveyor
             }
         }
 
-        private void HandleBalanceChanged(int newBalance) => _view.RefreshOffscreenItems();
+        public void Tick()
+        {
+            foreach (var (view, data) in _slots)
+            {
+                if (data.Lot == null) continue;
+
+                if (data.Lot.IsPurchased && !data.IsVisuallyPurchased)
+                {
+                    view.SetPurchasedState();
+                    data.IsVisuallyPurchased = true;
+                }
+
+                if (!data.Lot.IsVisible && _view.IsViewVisible(view))
+                    data.Lot.IsVisible = true;
+            }
+
+            if (!Mathf.Approximately(_config.ItemSpacing, _lastKnownSpacing))
+            {
+                _lastKnownSpacing = _config.ItemSpacing;
+                _view.UpdateSpacing(_lastKnownSpacing);
+            }
+        }
+
+        public void Init()
+        {
+            _view.OnItemRerollRequested += HandleRerollRequested;
+            _view.OnItemClicked += HandleItemClicked;
+
+            _balanceManager.OnCoinsCountChanged += HandleBalanceChanged;
+            _storeManager.OnPurchaseFailedNotEnoughMoney += _coinsCounterPresenter.PlayNotEnoughMoneyAnimation;
+            _storeManager.OnPurchaseFailedAquariumFull += _fishesCounterPresenter.PlayLimitReachedAnimation;
+
+            _lastKnownSpacing = _config.ItemSpacing;
+
+            _view.Init(_config.ConveyorSpeed, _config.ItemSpacing);
+        }
+
+        public void Dispose()
+        {
+            _view.OnItemRerollRequested -= HandleRerollRequested;
+            _view.OnItemClicked -= HandleItemClicked;
+
+            if (_balanceManager != null)
+                _balanceManager.OnCoinsCountChanged -= HandleBalanceChanged;
+
+            if (_storeManager != null)
+            {
+                _storeManager.OnPurchaseFailedNotEnoughMoney -= _coinsCounterPresenter.PlayNotEnoughMoneyAnimation;
+                _storeManager.OnPurchaseFailedAquariumFull -= _fishesCounterPresenter.PlayLimitReachedAnimation;
+            }
+        }
 
         #region class
 

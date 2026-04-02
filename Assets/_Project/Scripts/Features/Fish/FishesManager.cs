@@ -13,6 +13,7 @@ namespace Core.Game
         private readonly UpgradeManager _upgradeManager;
 
         public event Action<int, int> OnFishCountChanged;
+        public event Action OnFishRemoved;
 
         public int CurrentFishCount { get; private set; }
         public int MaxFishesCount { get; private set; }
@@ -39,6 +40,8 @@ namespace Core.Game
 
             CurrentFishCount--;
             OnFishCountChanged?.Invoke(CurrentFishCount, MaxFishesCount);
+
+            OnFishRemoved?.Invoke();
         }
 
         public bool TryAddFish(string fishId, float quality = 1f, Vector2 spawnPosition = default)

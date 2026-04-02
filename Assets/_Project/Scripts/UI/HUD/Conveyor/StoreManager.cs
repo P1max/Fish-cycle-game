@@ -31,6 +31,7 @@ namespace Core.Game
         public event Action OnPurchaseFailedNotEnoughMoney;
         public event Action OnPurchaseFailedAquariumFull;
         public event Action OnConveyorShifted;
+        public event Action OnFishBought;
 
         public StoreManager(
             ConveyorConfig config,
@@ -105,8 +106,12 @@ namespace Core.Game
                 return false;
             }
 
-            _aquarium.TryAddFish(lot.FishId, lot.Quality);
-            lot.MarkAsPurchased();
+            if (_aquarium.TryAddFish(lot.FishId, lot.Quality))
+            {
+                lot.MarkAsPurchased();
+                
+                OnFishBought?.Invoke();
+            }
 
             return true;
         }

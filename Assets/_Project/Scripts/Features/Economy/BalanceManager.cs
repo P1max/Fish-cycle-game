@@ -6,8 +6,9 @@ namespace Core.Game
     public class BalanceManager : IGameplayInit
     {
         private readonly AquariumConfig _config;
-        
+
         public event Action<int> OnCoinsCountChanged;
+        public event Action<int> OnCoinsAdded;
 
         public int CurrentCoinsCount { get; private set; }
 
@@ -19,8 +20,9 @@ namespace Core.Game
         public void AddCoins(int amount)
         {
             CurrentCoinsCount += amount;
-            
+
             OnCoinsCountChanged?.Invoke(CurrentCoinsCount);
+            OnCoinsAdded?.Invoke(amount);
         }
 
         public bool TrySpendCoins(int amount)
@@ -28,7 +30,7 @@ namespace Core.Game
             if (CurrentCoinsCount < amount) return false;
 
             CurrentCoinsCount -= amount;
-            
+
             OnCoinsCountChanged?.Invoke(CurrentCoinsCount);
 
             return true;

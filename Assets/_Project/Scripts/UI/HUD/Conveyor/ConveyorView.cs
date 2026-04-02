@@ -61,7 +61,7 @@ namespace UI.Conveyor
 
         public void RefreshOffscreenItems()
         {
-            if (_views == null || _views.Count == 0) return;
+            if (!_isInit || _views == null || _views.Count == 0) return;
 
             foreach (var view in _views)
             {
@@ -75,6 +75,8 @@ namespace UI.Conveyor
 
         public void UpdateSpacing(float newSpacing)
         {
+            if (!_isInit || _views == null || _views.Count == 0) return;
+
             _spacing = newSpacing;
             _stepDistance = _itemWidth + _spacing;
 
