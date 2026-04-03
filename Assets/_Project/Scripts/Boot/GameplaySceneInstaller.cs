@@ -22,7 +22,6 @@ namespace Installers
     public class GameplaySceneInstaller : MonoInstaller
     {
         [SerializeField] private DataSource _dataSource;
-        [SerializeField] private BotProfileConfig _botProfileAsset;
 
         public override void InstallBindings()
         {
@@ -81,7 +80,35 @@ namespace Installers
         {
             Container.BindInterfacesAndSelfTo<Features.BotBalancer.BotSetupService>().AsSingle();
 
-            Container.Bind<BotProfileConfig>().FromInstance(_botProfileAsset).AsSingle();
+            var isBotActive = false;
+
+#if UNITY_EDITOR
+            isBotActive = UnityEditor.EditorPrefs.GetBool("Bot_IsActive", false);
+#endif
+
+            if (!isBotActive) return;
+
+            BotProfileConfig activeProfile = null;
+
+#if UNITY_EDITOR
+            var profilePath = UnityEditor.EditorPrefs.GetString("Bot_ProfilePath", "");
+
+            if (!string.IsNullOrEmpty(profilePath)) 
+                activeProfile = UnityEditor.AssetDatabase.LoadAssetAtPath<BotProfileConfig>(profilePath);
+#endif
+
+            if (activeProfile)
+            {
+                Debug.Log($"Для симуляции загружен профиль: {activeProfile.name}");
+            }
+            else
+            {
+                Debug.LogWarning("Профиль из окна симуляции не найден. Бот не будет запущен.");
+
+                return;
+            }
+
+            Container.Bind<BotProfileConfig>().FromInstance(activeProfile).AsSingle();
 
             Container.Bind<IBotAction>().To<FeedFishesAction>().AsSingle();
             Container.Bind<IBotAction>().To<BuyFishAction>().AsSingle();

@@ -29,26 +29,31 @@ namespace Features.BotBalancer.AI
 
             if (!_aquarium.CanAddFish) return 0f;
 
-            var highestLotScore = 0f;
+            var highestRoi = -1f;
 
             foreach (var lot in _storeManager.AvailableLots)
             {
                 if (lot.IsPurchased) continue;
-
                 if (!lot.IsVisible) continue;
-
                 if (lot.Price > _balanceManager.CurrentCoinsCount) continue;
 
-                var lotScore = _profile.BuyFishWeight;
+                var baseConfig = _storeManager.GetFishConfig(lot.FishId);
 
-                if (lotScore > highestLotScore)
+                var actualIncome = baseConfig.IncomeCoins * lot.Quality;
+                var actualLifetime = baseConfig.LifetimeSeconds * lot.Quality;
+                var actualPrice = lot.Price == 0 ? 1 : lot.Price;
+
+                var expectedTotalIncome = actualIncome * (actualLifetime / baseConfig.IncomeCooldownSeconds);
+                var roi = expectedTotalIncome / actualPrice; 
+
+                if (roi > highestRoi)
                 {
-                    highestLotScore = lotScore;
+                    highestRoi = roi;
                     _bestLotToBuy = lot;
                 }
             }
-
-            return highestLotScore;
+            
+            return _bestLotToBuy != null ? _profile.BuyFishWeight : 0f;
         }
 
         public void Execute()

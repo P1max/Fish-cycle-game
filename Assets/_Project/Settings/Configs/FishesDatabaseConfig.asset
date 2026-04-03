@@ -137,8 +137,8 @@ MonoBehaviour:
     SizeModifier: {x: 0.7, y: 0.8}
     LifetimeSeconds: 110
     HungerGrowthPercentPerSecond: 1.5
-    BreedChancePercent: 30
-    BreedCooldownSeconds: 10
+    BreedChancePercent: 25
+    BreedCooldownSeconds: 15
     IncomeCoins: 15
     IncomeCooldownSeconds: 15
   - Sprite: {fileID: 5899847947390980637, guid: df5ee6f2075166041b9c626e873e07a8, type: 3}

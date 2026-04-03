@@ -13,5 +13,13 @@ MonoBehaviour:
   m_Name: BotProfileConfig
   m_EditorClassIdentifier: 
   DecisionInterval: 1
+  UpgradeThreshold: 1.8
+  UseStarvationStrategy: 0
+  StarvationWeightMultiplier: 0.103
+  UseAirlockStrategy: 0
+  AirlockWeightMultiplier: 0
   FeedFishesWeight: 0.8
-  BuyFishWeight: 0.6
+  BuyFishWeight: 0.7
+  CollectCoinsWeight: 0.9
+  UpgradeAquariumWeight: 0.7
+  CleanDeadFishWeight: 0.85

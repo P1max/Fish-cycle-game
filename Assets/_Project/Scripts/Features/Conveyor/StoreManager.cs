@@ -30,7 +30,6 @@ namespace Core.Game
 
         public event Action OnPurchaseFailedNotEnoughMoney;
         public event Action OnPurchaseFailedAquariumFull;
-        public event Action OnConveyorShifted;
         public event Action OnFishBought;
 
         public StoreManager(
@@ -54,8 +53,6 @@ namespace Core.Game
             if (_availableLots.Count > 0) _availableLots.RemoveAt(0);
 
             RequestNewLotAndRegister();
-
-            OnConveyorShifted?.Invoke();
         }
 
         public FishConfig GetFishConfig(string fishId) => _fishesConfigsLoader.LoadedFishesDict[fishId];
@@ -109,7 +106,7 @@ namespace Core.Game
             if (_aquarium.TryAddFish(lot.FishId, lot.Quality))
             {
                 lot.MarkAsPurchased();
-                
+
                 OnFishBought?.Invoke();
             }
 
