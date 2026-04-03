@@ -9,12 +9,12 @@ namespace _Project.Scripts.Editor
 {
     public class AquariumDebuggerWindow : OdinEditorWindow
     {
-        [MenuItem("Tools/Aquarium Debugger")]
+        [MenuItem("Tools/Отладка аквариума")]
         private static void OpenWindow()
         {
             var window = GetWindow<AquariumDebuggerWindow>();
 
-            window.titleContent = new GUIContent("Отладка Аквариума");
+            window.titleContent = new GUIContent("Отладка аквариума");
             window.Show();
         }
 

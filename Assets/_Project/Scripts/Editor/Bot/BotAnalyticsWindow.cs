@@ -59,10 +59,10 @@ namespace _Project.Scripts.Editor
             }
         }
 
-        [MenuItem("Tools/Analytics Dashboard")]
+        [MenuItem("Tools/Аналитика симуляции")]
         public static void ShowWindow()
         {
-            var window = GetWindow<BotAnalyticsWindow>("Analytics Dashboard");
+            var window = GetWindow<BotAnalyticsWindow>("Аналитика симуляции");
             
             window.minSize = new Vector2(700, 600);
             window.Show();
