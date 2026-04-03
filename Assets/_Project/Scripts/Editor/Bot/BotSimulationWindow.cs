@@ -26,7 +26,7 @@ namespace _Project.Scripts.Editor
 
         [LabelText("Интервал для создания одного репорта")]
         [LabelWidth(260)]
-        [PropertyRange(0.1f, 10)]
+        [MinValue(0.1f)]
         public float ReportsInterval = 1f;
 
         [LabelText("Отключить UI (для FPS)")]

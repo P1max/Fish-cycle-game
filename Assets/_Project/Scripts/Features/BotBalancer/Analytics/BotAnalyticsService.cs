@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Text;
 using _Project.Core.Interfaces;
 using Core.Feed;
 using Core.Game;
@@ -97,12 +98,43 @@ namespace Features.BotBalancer.Analytics
 
                 File.WriteAllText(_reportFilePath, json);
 
-                Debug.Log($"Отчет успешно сохранен: {_reportFilePath}");
+                var csvFilePath = Path.ChangeExtension(_reportFilePath, ".csv");
+
+                SaveCsv(csvFilePath);
+
+                Debug.Log($"Отчеты успешно сохранены:\nJSON: {_reportFilePath}\nCSV: {csvFilePath}");
             }
             catch (Exception e)
             {
                 Debug.LogError($"Ошибка при сохранении отчета: {e.Message}");
             }
+        }
+
+        private void SaveCsv(string filePath)
+        {
+            var sb = new StringBuilder();
+
+            sb.AppendLine("TimeSecond;CoinsBalance;FishesCount;DeadCount;BoughtCount;BornCount;FeederUsedCount;CoinsCollectedAmount");
+
+            var culture = System.Globalization.CultureInfo.InvariantCulture;
+
+            foreach (var snapshot in _report.Snapshots)
+            {
+                var timeString = snapshot.TimeSecond.ToString("F1", culture).Replace('.', ',');
+
+                sb.AppendLine(
+                    $"{timeString};" +
+                    $"{snapshot.CoinsBalance};" +
+                    $"{snapshot.FishesCount};" +
+                    $"{snapshot.DeadCount};" +
+                    $"{snapshot.BoughtCount};" +
+                    $"{snapshot.BornCount};" +
+                    $"{snapshot.FeederUsedCount};" +
+                    $"{snapshot.CoinsCollectedAmount}"
+                );
+            }
+
+            File.WriteAllText(filePath, sb.ToString());
         }
 
         private void FinishSimulation()
@@ -168,7 +200,7 @@ namespace Features.BotBalancer.Analytics
             {
                 ProfileName = _profile.name
             };
-            
+
             _isReportSaved = false;
 
             _sessionTimer = 0f;
