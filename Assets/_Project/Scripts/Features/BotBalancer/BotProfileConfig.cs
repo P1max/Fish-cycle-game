@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Features.BotBalancer.AI
 {
-    [CreateAssetMenu(fileName = "BotProfile", menuName = "Bot/BotProfile")]
+
     public class BotProfileConfig : ScriptableObject
     {
         [Title("Настройки мышления")]

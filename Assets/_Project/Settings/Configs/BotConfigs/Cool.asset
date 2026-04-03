@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fd70e48fce7a471681e37a300b0567be, type: 3}
-  m_Name: BotProfileConfig
+  m_Name: Cool
   m_EditorClassIdentifier: 
-  DecisionInterval: 1
-  UpgradeThreshold: 1.8
-  UseStarvationStrategy: 0
-  StarvationWeightMultiplier: 0.103
-  UseAirlockStrategy: 0
+  DecisionInterval: 0.2
+  UpgradeThreshold: 1.1
+  UseStarvationStrategy: 1
+  StarvationWeightMultiplier: 0
+  UseAirlockStrategy: 1
   AirlockWeightMultiplier: 0
-  FeedFishesWeight: 0.8
-  BuyFishWeight: 0.7
-  CollectCoinsWeight: 0.9
-  UpgradeAquariumWeight: 0.7
-  CleanDeadFishWeight: 0.85
+  FeedFishesWeight: 0.9
+  BuyFishWeight: 1
+  CollectCoinsWeight: 1
+  UpgradeAquariumWeight: 1
+  CleanDeadFishWeight: 1

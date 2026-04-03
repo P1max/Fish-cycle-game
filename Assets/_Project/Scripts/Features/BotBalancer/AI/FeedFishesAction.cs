@@ -38,9 +38,26 @@ namespace Features.BotBalancer.AI
         {
             if (!_feedManager.IsReady) return 0f;
 
-            var maxHunger = 0f;
-            var worstAliveFishRoi = float.MaxValue;
+            var bestPotentialRoi = 0f;
+
+            foreach (var baseConfig in _fishesConfigsLoader.LoadedFishesDict.Values)
+            {
+                if (baseConfig.Price > _balanceManager.CurrentCoinsCount) continue;
+
+                var expectedTotalIncome = baseConfig.IncomeCoins * (baseConfig.LifetimeSeconds / baseConfig.IncomeCooldownSeconds);
+                var actualPrice = baseConfig.Price == 0 ? 1 : baseConfig.Price;
+                var potentialRoi = expectedTotalIncome / actualPrice;
+
+                if (potentialRoi > bestPotentialRoi)
+                {
+                    bestPotentialRoi = potentialRoi;
+                }
+            }
+
+            var maxHungerElite = 0f;
+            var maxHungerTrash = 0f;
             var hasAliveFishes = false;
+            var hasTrash = false;
 
             foreach (var fish in _fishPool.ActiveFishes)
             {
@@ -48,53 +65,48 @@ namespace Features.BotBalancer.AI
 
                 hasAliveFishes = true;
 
-                if (fish.Hunger.CurrentHungerPercent > maxHunger)
-                    maxHunger = fish.Hunger.CurrentHungerPercent;
-
                 var expectedTotalIncome = fish.Config.IncomeCoins * (fish.Config.LifetimeSeconds / fish.Config.IncomeCooldownSeconds);
                 var actualPrice = fish.Config.Price == 0 ? 1 : fish.Config.Price;
                 var currentFishRoi = expectedTotalIncome / actualPrice;
 
-                if (currentFishRoi < worstAliveFishRoi)
+                var isTrash = (currentFishRoi * _profile.UpgradeThreshold) < bestPotentialRoi;
+
+                if (isTrash)
                 {
-                    worstAliveFishRoi = currentFishRoi;
+                    hasTrash = true;
+
+                    if (fish.Hunger.CurrentHungerPercent > maxHungerTrash)
+                        maxHungerTrash = fish.Hunger.CurrentHungerPercent;
+                }
+                else
+                {
+                    if (fish.Hunger.CurrentHungerPercent > maxHungerElite)
+                        maxHungerElite = fish.Hunger.CurrentHungerPercent;
                 }
             }
 
             if (!hasAliveFishes) return 0f;
 
-            if (!_aquarium.CanAddFish && _profile.UseStarvationStrategy)
-            {
-                var wantToStarveFishes = false;
-
-                foreach (var baseConfig in _fishesConfigsLoader.LoadedFishesDict.Values)
-                {
-                    if (baseConfig.Price > _balanceManager.CurrentCoinsCount) continue;
-
-                    var expectedTotalIncome = baseConfig.IncomeCoins * (baseConfig.LifetimeSeconds / baseConfig.IncomeCooldownSeconds);
-                    var actualPrice = baseConfig.Price == 0 ? 1 : baseConfig.Price;
-                    var potentialRoi = expectedTotalIncome / actualPrice;
-
-                    if (potentialRoi > worstAliveFishRoi * _profile.UpgradeThreshold)
-                    {
-                        wantToStarveFishes = true;
-
-                        break;
-                    }
-                }
-
-                if (wantToStarveFishes)
-                    return _profile.FeedFishesWeight * _profile.StarvationWeightMultiplier;
-            }
-
             var hungerThreshold = _commonFishConfig.HungerIndicatorThreshold;
 
-            if (maxHunger < hungerThreshold)
+            if (maxHungerElite >= hungerThreshold)
+            {
+                var panicFactor = (maxHungerElite - hungerThreshold) / (100f - hungerThreshold);
+
+                return _profile.FeedFishesWeight * Mathf.Clamp01(panicFactor);
+            }
+
+            if (!_aquarium.CanAddFish && hasTrash && _profile.UseStarvationStrategy)
+                return _profile.FeedFishesWeight * _profile.StarvationWeightMultiplier;
+
+            var overallMaxHunger = Mathf.Max(maxHungerElite, maxHungerTrash);
+
+            if (overallMaxHunger < hungerThreshold)
                 return 0.05f;
 
-            var panicFactor = (maxHunger - hungerThreshold) / (100f - hungerThreshold);
+            var normalPanic = (overallMaxHunger - hungerThreshold) / (100f - hungerThreshold);
 
-            return _profile.FeedFishesWeight * Mathf.Clamp01(panicFactor);
+            return _profile.FeedFishesWeight * Mathf.Clamp01(normalPanic);
         }
 
         public void Execute()

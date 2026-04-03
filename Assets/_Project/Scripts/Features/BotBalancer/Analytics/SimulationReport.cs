@@ -6,6 +6,7 @@ namespace Features.BotBalancer.Analytics
     [Serializable]
     public class SimulationReport
     {
+        public string ProfileName;
         public List<IntervalSnapshot> Snapshots = new();
     }
 

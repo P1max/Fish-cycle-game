@@ -3,6 +3,7 @@ using System.IO;
 using _Project.Core.Interfaces;
 using Core.Feed;
 using Core.Game;
+using Features.BotBalancer.AI;
 using UnityEngine;
 using Zenject;
 
@@ -16,6 +17,7 @@ namespace Features.BotBalancer.Analytics
         private readonly StoreManager _storeManager;
         private readonly BreedManager _breedManager;
         private readonly FeedManager _feedManager;
+        private readonly BotProfileConfig _profile;
 
         private SimulationReport _report;
         private float _sessionTimer;
@@ -37,7 +39,8 @@ namespace Features.BotBalancer.Analytics
             FishesManager aquarium,
             StoreManager storeManager,
             BreedManager breedManager,
-            FeedManager feedManager)
+            FeedManager feedManager,
+            BotProfileConfig profile)
         {
             _botSetup = botSetup;
             _balanceManager = balanceManager;
@@ -45,6 +48,7 @@ namespace Features.BotBalancer.Analytics
             _storeManager = storeManager;
             _breedManager = breedManager;
             _feedManager = feedManager;
+            _profile = profile;
         }
 
         private void HandleFishBought() => _totalBought++;
@@ -160,7 +164,11 @@ namespace Features.BotBalancer.Analytics
         {
             if (!_botSetup.IsBotActive) return;
 
-            _report = new SimulationReport();
+            _report = new SimulationReport
+            {
+                ProfileName = _profile.name
+            };
+            
             _isReportSaved = false;
 
             _sessionTimer = 0f;
@@ -173,7 +181,7 @@ namespace Features.BotBalancer.Analytics
             var timestamp = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
             var folderPath = Path.Combine(Application.dataPath, "Reports");
 
-            _reportFilePath = Path.Combine(folderPath, $"SimReport_{timestamp}.json");
+            _reportFilePath = Path.Combine(folderPath, $"SimReport_{_profile.name}_{timestamp}.json");
 
 #if UNITY_EDITOR
             _targetSimulationTime = UnityEditor.EditorPrefs.GetInt("Bot_SimTime", 60);

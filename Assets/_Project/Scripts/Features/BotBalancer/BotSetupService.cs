@@ -1,5 +1,3 @@
-// Папка: Assets/_Project/Scripts/Features/BotBalancer/BotSetupService.cs
-
 using _Project.Core.Interfaces;
 using UnityEngine;
 
