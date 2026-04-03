@@ -34,6 +34,9 @@ namespace UI.FeedJar
         [SerializeField] private float _breathingScaleMultyplier = 1.05f;
         [SerializeField] private float _breathingDuration = 1f;
 
+        [Title("Obstacle (Отталкивание рыб)")]
+        [SerializeField] private float _obstacleRadius = 0.4f;
+
         private FeederConfig _config;
         private Action _onCLick;
         private Sequence _shakeSeq;
@@ -41,6 +44,8 @@ namespace UI.FeedJar
         private Vector3 _originalScale;
         private Color _originalColor;
         private bool _isReadyState;
+
+        public float ObstacleRadius => _obstacleRadius;
 
         private void PlayReadyAnimation()
         {
@@ -118,6 +123,16 @@ namespace UI.FeedJar
 
                 if (_isReadyState) _isReadyState = false;
             }
+        }
+
+        public Vector2 GetWorldPosition(Camera cam)
+        {
+            if (!cam) return Vector2.zero;
+
+            Vector3 screenPos = RectTransformUtility.WorldToScreenPoint(null, _rect.position);
+            screenPos.z = Mathf.Abs(cam.transform.position.z);
+
+            return cam.ScreenToWorldPoint(screenPos);
         }
 
         public void Init(Action onClick)

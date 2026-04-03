@@ -1700,6 +1700,7 @@ MonoBehaviour:
   _colorOutEase: 2
   _breathingScaleMultyplier: 1.03
   _breathingDuration: 1
+  _obstacleRadius: 0.4
 --- !u!1 &794615945
 GameObject:
   m_ObjectHideFlags: 0

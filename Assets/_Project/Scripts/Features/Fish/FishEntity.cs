@@ -8,6 +8,7 @@ using Core.Game;
 using Core.Loaders;
 using Spawners;
 using DG.Tweening;
+using UI.FeedJar;
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(FishVisual))]
@@ -150,7 +151,7 @@ public class FishEntity : MonoBehaviour
 
     public void Init(IReadOnlyDictionary<Collider2D, FishEntity> fishesCache, FoodPool foodPool, Collider2D thisCollider,
         CommonFishConfig commonFishConfig, CoinsPool coinsPool, AquariumBoundsManager aquariumBoundsManager, BreedManager breedManager,
-        FishesConfigsLoader fishesConfigsLoader)
+        FishesConfigsLoader fishesConfigsLoader, FeedJarView feedJarView) 
     {
         _collider = thisCollider;
         CommonFishConfig = commonFishConfig;
@@ -161,7 +162,7 @@ public class FishEntity : MonoBehaviour
         LifeCycle = new FishLifeCycle(this);
 
         Movement = new FishMovement(this, GetComponent<Rigidbody2D>(), _collider,
-            aquariumBoundsManager);
+            aquariumBoundsManager, feedJarView);
 
         FishVisual.Init(this);
 

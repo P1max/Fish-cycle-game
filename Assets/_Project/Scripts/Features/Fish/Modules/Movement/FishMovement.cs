@@ -1,5 +1,6 @@
 using Core.Fish.BoidStrategies;
 using Core.Game;
+using UI.FeedJar;
 using UnityEngine;
 
 public class FishMovement
@@ -19,7 +20,8 @@ public class FishMovement
     public float ScareTimer { get; private set; }
     public bool IsScared => ScareTimer > 0;
 
-    public FishMovement(FishEntity fishEntity, Rigidbody2D rigidbody, Collider2D collider, AquariumBoundsManager aquariumBoundsManager)
+    public FishMovement(FishEntity fishEntity, Rigidbody2D rigidbody, Collider2D collider, AquariumBoundsManager aquariumBoundsManager
+    , FeedJarView feedJarView)
     {
         _fishEntity = fishEntity;
         _rigidbody = rigidbody;
@@ -27,7 +29,7 @@ public class FishMovement
         _behaviors = new ISteeringBehavior[]
         {
             new BoundsSteering(aquariumBoundsManager),
-            new ObstacleSteering(),
+            new ObstacleSteering(feedJarView),
             new WanderSteering(),
             new BoidsSteering(),
             new FoodSteering(collider),

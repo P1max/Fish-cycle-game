@@ -4,6 +4,7 @@ using Core.Game;
 using Core.Game.Upgrade;
 using Core.Loaders;
 using DG.Tweening;
+using UI.FeedJar;
 using UnityEngine;
 using Zenject;
 
@@ -19,6 +20,7 @@ namespace Spawners
         [Inject] private BreedManager _breedManager;
         [Inject] private CoinsPool _coinsPool;
         [Inject] private FoodPool _foodPool;
+        [Inject] private FeedJarView _feedJarView;
 
         private Dictionary<Collider2D, FishEntity> _fishesCache;
         private float _defaultScale;
@@ -44,7 +46,7 @@ namespace Spawners
             _fishesCache.Add(col, fish);
 
             fish.Init(_fishesCache, _foodPool, col, _commonFishConfig, _coinsPool, _aquariumBoundsManager, _breedManager,
-                _fishesConfigsLoader);
+                _fishesConfigsLoader, _feedJarView);
 
             fish.OnReturnToPool += ReturnToPool;
         }
