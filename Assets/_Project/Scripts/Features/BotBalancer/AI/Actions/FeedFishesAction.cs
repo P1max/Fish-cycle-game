@@ -1,6 +1,7 @@
 using Core.Feed;
 using Core.Game;
 using Core.Loaders;
+using Features.BotBalancer.AI.Configs;
 using Spawners;
 using UnityEngine;
 
@@ -9,7 +10,7 @@ namespace Features.BotBalancer.AI
     public class FeedFishesAction : IBotAction
     {
         private readonly FeedManager _feedManager;
-        private readonly BotProfileConfig _profile;
+        private readonly FeedActionConfig _config;
         private readonly FishesManager _aquarium;
         private readonly BalanceManager _balanceManager;
         private readonly FishPool _fishPool;
@@ -18,7 +19,7 @@ namespace Features.BotBalancer.AI
 
         public FeedFishesAction(
             FeedManager feedManager,
-            BotProfileConfig profile,
+            FeedActionConfig config,
             FishesManager aquarium,
             BalanceManager balanceManager,
             FishPool fishPool,
@@ -26,7 +27,7 @@ namespace Features.BotBalancer.AI
             FishesConfigsLoader fishesConfigsLoader)
         {
             _feedManager = feedManager;
-            _profile = profile;
+            _config = config;
             _aquarium = aquarium;
             _balanceManager = balanceManager;
             _fishPool = fishPool;
@@ -64,12 +65,10 @@ namespace Features.BotBalancer.AI
                 if (!fish.IsAlive) continue;
 
                 hasAliveFishes = true;
+                
+                var currentFishRoi = fish.Config.GetRoi();
 
-                var expectedTotalIncome = fish.Config.IncomeCoins * (fish.Config.LifetimeSeconds / fish.Config.IncomeCooldownSeconds);
-                var actualPrice = fish.Config.Price == 0 ? 1 : fish.Config.Price;
-                var currentFishRoi = expectedTotalIncome / actualPrice;
-
-                var isTrash = (currentFishRoi * _profile.UpgradeThreshold) < bestPotentialRoi;
+                var isTrash = (currentFishRoi * _config.UpgradeThreshold) < bestPotentialRoi;
 
                 if (isTrash)
                 {
@@ -93,11 +92,11 @@ namespace Features.BotBalancer.AI
             {
                 var panicFactor = (maxHungerElite - hungerThreshold) / (100f - hungerThreshold);
 
-                return _profile.FeedFishesWeight * Mathf.Clamp01(panicFactor);
+                return _config.BaseWeight * Mathf.Clamp01(panicFactor);
             }
 
-            if (!_aquarium.CanAddFish && hasTrash && _profile.UseStarvationStrategy)
-                return _profile.FeedFishesWeight * _profile.StarvationWeightMultiplier;
+            if (!_aquarium.CanAddFish && hasTrash && _config.UseStarvationStrategy)
+                return _config.BaseWeight * _config.StarvationWeightMultiplier;
 
             var overallMaxHunger = Mathf.Max(maxHungerElite, maxHungerTrash);
 
@@ -106,7 +105,7 @@ namespace Features.BotBalancer.AI
 
             var normalPanic = (overallMaxHunger - hungerThreshold) / (100f - hungerThreshold);
 
-            return _profile.FeedFishesWeight * Mathf.Clamp01(normalPanic);
+            return _config.BaseWeight * Mathf.Clamp01(normalPanic);
         }
 
         public void Execute()

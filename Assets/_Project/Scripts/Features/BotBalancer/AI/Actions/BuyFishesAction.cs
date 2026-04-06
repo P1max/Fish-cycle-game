@@ -1,4 +1,5 @@
 using Core.Game;
+using Features.BotBalancer.AI.Configs;
 
 namespace Features.BotBalancer.AI
 {
@@ -7,7 +8,7 @@ namespace Features.BotBalancer.AI
         private readonly StoreManager _storeManager;
         private readonly FishesManager _aquarium;
         private readonly BalanceManager _balanceManager;
-        private readonly BotProfileConfig _profile;
+        private readonly BuyFishActionConfig _config;
 
         private StoreLot _bestLotToBuy;
 
@@ -15,12 +16,12 @@ namespace Features.BotBalancer.AI
             StoreManager storeManager,
             FishesManager aquarium,
             BalanceManager balanceManager,
-            BotProfileConfig profile)
+            BuyFishActionConfig config)
         {
             _storeManager = storeManager;
             _aquarium = aquarium;
             _balanceManager = balanceManager;
-            _profile = profile;
+            _config = config;
         }
 
         public float Evaluate()
@@ -39,12 +40,7 @@ namespace Features.BotBalancer.AI
 
                 var baseConfig = _storeManager.GetFishConfig(lot.FishId);
 
-                var actualIncome = baseConfig.IncomeCoins * lot.Quality;
-                var actualLifetime = baseConfig.LifetimeSeconds * lot.Quality;
-                var actualPrice = lot.Price == 0 ? 1 : lot.Price;
-
-                var expectedTotalIncome = actualIncome * (actualLifetime / baseConfig.IncomeCooldownSeconds);
-                var roi = expectedTotalIncome / actualPrice; 
+                var roi = lot.GetRoi(baseConfig);
 
                 if (roi > highestRoi)
                 {
@@ -53,7 +49,7 @@ namespace Features.BotBalancer.AI
                 }
             }
             
-            return _bestLotToBuy != null ? _profile.BuyFishWeight : 0f;
+            return _bestLotToBuy != null ? _config.BaseWeight : 0f;
         }
 
         public void Execute()

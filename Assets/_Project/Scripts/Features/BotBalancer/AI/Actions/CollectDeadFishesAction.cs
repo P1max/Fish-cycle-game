@@ -1,4 +1,5 @@
 using Core.Game;
+using Features.BotBalancer.AI.Configs;
 using Spawners;
 
 namespace Features.BotBalancer.AI
@@ -6,7 +7,7 @@ namespace Features.BotBalancer.AI
     public class CollectDeadFishAction : IBotAction
     {
         private readonly FishPool _fishPool;
-        private readonly BotProfileConfig _profile;
+        private readonly CleanDeadFishActionConfig _config;
         private readonly StoreManager _storeManager;
         private readonly FishesManager _aquarium;
         private readonly BalanceManager _balanceManager;
@@ -15,13 +16,13 @@ namespace Features.BotBalancer.AI
 
         public CollectDeadFishAction(
             FishPool fishPool,
-            BotProfileConfig profile,
+            CleanDeadFishActionConfig config,
             StoreManager storeManager,
             FishesManager aquarium,
             BalanceManager balanceManager)
         {
             _fishPool = fishPool;
-            _profile = profile;
+            _config = config;
             _storeManager = storeManager;
             _aquarium = aquarium;
             _balanceManager = balanceManager;
@@ -44,9 +45,7 @@ namespace Features.BotBalancer.AI
                 {
                     aliveCount++;
 
-                    var expectedTotalIncome = fish.Config.IncomeCoins * (fish.Config.LifetimeSeconds / fish.Config.IncomeCooldownSeconds);
-                    var actualPrice = fish.Config.Price == 0 ? 1 : fish.Config.Price;
-                    var currentFishRoi = expectedTotalIncome / actualPrice;
+                    var currentFishRoi = fish.Config.GetRoi();
 
                     if (currentFishRoi < worstAliveFishRoi)
                     {
@@ -56,11 +55,11 @@ namespace Features.BotBalancer.AI
             }
 
             if (deadCount == 0) return 0f;
-            if (aliveCount == 0) return _profile.CleanDeadFishWeight;
+            if (aliveCount == 0) return _config.BaseWeight;
 
             if (!_aquarium.CanAddFish)
             {
-                if (!_profile.UseAirlockStrategy) return _profile.CleanDeadFishWeight;
+                if (!_config.UseAirlockStrategy) return _config.BaseWeight;
 
                 var canBuyBetterFish = false;
 
@@ -76,7 +75,7 @@ namespace Features.BotBalancer.AI
 
                     var storeFishRoi = (actualIncome * (actualLifetime / baseConfig.IncomeCooldownSeconds)) / actualPrice;
 
-                    if (storeFishRoi > worstAliveFishRoi * _profile.UpgradeThreshold)
+                    if (storeFishRoi > worstAliveFishRoi * _config.UpgradeThreshold)
                     {
                         canBuyBetterFish = true;
 
@@ -88,13 +87,13 @@ namespace Features.BotBalancer.AI
                 {
                     _isAirlockMode = true;
 
-                    return _profile.CleanDeadFishWeight;
+                    return _config.BaseWeight;
                 }
 
-                return _profile.CleanDeadFishWeight * _profile.AirlockWeightMultiplier;
+                return _config.BaseWeight * _config.AirlockWeightMultiplier;
             }
 
-            return _profile.CleanDeadFishWeight;
+            return _config.BaseWeight;
         }
 
         public void Execute()

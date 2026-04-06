@@ -1,5 +1,6 @@
 using Core.Game;
 using Core.Game.Upgrade;
+using Features.BotBalancer.AI.Configs;
 
 namespace Features.BotBalancer.AI
 {
@@ -7,25 +8,32 @@ namespace Features.BotBalancer.AI
     {
         private readonly UpgradeManager _upgradeManager;
         private readonly BalanceManager _balanceManager;
-        private readonly BotProfileConfig _profile;
+        private readonly FishesManager _fishesManager;
+        private readonly UpgradeAquariumActionConfig _config;
 
         public UpgradeAquariumAction(
             UpgradeManager upgradeManager,
             BalanceManager balanceManager,
-            BotProfileConfig profile)
+            FishesManager fishesManager,
+            UpgradeAquariumActionConfig config)
         {
             _upgradeManager = upgradeManager;
             _balanceManager = balanceManager;
-            _profile = profile;
+            _fishesManager = fishesManager;
+            _config = config;
         }
 
         public float Evaluate()
         {
             if (_upgradeManager.IsMaxLevel) return 0f;
-
             if (_balanceManager.CurrentCoinsCount < _upgradeManager.NextLevelCost) return 0f;
 
-            return _profile.UpgradeAquariumWeight;
+            var crowdedness = (float)_fishesManager.CurrentFishCount / _fishesManager.MaxFishesCount;
+
+            if (crowdedness < _config.MinCrowdedThreshold)
+                return 0f;
+
+            return _config.BaseWeight;
         }
 
         public void Execute()

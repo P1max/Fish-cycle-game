@@ -40,7 +40,7 @@ namespace _Project.Core.States
 
         public void Enter()
         {
-            DOTween.SetTweensCapacity(500, 250);
+            DOTween.SetTweensCapacity(800, 350);
 
             InitGroup(_coreInits);
             InitGroup(_gameplayInits);

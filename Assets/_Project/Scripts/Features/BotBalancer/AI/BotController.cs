@@ -25,14 +25,13 @@ namespace Features.BotBalancer.AI
 
             _timeSinceLastDecision += Time.deltaTime;
 
-            if (_timeSinceLastDecision >= _profile.DecisionInterval)
+            while (_timeSinceLastDecision >= _profile.DecisionInterval)
             {
-                _timeSinceLastDecision = 0f;
+                _timeSinceLastDecision -= _profile.DecisionInterval;
 
                 MakeDecision();
             }
         }
-
         private void MakeDecision()
         {
             IBotAction bestAction = null;
