@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fd70e48fce7a471681e37a300b0567be, type: 3}
-  m_Name: Default
+  m_Name: Casual
   m_EditorClassIdentifier: 
-  DecisionInterval: 0.2
+  DecisionInterval: 0.5
   Actions:
+  - rid: 1464322022656442464
   - rid: 1464322022656442469
   - rid: 1464322022656442476
-  - rid: 1464322022656442464
   - rid: 1464322022656442470
   - rid: 1464322022656442471
   references:
@@ -26,58 +26,58 @@ MonoBehaviour:
       type: {class: BuyFishActionConfig, ns: Features.BotBalancer.AI.Configs, asm: Assembly-CSharp}
       data:
         IsEnabled: 1
-        BaseWeight: 1
+        BaseWeight: 0.5
     - rid: 1464322022656442469
       type: {class: FeedActionConfig, ns: Features.BotBalancer.AI.Configs, asm: Assembly-CSharp}
       data:
         IsEnabled: 1
         BaseWeight: 1
-        UseStarvationStrategy: 1
-        UpgradeThreshold: 1.2
-        StarvationWeightMultiplier: 0
+        UseStarvationStrategy: 0
+        UpgradeThreshold: 2
+        StarvationWeightMultiplier: 0.3
     - rid: 1464322022656442470
       type: {class: CollectCoinsActionConfig, ns: Features.BotBalancer.AI.Configs, asm: Assembly-CSharp}
       data:
         IsEnabled: 1
         BaseWeight: 1
-        MaxCoinsThreshold: 10
+        MaxCoinsThreshold: 3
         CoinWeightCurve:
           serializedVersion: 2
           m_Curve:
           - serializedVersion: 3
             time: 0
             value: 0
-            inSlope: 0
-            outSlope: 0
-            tangentMode: 0
+            inSlope: 1
+            outSlope: 1
+            tangentMode: 34
             weightedMode: 0
             inWeight: 0
             outWeight: 0
           - serializedVersion: 3
             time: 1
             value: 1
-            inSlope: 2
-            outSlope: 2
-            tangentMode: 0
+            inSlope: 1
+            outSlope: 1
+            tangentMode: 34
             weightedMode: 0
             inWeight: 0
             outWeight: 0
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
-        UseDesperationStrategy: 1
+        UseDesperationStrategy: 0
         DesperationMultiplier: 1.5
     - rid: 1464322022656442471
       type: {class: UpgradeAquariumActionConfig, ns: Features.BotBalancer.AI.Configs, asm: Assembly-CSharp}
       data:
         IsEnabled: 1
-        BaseWeight: 1
-        MinCrowdedThreshold: 0.8
+        BaseWeight: 0.7
+        MinCrowdedThreshold: 0.3
     - rid: 1464322022656442476
       type: {class: CleanDeadFishActionConfig, ns: Features.BotBalancer.AI.Configs, asm: Assembly-CSharp}
       data:
         IsEnabled: 1
         BaseWeight: 1
-        UseAirlockStrategy: 1
-        UpgradeThreshold: 1.2
-        AirlockWeightMultiplier: 0
+        UseAirlockStrategy: 0
+        UpgradeThreshold: 2
+        AirlockWeightMultiplier: 0.5
