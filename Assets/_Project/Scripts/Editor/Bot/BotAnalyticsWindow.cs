@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using Features.BotBalancer.Analytics;
 using UnityEditor;
 using UnityEngine;
 
-namespace _Project.Scripts.Editor
+namespace _Project.Scripts.Editor.Bot
 {
     [InitializeOnLoad]
     public class BotAnalyticsWindow : EditorWindow
@@ -53,7 +54,7 @@ namespace _Project.Scripts.Editor
             if (state == PlayModeStateChange.EnteredEditMode && EditorPrefs.HasKey("AutoOpenReportPath"))
             {
                 var path = EditorPrefs.GetString("AutoOpenReportPath");
-                
+
                 EditorPrefs.DeleteKey("AutoOpenReportPath");
                 EditorApplication.delayCall += () => OpenWithReport(path);
             }
@@ -63,7 +64,7 @@ namespace _Project.Scripts.Editor
         public static void ShowWindow()
         {
             var window = GetWindow<BotAnalyticsWindow>("Аналитика симуляции");
-            
+
             window.minSize = new Vector2(700, 600);
             window.Show();
         }
@@ -71,7 +72,7 @@ namespace _Project.Scripts.Editor
         public static void OpenWithReport(string path)
         {
             var window = GetWindow<BotAnalyticsWindow>("Analytics Dashboard");
-            
+
             window._lastLoadedPath = path;
             window.LoadReport(path);
             window.Show();
@@ -115,19 +116,19 @@ namespace _Project.Scripts.Editor
             InitStyles();
             DrawHeader();
 
-            if (_report == null || _report.Snapshots.Count < 2)
+            if (_report == null || _report.Snapshots == null || _report.Snapshots.Count < 2)
             {
-                EditorGUILayout.HelpBox("Загрузите файл отчета (.json), чтобы увидеть графики.", MessageType.Info);
+                EditorGUILayout.HelpBox("Загрузите файл отчета (.json или .csv), чтобы увидеть графики.", MessageType.Info);
 
                 return;
             }
 
             EditorGUILayout.Space(10);
             EditorGUILayout.BeginHorizontal();
-            
+
             _zoomX = EditorGUILayout.Slider("Ширина (Zoom X)", _zoomX, 1f, 20f);
             _chartHeight = EditorGUILayout.Slider("Высота (Zoom Y)", _chartHeight, 150f, 800f);
-            
+
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.Space(10);
 
@@ -167,10 +168,11 @@ namespace _Project.Scripts.Editor
         {
             EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
 
-            if (GUILayout.Button("Загрузить JSON", EditorStyles.toolbarButton))
+            if (GUILayout.Button("Загрузить JSON / CSV", EditorStyles.toolbarButton))
             {
-                var path = EditorUtility.OpenFilePanel("Выберите отчет симуляции", Application.dataPath, "json");
-                
+                var path = EditorUtility.OpenFilePanelWithFilters("Выберите отчет симуляции", Application.dataPath,
+                    new[] { "Отчеты симуляции", "json,csv", "All files", "*" });
+
                 if (!string.IsNullOrEmpty(path)) LoadReport(path);
             }
 
@@ -240,7 +242,7 @@ namespace _Project.Scripts.Editor
 
                 var timeVal = normalizedX * maxTime;
                 var labelRect = new Rect(x - 20, plotRect.yMax + 5, 40, 16);
-                
+
                 GUI.Label(labelRect, $"{timeVal:0}s", _centerAlignedLabel);
             }
 
@@ -263,7 +265,7 @@ namespace _Project.Scripts.Editor
                 {
                     var x = plotRect.x + (snapshots[i].TimeSecond / maxTime) * plotRect.width;
                     var y = plotRect.yMax - (line.Selector(snapshots[i]) / maxVal) * plotRect.height;
-                    
+
                     points[i] = new Vector3(x, y, 0);
                 }
 
@@ -299,7 +301,7 @@ namespace _Project.Scripts.Editor
                 {
                     var hexColor = ColorUtility.ToHtmlStringRGB(line.Color);
                     var value = line.Selector(closestSnapshot);
-                    
+
                     tooltipText += $"<color=#{hexColor}>■ {line.Name}:</color> <color=white>{value}</color>\n";
                 }
 
@@ -316,7 +318,7 @@ namespace _Project.Scripts.Editor
                 }
 
                 var tooltipRect = new Rect(tooltipX, e.mousePosition.y, size.x + 10, size.y + 10);
-                
+
                 EditorGUI.DrawRect(tooltipRect, new Color(0.15f, 0.15f, 0.15f, 0.95f));
 
                 Handles.color = new Color(0.4f, 0.4f, 0.4f, 1f);
@@ -335,7 +337,7 @@ namespace _Project.Scripts.Editor
             foreach (var line in lines)
             {
                 _legendStyle.normal.textColor = line.Color;
-                
+
                 var content = new GUIContent($"■ {line.Name}");
                 var size = _legendStyle.CalcSize(content);
 
@@ -351,7 +353,7 @@ namespace _Project.Scripts.Editor
             foreach (var line in lines)
             {
                 var localMax = _report.Snapshots.Max(s => line.Selector(s));
-                
+
                 if (localMax > max) max = localMax;
             }
 
@@ -368,7 +370,7 @@ namespace _Project.Scripts.Editor
         private void DrawStatsTable()
         {
             var last = _report.Snapshots[^1];
-            
+
             EditorGUILayout.BeginVertical(EditorStyles.helpBox);
             EditorGUILayout.LabelField("ИТОГОВАЯ СВОДКА СЕССИИ", EditorStyles.boldLabel);
             EditorGUILayout.Space(5);
@@ -395,17 +397,90 @@ namespace _Project.Scripts.Editor
         {
             try
             {
-                var json = File.ReadAllText(path);
-                
-                _report = JsonUtility.FromJson<SimulationReport>(json);
+                var extension = Path.GetExtension(path).ToLower();
+
+                switch (extension)
+                {
+                    case ".json":
+                    {
+                        var json = File.ReadAllText(path);
+
+                        _report = JsonUtility.FromJson<SimulationReport>(json);
+
+                        break;
+                    }
+                    case ".csv":
+                        _report = ParseCsv(path);
+
+                        break;
+                    default:
+                        Debug.LogWarning("Неподдерживаемый формат: " + extension);
+
+                        return;
+                }
+
                 _lastLoadedPath = path;
-                
                 Repaint();
             }
             catch (Exception e)
             {
                 Debug.LogError($"Ошибка загрузки отчета: {e.Message}");
             }
+        }
+
+        private SimulationReport ParseCsv(string path)
+        {
+            var lines = File.ReadAllLines(path);
+
+            if (lines.Length < 2) return new SimulationReport { Snapshots = new List<IntervalSnapshot>() };
+
+            var separator = lines[0].Contains(';') ? ';' : ',';
+
+            var headers = lines[0].Split(separator).Select(h => h.Trim().ToLower()).ToList();
+            var snapshots = new List<IntervalSnapshot>();
+
+            for (int i = 1; i < lines.Length; i++)
+            {
+                if (string.IsNullOrWhiteSpace(lines[i])) continue;
+
+                var values = lines[i].Split(separator);
+
+                var snapshot = new IntervalSnapshot
+                {
+                    TimeSecond = GetCsvValue(headers, values, "timesecond", "time"),
+                    CoinsBalance = (int)GetCsvValue(headers, values, "coinsbalance", "balance"),
+                    CoinsCollectedAmount = (int)GetCsvValue(headers, values, "coinscollectedamount", "collected"),
+                    FishesCount = (int)GetCsvValue(headers, values, "fishescount", "fishes"),
+                    BornCount = (int)GetCsvValue(headers, values, "borncount", "born"),
+                    BoughtCount = (int)GetCsvValue(headers, values, "boughtcount", "bought"),
+                    DeadCount = (int)GetCsvValue(headers, values, "deadcount", "dead"),
+                    FeederUsedCount = (int)GetCsvValue(headers, values, "feederusedcount", "feeder")
+                };
+
+                snapshots.Add(snapshot);
+            }
+
+            return new SimulationReport { Snapshots = snapshots };
+        }
+
+        private float GetCsvValue(List<string> headers, string[] values, params string[] possibleKeys)
+        {
+            foreach (var key in possibleKeys)
+            {
+                var index = headers.IndexOf(key);
+
+                if (index >= 0 && index < values.Length)
+                {
+                    var rawValue = values[index].Replace(',', '.');
+
+                    if (float.TryParse(rawValue, NumberStyles.Any, CultureInfo.InvariantCulture, out var result))
+                    {
+                        return result;
+                    }
+                }
+            }
+
+            return 0f;
         }
     }
 }
