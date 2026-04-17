@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55ad112e68ff4df3a50f18c40f27f22b, type: 3}
+  m_Name: CommonFishConfig
+  m_EditorClassIdentifier: 
+  MarginXSides: 0.12
+  MarginTop: 0.1
+  MarginBottom: 0.1
+  BoundsWeight: 100
+  NeighborRadius: 1.6
+  SeparationRadius: 1
+  AlignmentWeight: 6
+  CohesionWeight: 2
+  SeparationWeight: 160
+  PartnerSearchRadius: 1
+  ObstacleAvoidanceWeight: 140
+  FoodWeight: 120
+  FoodSearchRadius: 5
+  EatTimer: {x: 1, y: 2}
+  WanderWeight: 10
+  ScareRadius: 1.5
+  ScareWeight: 100
+  ScareDuration: 1.3
+  DeathTimerThreshold: 10
+  HungerIndicatorThreshold: 60

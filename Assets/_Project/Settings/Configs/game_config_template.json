@@ -1,0 +1,436 @@
+{
+  "aquarium": {
+    "startCoins": 350,
+    "startFishCount": 0,
+    "maxFishCount": 5
+  },
+  "feeder": {
+    "cooldownSeconds": 12.0,
+    "totalHungerRestorePerUse": 180.0,
+    "foodPiecesCount": {
+      "x": 4,
+      "y": 6
+    }
+  },
+  "boids": {
+    "marginXSides": 0.12,
+    "marginTop": 0.1,
+    "marginBottom": 0.1,
+    "boundsWeight": 100.0,
+    "neighborRadius": 1.6,
+    "separationRadius": 1.0,
+    "alignmentWeight": 6.0,
+    "cohesionWeight": 2.0,
+    "separationWeight": 160.0,
+    "wanderWeight": 10.0,
+    "foodWeight": 120.0,
+    "foodSearchRadius": 5.0
+  },
+  "store": {
+    "conveyerSpeed": 80.0,
+    "freeFishQuality": {
+      "x": 0.3,
+      "y": 0.7
+    },
+    "coinsForFreeFish": 150,
+    "fishesCountForFreeFish": 2
+  },
+  "fishConfigs": [
+    {
+      "id": "goldfish",
+      "type": "worker",
+      "price": 100,
+      "canBeFree": true,
+      "sizeModifier": {
+        "x": 0.75,
+        "y": 0.85
+      },
+      "lifetimeSeconds": 120.0,
+      "hungerGrowthPercentPerSecond": 1.5,
+      "breedChancePercent": 10.0,
+      "breedCooldownSeconds": 30.0,
+      "incomeCoins": 12,
+      "incomeCooldownSeconds": 10.0,
+      "normalSpeedRange": {
+        "x": 0.8,
+        "y": 1.4
+      },
+      "steerSpeed": 7.0,
+      "maxTiltAngle": 20.0
+    },
+    {
+      "id": "rostik",
+      "type": "worker",
+      "price": 120,
+      "canBeFree": true,
+      "sizeModifier": {
+        "x": 0.85,
+        "y": 0.95
+      },
+      "lifetimeSeconds": 140.0,
+      "hungerGrowthPercentPerSecond": 1.2,
+      "breedChancePercent": 12.0,
+      "breedCooldownSeconds": 35.0,
+      "incomeCoins": 14,
+      "incomeCooldownSeconds": 12.0,
+      "normalSpeedRange": {
+        "x": 0.7,
+        "y": 1.2
+      },
+      "steerSpeed": 7.0,
+      "maxTiltAngle": 20.0
+    },
+    {
+      "id": "guf",
+      "type": "worker",
+      "price": 150,
+      "canBeFree": true,
+      "sizeModifier": {
+        "x": 0.55,
+        "y": 0.55
+      },
+      "lifetimeSeconds": 110.0,
+      "hungerGrowthPercentPerSecond": 1.8,
+      "breedChancePercent": 15.0,
+      "breedCooldownSeconds": 25.0,
+      "incomeCoins": 18,
+      "incomeCooldownSeconds": 9.0,
+      "normalSpeedRange": {
+        "x": 0.9,
+        "y": 1.5
+      },
+      "steerSpeed": 7.0,
+      "maxTiltAngle": 20.0
+    },
+    {
+      "id": "alex",
+      "type": "worker",
+      "price": 180,
+      "canBeFree": true,
+      "sizeModifier": {
+        "x": 0.75,
+        "y": 0.85
+      },
+      "lifetimeSeconds": 130.0,
+      "hungerGrowthPercentPerSecond": 1.4,
+      "breedChancePercent": 10.0,
+      "breedCooldownSeconds": 30.0,
+      "incomeCoins": 25,
+      "incomeCooldownSeconds": 11.0,
+      "normalSpeedRange": {
+        "x": 0.8,
+        "y": 1.3
+      },
+      "steerSpeed": 7.0,
+      "maxTiltAngle": 20.0
+    },
+    {
+      "id": "kreg",
+      "type": "selectioner",
+      "price": 150,
+      "canBeFree": true,
+      "sizeModifier": {
+        "x": 0.65,
+        "y": 0.75
+      },
+      "lifetimeSeconds": 90.0,
+      "hungerGrowthPercentPerSecond": 2.0,
+      "breedChancePercent": 40.0,
+      "breedCooldownSeconds": 15.0,
+      "incomeCoins": 8,
+      "incomeCooldownSeconds": 15.0,
+      "normalSpeedRange": {
+        "x": 0.8,
+        "y": 1.3
+      },
+      "steerSpeed": 7.0,
+      "maxTiltAngle": 20.0
+    },
+    {
+      "id": "jorj",
+      "type": "selectioner",
+      "price": 200,
+      "canBeFree": true,
+      "sizeModifier": {
+        "x": 0.75,
+        "y": 0.85
+      },
+      "lifetimeSeconds": 100.0,
+      "hungerGrowthPercentPerSecond": 2.2,
+      "breedChancePercent": 35.0,
+      "breedCooldownSeconds": 12.0,
+      "incomeCoins": 12,
+      "incomeCooldownSeconds": 14.0,
+      "normalSpeedRange": {
+        "x": 0.8,
+        "y": 1.3
+      },
+      "steerSpeed": 7.0,
+      "maxTiltAngle": 20.0
+    },
+    {
+      "id": "anjela",
+      "type": "selectioner",
+      "price": 250,
+      "canBeFree": true,
+      "sizeModifier": {
+        "x": 0.7,
+        "y": 0.8
+      },
+      "lifetimeSeconds": 85.0,
+      "hungerGrowthPercentPerSecond": 1.8,
+      "breedChancePercent": 50.0,
+      "breedCooldownSeconds": 20.0,
+      "incomeCoins": 10,
+      "incomeCooldownSeconds": 12.0,
+      "normalSpeedRange": {
+        "x": 0.8,
+        "y": 1.3
+      },
+      "steerSpeed": 7.0,
+      "maxTiltAngle": 20.0
+    },
+    {
+      "id": "rada",
+      "type": "selectioner",
+      "price": 300,
+      "canBeFree": true,
+      "sizeModifier": {
+        "x": 0.7,
+        "y": 0.8
+      },
+      "lifetimeSeconds": 110.0,
+      "hungerGrowthPercentPerSecond": 1.5,
+      "breedChancePercent": 30.0,
+      "breedCooldownSeconds": 10.0,
+      "incomeCoins": 15,
+      "incomeCooldownSeconds": 15.0,
+      "normalSpeedRange": {
+        "x": 0.9,
+        "y": 1.4
+      },
+      "steerSpeed": 7.0,
+      "maxTiltAngle": 20.0
+    },
+    {
+      "id": "bob",
+      "type": "suetolog",
+      "price": 220,
+      "canBeFree": true,
+      "sizeModifier": {
+        "x": 0.85,
+        "y": 0.9
+      },
+      "lifetimeSeconds": 45.0,
+      "hungerGrowthPercentPerSecond": 4.0,
+      "breedChancePercent": 5.0,
+      "breedCooldownSeconds": 40.0,
+      "incomeCoins": 30,
+      "incomeCooldownSeconds": 4.0,
+      "normalSpeedRange": {
+        "x": 1.4,
+        "y": 1.8
+      },
+      "steerSpeed": 7.0,
+      "maxTiltAngle": 20.0
+    },
+    {
+      "id": "vitalya",
+      "type": "suetolog",
+      "price": 350,
+      "canBeFree": true,
+      "sizeModifier": {
+        "x": 0.75,
+        "y": 0.85
+      },
+      "lifetimeSeconds": 50.0,
+      "hungerGrowthPercentPerSecond": 4.5,
+      "breedChancePercent": 5.0,
+      "breedCooldownSeconds": 40.0,
+      "incomeCoins": 55,
+      "incomeCooldownSeconds": 5.0,
+      "normalSpeedRange": {
+        "x": 1.5,
+        "y": 1.9
+      },
+      "steerSpeed": 7.0,
+      "maxTiltAngle": 20.0
+    },
+    {
+      "id": "arnold",
+      "type": "suetolog",
+      "price": 450,
+      "canBeFree": true,
+      "sizeModifier": {
+        "x": 0.85,
+        "y": 0.9
+      },
+      "lifetimeSeconds": 35.0,
+      "hungerGrowthPercentPerSecond": 5.0,
+      "breedChancePercent": 2.0,
+      "breedCooldownSeconds": 50.0,
+      "incomeCoins": 80,
+      "incomeCooldownSeconds": 3.0,
+      "normalSpeedRange": {
+        "x": 1.3,
+        "y": 1.75
+      },
+      "steerSpeed": 7.0,
+      "maxTiltAngle": 20.0
+    },
+    {
+      "id": "sasha",
+      "type": "aristocrat",
+      "price": 500,
+      "canBeFree": false,
+      "sizeModifier": {
+        "x": 1.05,
+        "y": 1.15
+      },
+      "lifetimeSeconds": 240.0,
+      "hungerGrowthPercentPerSecond": 0.8,
+      "breedChancePercent": 8.0,
+      "breedCooldownSeconds": 60.0,
+      "incomeCoins": 60,
+      "incomeCooldownSeconds": 20.0,
+      "normalSpeedRange": {
+        "x": 0.55,
+        "y": 0.9
+      },
+      "steerSpeed": 7.0,
+      "maxTiltAngle": 20.0
+    },
+    {
+      "id": "henri",
+      "type": "aristocrat",
+      "price": 700,
+      "canBeFree": false,
+      "sizeModifier": {
+        "x": 0.8,
+        "y": 0.9
+      },
+      "lifetimeSeconds": 300.0,
+      "hungerGrowthPercentPerSecond": 0.6,
+      "breedChancePercent": 5.0,
+      "breedCooldownSeconds": 80.0,
+      "incomeCoins": 80,
+      "incomeCooldownSeconds": 25.0,
+      "normalSpeedRange": {
+        "x": 0.8,
+        "y": 1.4
+      },
+      "steerSpeed": 7.0,
+      "maxTiltAngle": 20.0
+    },
+    {
+      "id": "mr fish",
+      "type": "aristocrat",
+      "price": 900,
+      "canBeFree": false,
+      "sizeModifier": {
+        "x": 0.55,
+        "y": 0.75
+      },
+      "lifetimeSeconds": 270.0,
+      "hungerGrowthPercentPerSecond": 0.7,
+      "breedChancePercent": 10.0,
+      "breedCooldownSeconds": 55.0,
+      "incomeCoins": 100,
+      "incomeCooldownSeconds": 18.0,
+      "normalSpeedRange": {
+        "x": 0.9,
+        "y": 1.4
+      },
+      "steerSpeed": 7.0,
+      "maxTiltAngle": 20.0
+    },
+    {
+      "id": "kira",
+      "type": "aristocrat",
+      "price": 1200,
+      "canBeFree": false,
+      "sizeModifier": {
+        "x": 0.55,
+        "y": 0.65
+      },
+      "lifetimeSeconds": 320.0,
+      "hungerGrowthPercentPerSecond": 0.5,
+      "breedChancePercent": 5.0,
+      "breedCooldownSeconds": 90.0,
+      "incomeCoins": 150,
+      "incomeCooldownSeconds": 22.0,
+      "normalSpeedRange": {
+        "x": 1.1,
+        "y": 1.4
+      },
+      "steerSpeed": 7.0,
+      "maxTiltAngle": 20.0
+    },
+    {
+      "id": "don",
+      "type": "legendary",
+      "price": 2000,
+      "canBeFree": false,
+      "sizeModifier": {
+        "x": 0.75,
+        "y": 0.85
+      },
+      "lifetimeSeconds": 180.0,
+      "hungerGrowthPercentPerSecond": 3.0,
+      "breedChancePercent": 20.0,
+      "breedCooldownSeconds": 45.0,
+      "incomeCoins": 300,
+      "incomeCooldownSeconds": 15.0,
+      "normalSpeedRange": {
+        "x": 1.0,
+        "y": 1.4
+      },
+      "steerSpeed": 7.0,
+      "maxTiltAngle": 20.0
+    },
+    {
+      "id": "nastya",
+      "type": "legendary",
+      "price": 3500,
+      "canBeFree": false,
+      "sizeModifier": {
+        "x": 0.75,
+        "y": 0.85
+      },
+      "lifetimeSeconds": 150.0,
+      "hungerGrowthPercentPerSecond": 3.5,
+      "breedChancePercent": 15.0,
+      "breedCooldownSeconds": 40.0,
+      "incomeCoins": 650,
+      "incomeCooldownSeconds": 12.0,
+      "normalSpeedRange": {
+        "x": 0.9,
+        "y": 1.35
+      },
+      "steerSpeed": 7.0,
+      "maxTiltAngle": 20.0
+    },
+    {
+      "id": "lesha",
+      "type": "legendary",
+      "price": 5000,
+      "canBeFree": false,
+      "sizeModifier": {
+        "x": 0.65,
+        "y": 0.75
+      },
+      "lifetimeSeconds": 200.0,
+      "hungerGrowthPercentPerSecond": 2.5,
+      "breedChancePercent": 10.0,
+      "breedCooldownSeconds": 60.0,
+      "incomeCoins": 800,
+      "incomeCooldownSeconds": 14.0,
+      "normalSpeedRange": {
+        "x": 1.2,
+        "y": 1.5
+      },
+      "steerSpeed": 7.0,
+      "maxTiltAngle": 20.0
+    }
+  ]
+}
